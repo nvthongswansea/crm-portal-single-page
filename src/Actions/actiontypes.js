@@ -1,0 +1,4 @@
+export const REFRESH_TABLE = "REFRESH_TABLE";
+export const REFRESH_FAQ = "REFRESH_FAQ";
+export const REFRESH_ADDTICKET = "REFRESH_ADDTICKET";
+export const GET_TICKET = "GET_TICKET";
