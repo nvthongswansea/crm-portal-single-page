@@ -4,7 +4,6 @@ import {refreshContent,getContentByParam} from '../Actions/displaymodulename.js'
 import {bindActionCreators} from 'redux';
 import Loader from 'halogen/PulseLoader';
 import jQuery from 'jquery';
-import { hashHistory } from 'react-router';
 import axios from 'axios';
 
 class AddTicket extends Component {
@@ -93,19 +92,7 @@ class AddTicket extends Component {
 	// }
 	submit(dom) {
 		let Jsondata = jQuery(dom).serialize();
-		axios.post("/portal/createnewticket", Jsondata)
-				.then(function(response) {
-					hashHistory.push({
-  						pathname: '/HelpDesk/main',
-  						query: {noti: 'Added new ticket successfully!'}
-					});
-				})
-				.catch(function(error) {
-					hashHistory.push({
-  						pathname: '/HelpDesk/main',
-  						query: {noti: 'Failed!'}
-					});
-				});
+		this.props.getContentByParam("addticket", Jsondata);
 		
 	}
 	render() {
@@ -116,7 +103,7 @@ class AddTicket extends Component {
 			         <div className="panel-heading"> Ticket Detail </div>
 			         { this.props.statuses.loadedAddTicketForm === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 			         { this.props.statuses.loadedAddTicketForm === 'success' &&  
-			         <form id="ticketform" method="POST" role="form" onSubmit={(e) => {  this.submit("#ticketform");e.preventDefault();}}>
+			         <form id="ticketform" method="POST" role="form">
 			         	<div className="panel-body">
 			         		<input name="module" value="HelpDesk" type="hidden"></input>
 							<input name="projectid" value="" type="hidden"></input>
@@ -175,7 +162,7 @@ class AddTicket extends Component {
 							</div>
 			         	</div>
 			         	<div className="panel-footer">
-							<input className="btn btn-success btn-lg" value="Submit Ticket" type="submit"></input>
+							<a className="btn btn-success btn-lg" onClick={() => {this.submit("#ticketform")}}>Thêm vé mới</a>
 						</div>
 			         </form> }
 			         <a onClick={() => this.props.getContentByParam('test', 123)}>test</a>

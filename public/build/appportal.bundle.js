@@ -2227,10 +2227,13 @@ module.exports = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_await__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_await___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_redux_await__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__ = __webpack_require__(27);
 Object.defineProperty(exports, "__esModule", { value: true });
 /* harmony export (immutable) */ exports["refreshContent"] = refreshContent;
 /* harmony export (immutable) */ exports["getContentByParam"] = getContentByParam;
+
 
 
 
@@ -2239,7 +2242,7 @@ function refreshContent(menutitle) {
 	switch (menutitle) {
 		case 'HelpDesk':
 			return {
-				type: __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__["a" /* REFRESH_TABLE */],
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["a" /* REFRESH_TABLE */],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listtickets')
@@ -2254,7 +2257,7 @@ function refreshContent(menutitle) {
 			};
 		case "Contacts":
 			return {
-				type: __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__["a" /* REFRESH_TABLE */],
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["a" /* REFRESH_TABLE */],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listcontacts')
@@ -2269,7 +2272,7 @@ function refreshContent(menutitle) {
 			};
 		case "Products":
 			return {
-				type: __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__["a" /* REFRESH_TABLE */],
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["a" /* REFRESH_TABLE */],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listproducts')
@@ -2284,7 +2287,7 @@ function refreshContent(menutitle) {
 			};
 		case "ATickets":
 			return {
-				type: __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__["a" /* REFRESH_TABLE */],
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["a" /* REFRESH_TABLE */],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listatickets')
@@ -2299,7 +2302,7 @@ function refreshContent(menutitle) {
 			};
 		case 'Faq':
 			return {
-				type: __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__["b" /* REFRESH_FAQ */],
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["b" /* REFRESH_FAQ */],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedFAQ: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/listfaq")
@@ -2314,7 +2317,7 @@ function refreshContent(menutitle) {
 			};
 		case 'newticket':
 			return {
-				type: __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__["c" /* REFRESH_ADDTICKET */],
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["c" /* REFRESH_ADDTICKET */],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedAddTicketForm: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/inforaddnewticket")
@@ -2336,7 +2339,7 @@ function getContentByParam(module, param) {
 	switch (module) {
 		case 'ticketdetail':
 			return {
-				type: __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__["d" /* GET_TICKET */],
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["d" /* GET_TICKET */],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedTicketInfo: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/ticket/" + param)
@@ -2351,7 +2354,7 @@ function getContentByParam(module, param) {
 			};
 		case "closeticket":
 			return {
-				type: __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__["d" /* GET_TICKET */],
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["d" /* GET_TICKET */],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedTicketInfo: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/closeticket/" + param)
@@ -2371,7 +2374,7 @@ function getContentByParam(module, param) {
 			};
 		case "contactdetail":
 			return {
-				type: __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__["e" /* GET_CONTACT */],
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["e" /* GET_CONTACT */],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedContactInfo: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/contact/" + param)
@@ -2386,7 +2389,7 @@ function getContentByParam(module, param) {
 			};
 		case 'ticketpicker':
 			return {
-				type: __WEBPACK_IMPORTED_MODULE_2__actiontypes_js__["f" /* REFRESH_TICKETPICKER */],
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["f" /* REFRESH_TICKETPICKER */],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param)
@@ -2399,9 +2402,46 @@ function getContentByParam(module, param) {
 
 				},
 			};
-
-		case 'test': 
-			console.log("this is a test! with param: "+param);
+		case "addticket":
+			__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/createnewticket", param)
+				.then(function(response) {
+					__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
+						pathname: '/HelpDesk/main',
+						query: {
+							noti: 'Added new ticket successfully!'
+						}
+					});
+				})
+				.catch(function(error) {
+					__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
+						pathname: '/HelpDesk/main',
+						query: {
+							noti: 'Failed!'
+						}
+					});
+				});
+		case "updateAtickContProd":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["f" /* REFRESH_TICKETPICKER */],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/update/" + param.tickcontproductid + "/" + param.productid)
+						.then((response) => {
+							return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param.defaultprodid)
+								.then((responsed) => {
+									return responsed.data;
+								})
+								.catch((errd) => {
+									return errd;
+								});
+						})
+						.catch((err) => {
+							return err;
+						})
+				},
+			};
+		case 'test':
+			console.log("this is a test! with param: " + param);
 	}
 }
 
@@ -10095,8 +10135,6 @@ var _jquery = __webpack_require__(40);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _reactRouter = __webpack_require__(22);
-
 var _axios = __webpack_require__(50);
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -10235,17 +10273,7 @@ var AddTicket = function (_Component) {
 		key: 'submit',
 		value: function submit(dom) {
 			var Jsondata = (0, _jquery2.default)(dom).serialize();
-			_axios2.default.post("/portal/createnewticket", Jsondata).then(function (response) {
-				_reactRouter.hashHistory.push({
-					pathname: '/HelpDesk/main',
-					query: { noti: 'Added new ticket successfully!' }
-				});
-			}).catch(function (error) {
-				_reactRouter.hashHistory.push({
-					pathname: '/HelpDesk/main',
-					query: { noti: 'Failed!' }
-				});
-			});
+			this.props.getContentByParam("addticket", Jsondata);
 		}
 	}, {
 		key: 'render',
@@ -10269,9 +10297,7 @@ var AddTicket = function (_Component) {
 						this.props.statuses.loadedAddTicketForm === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 						this.props.statuses.loadedAddTicketForm === 'success' && _react2.default.createElement(
 							'form',
-							{ id: 'ticketform', method: 'POST', role: 'form', onSubmit: function onSubmit(e) {
-									_this2.submit("#ticketform");e.preventDefault();
-								} },
+							{ id: 'ticketform', method: 'POST', role: 'form' },
 							_react2.default.createElement(
 								'div',
 								{ className: 'panel-body' },
@@ -10416,7 +10442,13 @@ var AddTicket = function (_Component) {
 							_react2.default.createElement(
 								'div',
 								{ className: 'panel-footer' },
-								_react2.default.createElement('input', { className: 'btn btn-success btn-lg', value: 'Submit Ticket', type: 'submit' })
+								_react2.default.createElement(
+									'a',
+									{ className: 'btn btn-success btn-lg', onClick: function onClick() {
+											_this2.submit("#ticketform");
+										} },
+									'Th\xEAm v\xE9 m\u1EDBi'
+								)
 							)
 						),
 						_react2.default.createElement(
@@ -10494,6 +10526,8 @@ var TicketPicker = function (_Component) {
 		_this.props.getContentByParam("ticketpicker", _this.state.productId);
 		_this.renderProductInfo = _this.renderProductInfo.bind(_this);
 		_this.renderTicket = _this.renderTicket.bind(_this);
+		_this.registerTimtable = _this.registerTimtable.bind(_this);
+		_this.cancelTimetable = _this.cancelTimetable.bind(_this);
 		return _this;
 	}
 
@@ -10571,12 +10605,26 @@ var TicketPicker = function (_Component) {
 			return info_arr;
 		}
 	}, {
+		key: 'registerTimtable',
+		value: function registerTimtable(tickcontproductid, productid) {
+			var param = { tickcontproductid: tickcontproductid, productid: productid, defaultprodid: this.state.productId };
+			this.props.getContentByParam("updateAtickContProd", param);
+		}
+	}, {
+		key: 'cancelTimetable',
+		value: function cancelTimetable(tickcontproductid, productid) {
+			var param = { tickcontproductid: tickcontproductid, productid: productid, defaultprodid: this.state.productId };
+			this.props.getContentByParam("updateAtickContProd", param);
+		}
+	}, {
 		key: 'renderTicket',
 		value: function renderTicket() {
+			var _this3 = this;
+
 			var data = this.props.data;
-			if (!data.ticketinfo) return "";
+			if (!data.ticketinfo && !data.usedticketinfo) return "";
 			var info_arr = [];
-			data.ticketinfo.map(function (field, index) {
+			if (data.ticketinfo) data.ticketinfo.map(function (field, index) {
 				info_arr.push(_react2.default.createElement(
 					'tr',
 					null,
@@ -10595,11 +10643,41 @@ var TicketPicker = function (_Component) {
 					_react2.default.createElement(
 						'td',
 						null,
-						field.atickcontprodid,
 						_react2.default.createElement(
 							'a',
-							{ className: 'btn btn-primary btn-sm openticketpicker', href: '#' },
+							{ className: 'btn btn-primary btn-sm', onClick: function onClick() {
+									_this3.registerTimtable(field.atickcontprodid, _this3.state.productId);
+								} },
 							'\u0110\u0103ng k\xED'
+						)
+					)
+				));
+			});
+			if (data.usedticketinfo) data.usedticketinfo.map(function (field, index) {
+				info_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'V\xE9 ',
+							field.atickets_type,
+							' ',
+							field.atickets_code
+						)
+					),
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'a',
+							{ className: 'btn btn-danger btn-sm', onClick: function onClick() {
+									_this3.cancelTimetable(field.atickcontprodid, data.defaultprodid);
+								} },
+							'H\u1EE7y \u0111\u0103ng k\xED'
 						)
 					)
 				));
@@ -10615,6 +10693,7 @@ var TicketPicker = function (_Component) {
 				_react2.default.createElement(
 					'div',
 					{ className: 'row' },
+					this.props.statuses.loadedTicketPicker === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 					_react2.default.createElement(
 						'div',
 						{ className: 'col-lg-6' },
@@ -10626,7 +10705,6 @@ var TicketPicker = function (_Component) {
 								{ className: 'panel-heading' },
 								'Th\xF4ng tin kh\xF3a h\u1ECDc \u0111\u0103ng k\xFD: '
 							),
-							this.props.statuses.loadedTicketPicker === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 							_react2.default.createElement(
 								'table',
 								{ className: 'table' },
@@ -10919,6 +10997,7 @@ var ContactDetail = function (_Component) {
 				_react2.default.createElement(
 					'div',
 					{ className: 'row' },
+					this.props.statuses.loadedContactInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 					_react2.default.createElement(
 						'div',
 						{ className: 'col-lg-6' },
@@ -10930,7 +11009,6 @@ var ContactDetail = function (_Component) {
 								{ className: 'panel-heading' },
 								'Basic Information '
 							),
-							this.props.statuses.loadedContactInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 							_react2.default.createElement(
 								'table',
 								{ className: 'table' },
@@ -10953,7 +11031,6 @@ var ContactDetail = function (_Component) {
 								{ className: 'panel-heading' },
 								'Customer Portal Details '
 							),
-							this.props.statuses.loadedContactInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 							_react2.default.createElement(
 								'table',
 								{ className: 'table' },
@@ -10977,7 +11054,6 @@ var ContactDetail = function (_Component) {
 								{ className: 'panel-heading' },
 								'Address Details '
 							),
-							this.props.statuses.loadedContactInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 							_react2.default.createElement(
 								'table',
 								{ className: 'table' },
@@ -11001,7 +11077,6 @@ var ContactDetail = function (_Component) {
 								{ className: 'panel-heading' },
 								'Description Details '
 							),
-							this.props.statuses.loadedContactInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 							_react2.default.createElement(
 								'table',
 								{ className: 'table' },
@@ -11025,7 +11100,6 @@ var ContactDetail = function (_Component) {
 								{ className: 'panel-heading' },
 								'LBL_PARRENT_CONTACT  '
 							),
-							this.props.statuses.loadedContactInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 							_react2.default.createElement(
 								'table',
 								{ className: 'table' },
@@ -11382,6 +11456,7 @@ var TicketDetail = function (_Component) {
 				_react2.default.createElement(
 					'div',
 					{ className: 'row' },
+					this.props.statuses.loadedTicketInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 					_react2.default.createElement(
 						'div',
 						{ className: 'col-lg-6' },
@@ -11393,7 +11468,6 @@ var TicketDetail = function (_Component) {
 								{ className: 'panel-heading' },
 								'Ticket Information'
 							),
-							this.props.statuses.loadedTicketInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 							_react2.default.createElement(
 								'table',
 								{ className: 'table' },
@@ -11416,7 +11490,6 @@ var TicketDetail = function (_Component) {
 								{ className: 'panel-heading' },
 								' Description Details '
 							),
-							this.props.statuses.loadedTicketInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 							_react2.default.createElement(
 								'table',
 								{ className: 'table' },
@@ -11440,7 +11513,6 @@ var TicketDetail = function (_Component) {
 								{ className: 'panel-heading' },
 								' Ticket Resolution '
 							),
-							this.props.statuses.loadedTicketInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 							_react2.default.createElement(
 								'table',
 								{ className: 'table' },
@@ -11465,7 +11537,6 @@ var TicketDetail = function (_Component) {
 								{ className: 'panel-heading' },
 								' Attachments '
 							),
-							this.props.statuses.loadedTicketInfo === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
 							_react2.default.createElement(
 								'table',
 								{ className: 'table' },

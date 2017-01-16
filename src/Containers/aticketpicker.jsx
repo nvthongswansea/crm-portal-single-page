@@ -11,6 +11,8 @@ class TicketPicker extends Component {
 		this.props.getContentByParam("ticketpicker", this.state.productId);
 		this.renderProductInfo=this.renderProductInfo.bind(this);
 		this.renderTicket=this.renderTicket.bind(this);
+		this.registerTimtable=this.registerTimtable.bind(this);
+		this.cancelTimetable=this.cancelTimetable.bind(this);
 	}
 	componentWillReceiveProps(nextProps){
 		if (this.state.productId != nextProps.params.productId)
@@ -30,23 +32,48 @@ class TicketPicker extends Component {
 		info_arr.push(<tr><td><b>Ngày bắt đầu học: </b></td><td>{data.productinfo.startdate}</td></tr>);
 		return info_arr;
 	}
+	registerTimtable(tickcontproductid, productid) {
+		let param = {tickcontproductid: tickcontproductid, productid: productid, defaultprodid: this.state.productId};
+		this.props.getContentByParam("updateAtickContProd", param);
+	}
+	cancelTimetable(tickcontproductid, productid) {
+		let param = {tickcontproductid: tickcontproductid, productid: productid, defaultprodid: this.state.productId};
+		this.props.getContentByParam("updateAtickContProd", param);
+	}
 	renderTicket() {
 		let data = this.props.data;
-		if (!data.ticketinfo) return "";
+		if (!data.ticketinfo && !data.usedticketinfo) return "";
 		let info_arr = [];
-		data.ticketinfo.map( (field, index) => {
-			info_arr.push(<tr><td><b>Vé {field.atickets_type} {field.atickets_code}</b></td><td>{field.atickcontprodid}<a className="btn btn-primary btn-sm openticketpicker" href="#">Đăng kí</a></td></tr>);
+		if (data.ticketinfo)
+			data.ticketinfo.map( (field, index) => {
+			info_arr.push(<tr>
+				<td>
+					<b>Vé {field.atickets_type} {field.atickets_code}</b>
+				</td>
+				<td>
+					<a className="btn btn-primary btn-sm" onClick={() =>{this.registerTimtable(field.atickcontprodid,this.state.productId)}}>Đăng kí</a>
+				</td></tr>);
 		});
+		if (data.usedticketinfo)
+			data.usedticketinfo.map( (field, index) => {
+				info_arr.push(<tr>
+					<td>
+						<b>Vé {field.atickets_type} {field.atickets_code}</b>
+					</td>
+					<td>
+						<a className="btn btn-danger btn-sm" onClick={() =>{this.cancelTimetable(field.atickcontprodid,data.defaultprodid)}}>Hủy đăng kí</a>
+					</td></tr>);
+			});
 		return info_arr;
 	}
 	render() {
 		return (
 		   <div>
 	        <div className="row">
+	        { this.props.statuses.loadedTicketPicker === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Thông tin khóa học đăng ký: </div>
-	              { this.props.statuses.loadedTicketPicker === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	              <table className="table">
 	                <tbody>{this.props.data? this.renderProductInfo() : ""}
 	                </tbody>

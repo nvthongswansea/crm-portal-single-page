@@ -145,10 +145,10 @@ class TicketDetail extends Component {
 		return (
 	      <div>
 	        <div className="row">
+	         { this.props.statuses.loadedTicketInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Ticket Information</div>
-	              { this.props.statuses.loadedTicketInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	              <table className="table">
 	                <tbody>{this.props.data? this.renderTicketInfo() : ""}
 	                </tbody></table>
@@ -157,7 +157,6 @@ class TicketDetail extends Component {
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading"> Description Details </div>
-	              { this.props.statuses.loadedTicketInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	              <table className="table">
 	                <tbody> {this.props.data? this.renderDescription() : ""}
 	                </tbody></table>
@@ -166,7 +165,6 @@ class TicketDetail extends Component {
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading"> Ticket Resolution </div>
-	              { this.props.statuses.loadedTicketInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	              <table className="table">
 	                <tbody> {this.props.data? this.renderResolution() : ""}
 	                </tbody></table>
@@ -176,7 +174,6 @@ class TicketDetail extends Component {
 	            	{this.props.data? this.renderStatus() : ""}
 	            <div className="panel panel-default">
 	              <div className="panel-heading"> Attachments </div>
-	              { this.props.statuses.loadedTicketInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 
 	              <table className="table">
 	                <tbody>

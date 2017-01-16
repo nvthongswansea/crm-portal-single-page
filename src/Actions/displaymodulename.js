@@ -3,6 +3,9 @@ import {
 	AWAIT_MARKER
 } from 'redux-await';
 import {
+	hashHistory
+} from 'react-router';
+import {
 	REFRESH_TABLE,
 	REFRESH_FAQ,
 	REFRESH_ADDTICKET,
@@ -175,8 +178,45 @@ export function getContentByParam(module, param) {
 
 				},
 			};
-
-		case 'test': 
-			console.log("this is a test! with param: "+param);
+		case "addticket":
+			axios.post("/portal/createnewticket", param)
+				.then(function(response) {
+					hashHistory.push({
+						pathname: '/HelpDesk/main',
+						query: {
+							noti: 'Added new ticket successfully!'
+						}
+					});
+				})
+				.catch(function(error) {
+					hashHistory.push({
+						pathname: '/HelpDesk/main',
+						query: {
+							noti: 'Failed!'
+						}
+					});
+				});
+		case "updateAtickContProd":
+			return {
+				type: REFRESH_TICKETPICKER,
+				AWAIT_MARKER,
+				payload: {
+					loadedTicketPicker: axios.get("/portal/aticketsproduct/update/" + param.tickcontproductid + "/" + param.productid)
+						.then((response) => {
+							return axios.get("/portal/aticketsproduct/" + param.defaultprodid)
+								.then((responsed) => {
+									return responsed.data;
+								})
+								.catch((errd) => {
+									return errd;
+								});
+						})
+						.catch((err) => {
+							return err;
+						})
+				},
+			};
+		case 'test':
+			console.log("this is a test! with param: " + param);
 	}
 }

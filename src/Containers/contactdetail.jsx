@@ -87,10 +87,10 @@ class ContactDetail extends Component {
 		return (
 	      <div>
 	        <div className="row">
+	        { this.props.statuses.loadedContactInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Basic Information </div>
-	              { this.props.statuses.loadedContactInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	              <table className="table">
 	                <tbody>{this.props.data? this.renderBasicInfo() : ""}
 	                </tbody></table>
@@ -99,7 +99,6 @@ class ContactDetail extends Component {
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Customer Portal Details </div>
-	              { this.props.statuses.loadedContactInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	              <table className="table">
 	                <tbody> {this.props.data? this.renderPortalDetail() : ""}
 	                </tbody></table>
@@ -108,7 +107,6 @@ class ContactDetail extends Component {
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Address Details </div>
-	              { this.props.statuses.loadedContactInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	              <table className="table">
 	                <tbody> {this.props.data? this.renderAddress() : ""}
 	                </tbody></table>
@@ -117,7 +115,6 @@ class ContactDetail extends Component {
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Description Details </div>
-	              { this.props.statuses.loadedContactInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	              <table className="table">
 	                <tbody> {this.props.data? this.renderDescription() : ""}
 	                </tbody></table>
@@ -126,7 +123,6 @@ class ContactDetail extends Component {
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">LBL_PARRENT_CONTACT  </div>
-	              { this.props.statuses.loadedContactInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	              <table className="table">
 	                <tbody> {this.props.data? this.renderParentContact() : ""}
 	                </tbody></table>

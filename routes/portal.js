@@ -304,4 +304,28 @@ router.get('/aticketsproduct/:productid', _helper.loginRequired, function(req, r
 	});
 });
 
+router.get('/aticketsproduct/update/:tickcontproductid/:productid', _helper.loginRequired, function(req, res, next) {
+	console.log("check");
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		productid: req.params.productid,
+		tickcontproductid: req.params.tickcontproductid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=updatetickcontprod',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+
 module.exports = router;
