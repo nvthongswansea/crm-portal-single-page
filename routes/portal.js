@@ -17,7 +17,15 @@ router.get('/', _helper.loginRequired, function(req, res, next) {
 
 	request(VT_URL + '/vtigerservice.php?service=restful&do=getmodules', function(error, response, body) {
 		if (!error && response.statusCode == 200) {
-			body = JSON.parse(body);
+			body = {
+				"2": "HelpDesk",
+				"3": "Faq",
+				"6": "Products",
+				"9": "Contacts",
+				"11": "ATickets",
+				"12": "ATickConProd",
+				"13": "Opportunities"
+			};
 			var modulelist = [];
 			for (module in objectValues(body)) {
 				modulelist.push({
@@ -162,7 +170,7 @@ router.get('/ticket/:ticketId', _helper.loginRequired, function(req, res, next) 
 			});
 		}
 	});
-	
+
 })
 router.get('/closeticket/:ticketId', _helper.loginRequired, function(req, res, next) {
 	var formData = {
@@ -187,7 +195,113 @@ router.get('/closeticket/:ticketId', _helper.loginRequired, function(req, res, n
 			});
 		}
 	});
-	
+
 })
+
+router.get('/listcontacts', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		module: "Contacts"
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getlist',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+router.get('/contact/:contactId', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		module: 'Contacts'
+	}
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=detail&entityid=' + req.params.contactId,
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send((JSON.parse(bodydata)));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+
+});
+router.get('/listproducts', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getproducts',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+router.get('/listatickets', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getAtickets',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+
+router.get('/aticketsproduct/:productid', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		productid: req.params.productid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getAticketsProd',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
 
 module.exports = router;

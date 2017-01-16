@@ -3,7 +3,6 @@ import { connect } from 'redux-await';
 import {getContentByParam} from '../Actions/displaymodulename.js';
 import {bindActionCreators} from 'redux';
 import { hashHistory } from 'react-router';
-import axios from 'axios';
 import Loader from 'halogen/PulseLoader';
 import ReactHtmlParser from 'react-html-parser';
 
@@ -133,14 +132,14 @@ class TicketDetail extends Component {
 		return ticketinfo;
 	}
 	closeTicket() {
-		
-		axios.get("/portal/closeticket/" + this.state.ticketId)
-				.then((response) => {
-					this.props.getContentByParam("ticketdetail", response.data.ticketid);
-				})
-				.catch((errt) => {
-					this.forceUpdate();
-				})
+		this.props.getContentByParam("closeticket", this.state.ticketId);
+		// axios.get("/portal/closeticket/" + this.state.ticketId)
+		// 		.then((response) => {
+		// 			this.props.getContentByParam("ticketdetail", response.data.ticketid);
+		// 		})
+		// 		.catch((errt) => {
+		// 			this.forceUpdate();
+		// 		})
 	}
 	render() {
 		return (

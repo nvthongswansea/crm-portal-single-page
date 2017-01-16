@@ -1,6 +1,6 @@
 //Here is where we config the server
 module.exports = {
-  'URL': 'http://localhost/crmv1/vtigercrm',
+  'URL': 'http://askcrm.safsa.vn',
   'USER_ADMIN': 'admin',
-  'ACCESSKEY': 'eS3O3dua8POcwcd'
+  'ACCESSKEY': 'lBlVpmHhPWaGVG99'
 };

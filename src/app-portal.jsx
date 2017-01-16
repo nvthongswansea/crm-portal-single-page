@@ -10,6 +10,8 @@ import Datatable from './Containers/datatable.jsx';
 import FAQ from './Containers/FAQ.jsx';
 import AddTicket from './Containers/addticket.jsx';
 import TicketDetail from './Containers/ticketdetail.jsx';
+import ContactDetail from './Containers/contactdetail.jsx';
+import TicketPicker from './Containers/aticketpicker.jsx';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRedirect, Link, hashHistory } from 'react-router';
 
@@ -53,7 +55,17 @@ window.onload = () => {
         			</Route>
               <Route path="Contacts" component={MainContent} title="Contacts"> 
                 <IndexRedirect to="/Contacts/main"/>
-                <Route path ="/Contacts/main" />
+                <Route path ="/Contacts/main" component={Datatable} tablename="Contacts"/>
+                <Route path="/Contacts/contact/:contactId" component={ContactDetail}/>
+              </Route>
+              <Route path="Products" component={MainContent} title="Products"> 
+                <IndexRedirect to="/Products/main"/>
+                <Route path ="/Products/main" component={Datatable} tablename="Products"/>
+                <Route path="/Products/register/:productId" component={TicketPicker}/>
+              </Route>
+              <Route path="ATickets" component={MainContent} title="ATickets"> 
+                <IndexRedirect to="/ATickets/main"/>
+                <Route path ="/ATickets/main" component={Datatable} tablename="ATickets"/>
               </Route>
         		</Route>
         	</Router>

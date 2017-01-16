@@ -177,8 +177,8 @@ class AddTicket extends Component {
 			         	<div className="panel-footer">
 							<input className="btn btn-success btn-lg" value="Submit Ticket" type="submit"></input>
 						</div>
-			         </form>}
-			         
+			         </form> }
+			         <a onClick={() => this.props.getContentByParam('test', 123)}>test</a>
 			      </div>
 			   </div>
 			</div>			
@@ -193,7 +193,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-   return bindActionCreators({refreshContent: refreshContent}, dispatch);
+   return bindActionCreators({refreshContent: refreshContent, getContentByParam: getContentByParam}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTicket);
