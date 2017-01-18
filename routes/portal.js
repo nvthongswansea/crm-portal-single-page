@@ -281,6 +281,26 @@ router.get('/listatickets', _helper.loginRequired, function(req, res, next) {
 		}
 	});
 });
+router.get('/listatickcontprod', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getATickContProd',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
 
 router.get('/aticketsproduct/:productid', _helper.loginRequired, function(req, res, next) {
 	var formData = {
@@ -304,14 +324,13 @@ router.get('/aticketsproduct/:productid', _helper.loginRequired, function(req, r
 	});
 });
 
-router.get('/aticketsproduct/update/:tickcontproductid/:productid', _helper.loginRequired, function(req, res, next) {
-	console.log("check");
+router.post('/aticketsproduct/update', _helper.loginRequired, function(req, res, next) {
 	var formData = {
 		// Pass a simple key-value pair
 		sessionid: req.session.sessid,
 		id: req.session.userid,
-		productid: req.params.productid,
-		tickcontproductid: req.params.tickcontproductid
+		productid: req.body.productid,
+		tickcontproductid: req.body.tickcontproductid
 	};
 	request.post({
 		url: VT_URL + '/vtigerservice.php?service=restful&do=updatetickcontprod',
@@ -328,4 +347,70 @@ router.get('/aticketsproduct/update/:tickcontproductid/:productid', _helper.logi
 	});
 });
 
+router.get('/ATickConProd/:atickcontprodid', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		atickcontprodid: req.params.atickcontprodid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getATickContProdDetail',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+
+router.post('/checkemailexistence', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		email: req.body.email
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=checkEmail',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+
+router.post('/changeStudent', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		atickcontprodid: req.body.atickcontprodid,
+		email: req.body.email
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=updateStudentATickContProd',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
 module.exports = router;

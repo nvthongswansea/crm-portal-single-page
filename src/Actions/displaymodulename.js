@@ -11,7 +11,10 @@ import {
 	REFRESH_ADDTICKET,
 	GET_TICKET,
 	GET_CONTACT,
-	REFRESH_TICKETPICKER
+	REFRESH_TICKETPICKER,
+	REFRESH_ATICKCONTPRODEDITOR,
+	NO_EMAIL,
+	EMAIL_EXIST
 } from './actiontypes.js';
 
 export function refreshContent(menutitle) {
@@ -67,6 +70,21 @@ export function refreshContent(menutitle) {
 				AWAIT_MARKER,
 				payload: {
 					loadedTable: axios.get('/portal/listatickets')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "ATickConProd":
+			return {
+				type: REFRESH_TABLE,
+				AWAIT_MARKER,
+				payload: {
+					loadedTable: axios.get('/portal/listatickcontprod')
 						.then((response) => {
 							return response.data;
 						})
@@ -178,6 +196,21 @@ export function getContentByParam(module, param) {
 
 				},
 			};
+		case "ATCPDetail":
+			return {
+				type: REFRESH_ATICKCONTPRODEDITOR,
+				AWAIT_MARKER,
+				payload: {
+					loadedATCPeditor: axios.get("/portal/ATickConProd/" + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
 		case "addticket":
 			axios.post("/portal/createnewticket", param)
 				.then(function(response) {
@@ -201,7 +234,10 @@ export function getContentByParam(module, param) {
 				type: REFRESH_TICKETPICKER,
 				AWAIT_MARKER,
 				payload: {
-					loadedTicketPicker: axios.get("/portal/aticketsproduct/update/" + param.tickcontproductid + "/" + param.productid)
+					loadedTicketPicker: axios.post("/portal/aticketsproduct/update", {
+							productid: param.productid,
+							tickcontproductid: param.tickcontproductid
+						})
 						.then((response) => {
 							return axios.get("/portal/aticketsproduct/" + param.defaultprodid)
 								.then((responsed) => {
@@ -216,7 +252,48 @@ export function getContentByParam(module, param) {
 						})
 				},
 			};
-		case 'test':
-			console.log("this is a test! with param: " + param);
+		case 'checkStudentEmail':
+			return dispatch => {
+				axios.post("/portal/checkemailexistence", {
+						email: param
+					})
+					.then((response) => {
+						console.log(response.data);
+						if (!response.data) {
+							dispatch({
+								type: NO_EMAIL
+							});
+						} else if (response.data.contactid) {
+							dispatch({
+								type: EMAIL_EXIST
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
+		case "changeStudent":
+			return dispatch => {
+				axios.post("/portal/changeStudent", param)
+					.then((response) => {
+						if (response.data) {
+							hashHistory.push({
+								pathname: '/ATickConProd/main',
+								query: {
+									noti: 'Changed student successfully!'
+								}
+							});
+						} else {
+							dispatch({
+								type: NO_EMAIL
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
+
 	}
 }

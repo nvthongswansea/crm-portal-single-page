@@ -86,8 +86,9 @@ class ContactDetail extends Component {
 	render() {
 		return (
 	      <div>
+	      { this.props.statuses.loadedContactInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
+	      { this.props.statuses.loadedContactInfo === 'success' && 
 	        <div className="row">
-	        { this.props.statuses.loadedContactInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Basic Information </div>
@@ -128,7 +129,7 @@ class ContactDetail extends Component {
 	                </tbody></table>
 	            </div>
 	          </div>
-	        </div>
+	        </div>}
 	        <div className="row">
 	        </div>
 	      </div>

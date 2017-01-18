@@ -64,6 +64,5 @@ module.exports = {
       jQuery: "jquery"
     })
   ],
-  watch: true,
-  devtool: 'source-map'
+  watch: true
 };

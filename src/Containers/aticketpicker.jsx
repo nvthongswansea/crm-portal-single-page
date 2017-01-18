@@ -69,8 +69,9 @@ class TicketPicker extends Component {
 	render() {
 		return (
 		   <div>
+		   { this.props.statuses.loadedTicketPicker === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
+	        { this.props.statuses.loadedTicketPicker === 'success' && 
 	        <div className="row">
-	        { this.props.statuses.loadedTicketPicker === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Thông tin khóa học đăng ký: </div>
@@ -88,7 +89,7 @@ class TicketPicker extends Component {
 	                </tbody></table>
 	            </div>
 	          </div> 
-	        </div>
+	        </div>}
 	        <div className="row">
 	        </div>
 	      </div>
