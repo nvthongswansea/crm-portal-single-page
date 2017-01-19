@@ -94,6 +94,21 @@ export function refreshContent(menutitle) {
 
 				},
 			};
+		case "Opportunities":
+			return {
+				type: REFRESH_TABLE,
+				AWAIT_MARKER,
+				payload: {
+					loadedTable: axios.get('/portal/listopportunities')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
 		case 'Faq':
 			return {
 				type: REFRESH_FAQ,
@@ -294,6 +309,36 @@ export function getContentByParam(module, param) {
 						return err;
 					})
 			}
+		case "PotentialATCP":
+			return {
+				type: REFRESH_TABLE,
+				AWAIT_MARKER,
+				payload: {
+					loadedTable: axios.get('/portal/listATCPbypotential/'+param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "PotentialTrans":
+			return {
+				type: REFRESH_TABLE,
+				AWAIT_MARKER,
+				payload: {
+					loadedTable: axios.get('/portal/listTransbypotential/'+param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
 
 	}
 }

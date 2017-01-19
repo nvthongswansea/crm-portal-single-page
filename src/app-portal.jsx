@@ -6,6 +6,7 @@ require('./sb-admin-2.css');
 import store from './store.jsx';
 import NavBar from './Components/Navbars.jsx';
 import MainContent from './Components/Maincontent.jsx';
+import PotentialDetail from './Components/OpportunitiesDetail.jsx'
 import Datatable from './Containers/datatable.jsx';
 import FAQ from './Containers/FAQ.jsx';
 import AddTicket from './Containers/addticket.jsx';
@@ -72,6 +73,15 @@ window.onload = () => {
                 <IndexRedirect to="/ATickConProd/main"/>
                 <Route path ="/ATickConProd/main" component={Datatable} tablename="ATickConProd"/>
                 <Route path="/ATickConProd/edit/:ATickConProdId" component={ATCPEditor}/>
+              </Route>
+              <Route path="Opportunities" component={MainContent} title="Opportunities"> 
+                <IndexRedirect to="/Opportunities/main"/>
+                <Route path ="/Opportunities/main" component={Datatable} tablename="Opportunities"/>
+                <Route path="/Opportunities/potential/:potentialid" component={PotentialDetail}>
+                  <IndexRedirect to="/Opportunities/potential/:potentialid/PotentialATCP"/>
+                  <Route path ="/Opportunities/potential/:potentialid/PotentialATCP" component={Datatable} tablename="PotentialATCP"/>
+                  <Route path ="/Opportunities/potential/:potentialid/PotentialTrans" component={Datatable} tablename="PotentialTrans"/>
+                </Route>
               </Route>
         		</Route>
         	</Router>

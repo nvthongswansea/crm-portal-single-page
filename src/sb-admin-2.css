@@ -346,3 +346,10 @@ table.dataTable thead .sorting:after {
     color: #df8a13;
 }
 
+.active {
+    color: #555;
+    cursor: default;
+}
+.nav-tabs>li>a {
+    border: 1px solid #ececec!important;
+}

@@ -413,4 +413,68 @@ router.post('/changeStudent', _helper.loginRequired, function(req, res, next) {
 		}
 	});
 });
+
+router.get('/listopportunities', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getopportunities',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+
+router.get('/listATCPbypotential/:potentialid', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		potentialid: req.params.potentialid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getATCPbypotential',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+router.get('/listTransbypotential/:potentialid', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		potentialid: req.params.potentialid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getTransbypotential',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
 module.exports = router;

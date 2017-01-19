@@ -2,5 +2,5 @@
 module.exports = {
   'URL': 'http://askcrm.safsa.vn',
   'USER_ADMIN': 'admin',
-  'ACCESSKEY': 'lBlVpmHhPWaGVG99'
+  'ACCESSKEY': 'ul1XxTXQkgMh5kuU'
 };

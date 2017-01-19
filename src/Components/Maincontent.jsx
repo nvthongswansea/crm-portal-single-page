@@ -12,7 +12,9 @@ export default class MainContent extends Component {
 					<div className="col-lg-12">
 						<h1 className="page-header">{this.props.route.title}</h1>
 					</div>
+					{this.props.route.submenu}
 				</div>
+
 				{this.props.children}
 			</div>
 			);

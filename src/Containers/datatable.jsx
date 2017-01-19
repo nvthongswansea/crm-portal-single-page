@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
-import {refreshContent} from '../Actions/displaymodulename.js';
+import {refreshContent,getContentByParam} from '../Actions/displaymodulename.js';
 import {bindActionCreators} from 'redux';
 import { Link } from 'react-router';
 import jQuery from 'jquery';
@@ -13,7 +13,13 @@ class Datatable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {tablename: this.props.route.tablename, selectedProd: null};
-		this.props.refreshContent(this.state.tablename);
+		if (this.state.tablename == "PotentialATCP") {
+			this.props.getContentByParam("PotentialATCP",this.props.params.potentialid);
+		} else if (this.state.tablename == "PotentialTrans") {
+			this.props.getContentByParam("PotentialTrans",this.props.params.potentialid);
+		} else {
+			this.props.refreshContent(this.state.tablename);
+		}
 		this.renderTable=this.renderTable.bind(this);
 		this.rerenderTable=this.rerenderTable.bind(this);
 		this.displayNodata=this.displayNodata.bind(this);
@@ -24,7 +30,13 @@ class Datatable extends Component {
 			this.setState({
       			tablename: nextProps.route.tablename
     		}, () => {
-    			nextProps.refreshContent(this.state.tablename);
+    			if (this.state.tablename == "PotentialATCP") {
+					nextProps.getContentByParam("PotentialATCP",nextProps.params.potentialid);
+				} else if (this.state.tablename == "PotentialTrans") {
+					nextProps.getContentByParam("PotentialTrans",nextProps.params.potentialid);
+				}else {
+					nextProps.refreshContent(this.state.tablename);
+				}
     		});
 		
 	}
@@ -45,7 +57,7 @@ class Datatable extends Component {
 	renderTable() {
 		
 		let data = this.props.data;
-		if (!data[0].head || !data[1].data) 
+		if (!data[0] || !data[1]) 
 			return "No data";
 		let headers = [];
 		data[0].head.map((header) => {
@@ -104,7 +116,7 @@ class Datatable extends Component {
 					</div>
 					<div className="panel-body">
 						<div id="toremove" className="table-responsive">						
-							{ this.props.data ? this.renderTable(): this.displayNodata() }
+							{ this.props.statuses.loadedTable === 'success' && (this.props.data ? this.renderTable(): this.displayNodata())}
 							{ this.props.statuses.loadedTable === 'pending' &&  this.displayLoader() }
 						</div> 
 					</div>
@@ -121,7 +133,7 @@ function mapStateToProps(state) {
 	};
 }
 function mapDispatchToProps(dispatch) {
-   return bindActionCreators({refreshContent: refreshContent}, dispatch);
+   return bindActionCreators({refreshContent: refreshContent, getContentByParam: getContentByParam}, dispatch);
 }
 
 

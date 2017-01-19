@@ -34,7 +34,7 @@ class ContactDetail extends Component {
 		let ticketinfo_arr = [];
 		data.Contacts.map( (field, index) => {
 			if (field.blockname == "Basic Information"){
-				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td>{ReactHtmlParser(field.fieldvalue)}</td></tr>);
+				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td dangerouslySetInnerHTML={{__html: field.fieldvalue}} /></tr>);
 			}
 		});
 		return ticketinfo_arr;
@@ -45,7 +45,7 @@ class ContactDetail extends Component {
 		let ticketinfo_arr = [];
 		data.Contacts.map( (field, index) => {
 			if (field.blockname == "Customer Portal Details"){
-				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td>{field.fieldvalue}</td></tr>);
+				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td dangerouslySetInnerHTML={{__html: field.fieldvalue}} /></tr>);
 			}
 		});
 		return ticketinfo_arr;
@@ -56,7 +56,7 @@ class ContactDetail extends Component {
 		let ticketinfo_arr = [];
 		data.Contacts.map( (field, index) => {
 			if (field.blockname == "Address Details"){
-				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td>{field.fieldvalue}</td></tr>);
+				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td dangerouslySetInnerHTML={{__html: field.fieldvalue}} /></tr>);
 			}
 		});
 		return ticketinfo_arr;
@@ -67,7 +67,7 @@ class ContactDetail extends Component {
 		let ticketinfo_arr = [];
 		data.Contacts.map( (field, index) => {
 			if (field.blockname == "Description Details"){
-				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td>{field.fieldvalue}</td></tr>);
+				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td dangerouslySetInnerHTML={{__html: field.fieldvalue}} /></tr>);
 			}
 		});
 		return ticketinfo_arr;
@@ -78,7 +78,7 @@ class ContactDetail extends Component {
 		let ticketinfo_arr = [];
 		data.Contacts.map( (field, index) => {
 			if (field.blockname == "LBL_PARRENT_CONTACT"){
-				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td>{field.fieldvalue}</td></tr>);
+				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td dangerouslySetInnerHTML={{__html: field.fieldvalue}} /></tr>);
 			}
 		});
 		return ticketinfo_arr;

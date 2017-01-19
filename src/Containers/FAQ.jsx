@@ -40,13 +40,13 @@ class FAQ extends Component {
 					<div className="panel panel-default">
 					   <div className="panel-heading">
 					      <h4 className="panel-title">
-					         <a data-toggle="collapse" data-parent="#accordion" data-target={'#'+eachtab.faqno}>{eachtab.faqno} - {eachtab.question}</a>
+					         <a data-toggle="collapse" data-parent="#accordion" data-target={'#'+eachtab.faqno} dangerouslySetInnerHTML={{__html: eachtab.faqno + " - " + eachtab.question}} />
 					      </h4>
 					   </div>
 					   <div id={eachtab.faqno} className="panel-collapse collapse in">
 					      <div className="panel-body">
 					         <h4>Answer: </h4>
-					         <p>{eachtab.answer}</p>
+					         <p dangerouslySetInnerHTML={{__html: eachtab.answer}} />
 					         <br/>
 					         <h4>Related Product: {faq.product.map((product)=>{ return eachtab.product_id == product.productid ? product.productname : "" })}</h4>
 					         <div className="row"> </div>
