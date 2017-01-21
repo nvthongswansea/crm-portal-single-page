@@ -2401,6 +2401,21 @@ function getContentByParam(module, param) {
 
 				},
 			};
+		case "VoucherDetail":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_ATICKCONTPRODEDITOR"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedATCPeditor: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/AVouchers/" + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
 		case "addticket":
 			__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/createnewticket", param)
 				.then(function(response) {
@@ -2523,6 +2538,27 @@ function getContentByParam(module, param) {
 						if (response.data) {
 							__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
 								pathname: '/ATickConProd/main',
+								query: {
+									noti: 'Changed student successfully!'
+								}
+							});
+						} else {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
+		case "changeVoucherOwner":
+			return dispatch => {
+				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/changeVoucherOwner", param)
+					.then((response) => {
+						if (response.data) {
+							__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
+								pathname: '/AVouchers/main',
 								query: {
 									noti: 'Changed student successfully!'
 								}
@@ -9941,7 +9977,7 @@ window.onload = function () {
           { path: 'ATickConProd', component: _Maincontent2.default, title: 'ATickConProd' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/ATickConProd/main' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/ATickConProd/main', component: _datatable2.default, tablename: 'ATickConProd' }),
-          _react2.default.createElement(_reactRouter.Route, { path: '/ATickConProd/edit/:ATickConProdId', component: _StudentTransfer2.default })
+          _react2.default.createElement(_reactRouter.Route, { path: '/ATickConProd/edit/:ATickConProdId', component: _StudentTransfer2.default, formname: 'TransferCourse' })
         ),
         _react2.default.createElement(
           _reactRouter.Route,
@@ -9960,7 +9996,8 @@ window.onload = function () {
           _reactRouter.Route,
           { path: 'AVouchers', component: _Maincontent2.default, title: 'AVouchers' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/AVouchers/main' }),
-          _react2.default.createElement(_reactRouter.Route, { path: '/AVouchers/main', component: _datatable2.default, tablename: 'AVouchers' })
+          _react2.default.createElement(_reactRouter.Route, { path: '/AVouchers/main', component: _datatable2.default, tablename: 'AVouchers' }),
+          _react2.default.createElement(_reactRouter.Route, { path: '/AVouchers/edit/:AVouchersId', component: _StudentTransfer2.default, formname: 'TransferVoucher' })
         )
       )
     )
@@ -32202,9 +32239,15 @@ var StudentTransfer = function (_Component) {
 
 		var _this = _possibleConstructorReturn(this, (StudentTransfer.__proto__ || Object.getPrototypeOf(StudentTransfer)).call(this, props));
 
-		_this.state = { ATickConProdId: _this.props.params.ATickConProdId };
-		_this.props.getContentByParam("ATCPDetail", _this.state.ATickConProdId);
+		if (_this.props.route.formname == "TransferCourse") {
+			_this.state = { ATickConProdId: _this.props.params.ATickConProdId };
+			_this.props.getContentByParam("ATCPDetail", _this.state.ATickConProdId);
+		} else if (_this.props.route.formname == "TransferVoucher") {
+			_this.state = { AVouchersId: _this.props.params.AVouchersId };
+			_this.props.getContentByParam("VoucherDetail", _this.state.AVouchersId);
+		}
 		_this.renderProductInfo = _this.renderProductInfo.bind(_this);
+		_this.renderVoucherInfo = _this.renderVoucherInfo.bind(_this);
 		_this.keyDown = _this.keyDown.bind(_this);
 		_this.submit = _this.submit.bind(_this);
 		return _this;
@@ -32215,11 +32258,19 @@ var StudentTransfer = function (_Component) {
 		value: function componentWillReceiveProps(nextProps) {
 			var _this2 = this;
 
-			if (this.state.ATickConProdId != nextProps.params.ATickConProdId) this.setState({
-				ATickConProdId: nextProps.params.ATickConProdId
-			}, function () {
-				nextProps.getContentByParam("ATCPDetail", _this2.state.ATickConProdId);
-			});
+			if (this.props.route.formname == "TransferCourse") {
+				if (this.state.ATickConProdId != nextProps.params.ATickConProdId) this.setState({
+					ATickConProdId: nextProps.params.ATickConProdId
+				}, function () {
+					nextProps.getContentByParam("ATCPDetail", _this2.state.ATickConProdId);
+				});
+			} else if (this.props.route.formname == "TransferVoucher") {
+				if (this.state.AVouchersId != nextProps.params.AVouchersId) this.setState({
+					AVouchersId: nextProps.params.AVouchersId
+				}, function () {
+					nextProps.getContentByParam("VoucherDetail", _this2.state.AVouchersId);
+				});
+			}
 		}
 	}, {
 		key: 'keyDown',
@@ -32233,10 +32284,18 @@ var StudentTransfer = function (_Component) {
 		key: 'submit',
 		value: function submit(dom) {
 			var txt = void 0;
-			var res = confirm("Lưu ý: Sau khi đổi tên người đi học, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin vé này nữa. Bạn có chắc chắn muốn đổi?");
-			if (res == true) {
-				var Jsondata = (0, _jquery2.default)(dom).serialize();
-				this.props.getContentByParam("changeStudent", Jsondata);
+			if (this.props.route.formname == "TransferCourse") {
+				var res = confirm("Lưu ý: Sau khi đổi tên người đi học, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin vé này nữa. Bạn có chắc chắn muốn đổi?");
+				if (res == true) {
+					var Jsondata = (0, _jquery2.default)(dom).serialize();
+					this.props.getContentByParam("changeStudent", Jsondata);
+				}
+			} else if (this.props.route.formname == "TransferVoucher") {
+				var _res = confirm("Lưu ý: Sau khi chuyển nhượng, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin voucher này nữa. Bạn có chắc chắn muốn chuyển?");
+				if (_res == true) {
+					var _Jsondata = (0, _jquery2.default)(dom).serialize();
+					this.props.getContentByParam("changeVoucherOwner", _Jsondata);
+				}
 			}
 		}
 	}, {
@@ -32245,7 +32304,7 @@ var StudentTransfer = function (_Component) {
 			var _this3 = this;
 
 			var data = this.props.data;
-			if (!data.data) return "";
+			if (!data) return "";
 			var info_arr = [];
 			info_arr.push(_react2.default.createElement(
 				'tr',
@@ -32262,7 +32321,7 @@ var StudentTransfer = function (_Component) {
 				_react2.default.createElement(
 					'td',
 					null,
-					data.data.productname
+					data.productname
 				)
 			));
 			info_arr.push(_react2.default.createElement(
@@ -32280,7 +32339,7 @@ var StudentTransfer = function (_Component) {
 				_react2.default.createElement(
 					'td',
 					null,
-					data.data.atickets_code
+					data.atickets_code
 				)
 			));
 			info_arr.push(_react2.default.createElement(
@@ -32304,8 +32363,8 @@ var StudentTransfer = function (_Component) {
 						_react2.default.createElement(
 							'div',
 							{ className: 'form-group' },
-							_react2.default.createElement('input', { type: 'hidden', className: 'form-control', name: 'atickcontprodid', value: data.data.atickcontprodid }),
-							_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', defaultValue: data.data.email, onKeyDown: function onKeyDown(event) {
+							_react2.default.createElement('input', { type: 'hidden', className: 'form-control', name: 'atickcontprodid', value: data.atickcontprodid }),
+							_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', defaultValue: data.email, onKeyDown: function onKeyDown(event) {
 									return _this3.keyDown(event);
 								}, onBlur: function onBlur(event) {
 									_this3.props.getContentByParam("checkStudentEmail", event.target.value.trim());
@@ -32352,7 +32411,108 @@ var StudentTransfer = function (_Component) {
 				_react2.default.createElement(
 					'td',
 					null,
-					data.data.atcp_statusatcp_status
+					data.atcp_statusatcp_status
+				)
+			));
+			return info_arr;
+		}
+	}, {
+		key: 'renderVoucherInfo',
+		value: function renderVoucherInfo() {
+			var _this4 = this;
+
+			var data = this.props.data;
+			if (!data) return "";
+			var info_arr = [];
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'M\xE3 voucher: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					data.avouchers_code
+				)
+			));
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'Lo\u1EA1i voucher: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					data.avouchers_type,
+					' VND'
+				)
+			));
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'Email ng\u01B0\u1EDDi \u0111i h\u1ECDc: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'form',
+						{ id: 'changeStudentForm' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement('input', { type: 'hidden', className: 'form-control', name: 'voucherid', value: data.avouchersid }),
+							_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', defaultValue: data.email, onKeyDown: function onKeyDown(event) {
+									return _this4.keyDown(event);
+								}, onBlur: function onBlur(event) {
+									_this4.props.getContentByParam("checkStudentEmail", event.target.value.trim());
+								} }),
+							_react2.default.createElement(
+								'div',
+								{ style: { color: "red" } },
+								_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+									defaultMessage: 'Email ng\u01B0\u1EDDi h\u1ECDc kh\xF4ng t\u1ED3n t\u1EA1i! Xin nh\u1EADp email \u0111\xE3 t\u1ED3n t\u1EA1i trong h\u1EC7 th\u1ED1ng.',
+									hideAfter: 2500,
+									triggeredBy: _actiontypes.NO_EMAIL })
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ style: { color: "green" } },
+							_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+								defaultMessage: 'C\xF3 th\u1EC3 chuy\u1EC3n v\xE9 cho ng\u01B0\u1EDDi \u0111i h\u1ECDc n\xE0y!',
+								hideAfter: 2500,
+								triggeredBy: _actiontypes.EMAIL_EXIST })
+						)
+					),
+					_react2.default.createElement(
+						'a',
+						{ className: 'btn btn-success btn-xs', onClick: function onClick() {
+								_this4.submit("#changeStudentForm");
+							} },
+						'Chuy\u1EC3n nh\u01B0\u1EE3ng voucher'
+					)
 				)
 			));
 			return info_arr;
@@ -32385,7 +32545,8 @@ var StudentTransfer = function (_Component) {
 								_react2.default.createElement(
 									'tbody',
 									null,
-									this.props.data ? this.renderProductInfo() : ""
+									this.props.route.formname == "TransferCourse" ? this.props.data ? this.renderProductInfo() : "" : "",
+									this.props.route.formname == "TransferVoucher" ? this.props.data ? this.renderVoucherInfo() : "" : ""
 								)
 							)
 						)

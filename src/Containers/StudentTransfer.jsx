@@ -10,20 +10,34 @@ import jQuery from 'jquery';
 class StudentTransfer extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {ATickConProdId: this.props.params.ATickConProdId};
-		this.props.getContentByParam("ATCPDetail", this.state.ATickConProdId);
+		if (this.props.route.formname=="TransferCourse") {
+			this.state = {ATickConProdId: this.props.params.ATickConProdId};
+			this.props.getContentByParam("ATCPDetail", this.state.ATickConProdId);
+		} else if (this.props.route.formname=="TransferVoucher") {
+			this.state = {AVouchersId: this.props.params.AVouchersId};
+			this.props.getContentByParam("VoucherDetail", this.state.AVouchersId);
+		}
 		this.renderProductInfo=this.renderProductInfo.bind(this);
+		this.renderVoucherInfo=this.renderVoucherInfo.bind(this);
 		this.keyDown = this.keyDown.bind(this);
 		this.submit=this.submit.bind(this);
 	}
 	componentWillReceiveProps(nextProps){
-		if (this.state.ATickConProdId != nextProps.params.ATickConProdId)
-			this.setState({
-      			ATickConProdId: nextProps.params.ATickConProdId
-    		}, () => {
-    			nextProps.getContentByParam("ATCPDetail", this.state.ATickConProdId);
-    		});
-		
+		if (this.props.route.formname=="TransferCourse") {
+			if (this.state.ATickConProdId != nextProps.params.ATickConProdId)
+				this.setState({
+	      			ATickConProdId: nextProps.params.ATickConProdId
+	    		}, () => {
+	    			nextProps.getContentByParam("ATCPDetail", this.state.ATickConProdId);
+	    		});
+		} else if (this.props.route.formname=="TransferVoucher") {
+			if (this.state.AVouchersId != nextProps.params.AVouchersId)
+				this.setState({
+	      			AVouchersId: nextProps.params.AVouchersId
+	    		}, () => {
+	    			nextProps.getContentByParam("VoucherDetail", this.state.AVouchersId);
+	    		});
+		}
 	}
 	keyDown(event) {
 		if (event.keyCode === 13) {
@@ -33,19 +47,27 @@ class StudentTransfer extends Component {
 	}
 	submit(dom) {
 		let txt;
-    	let res = confirm("Lưu ý: Sau khi đổi tên người đi học, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin vé này nữa. Bạn có chắc chắn muốn đổi?");
-		if (res == true) {
-			let Jsondata = jQuery(dom).serialize();
-			this.props.getContentByParam("changeStudent", Jsondata);
+		if (this.props.route.formname=="TransferCourse") {
+	    	let res = confirm("Lưu ý: Sau khi đổi tên người đi học, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin vé này nữa. Bạn có chắc chắn muốn đổi?");
+			if (res == true) {
+				let Jsondata = jQuery(dom).serialize();
+				this.props.getContentByParam("changeStudent", Jsondata);
+			}
+		} else if (this.props.route.formname=="TransferVoucher") {
+			let res = confirm("Lưu ý: Sau khi chuyển nhượng, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin voucher này nữa. Bạn có chắc chắn muốn chuyển?");
+			if (res == true) {
+				let Jsondata = jQuery(dom).serialize();
+				this.props.getContentByParam("changeVoucherOwner", Jsondata);
+			}
 		}
 		
 	}
 	renderProductInfo() {
 		let data = this.props.data;
-		if (!data.data) return "";
+		if (!data) return "";
 		let info_arr = [];
-		info_arr.push(<tr><td><b>Tên Khóa học: </b></td><td>{data.data.productname}</td></tr>);
-		info_arr.push(<tr><td><b>Mã vé: </b></td><td>{data.data.atickets_code}</td></tr>);
+		info_arr.push(<tr><td><b>Tên Khóa học: </b></td><td>{data.productname}</td></tr>);
+		info_arr.push(<tr><td><b>Mã vé: </b></td><td>{data.atickets_code}</td></tr>);
 		info_arr.push(
 			<tr>
 				<td>
@@ -54,8 +76,8 @@ class StudentTransfer extends Component {
 				<td> 
 					<form id="changeStudentForm">
 						<div className="form-group">
-							<input type="hidden" className="form-control" name="atickcontprodid" value={data.data.atickcontprodid}/>
-		  					<input type="text" className="form-control" name="email" defaultValue={data.data.email} onKeyDown={(event) => this.keyDown(event)} onBlur={(event) => {this.props.getContentByParam("checkStudentEmail",event.target.value.trim())}}/>
+							<input type="hidden" className="form-control" name="atickcontprodid" value={data.atickcontprodid}/>
+		  					<input type="text" className="form-control" name="email" defaultValue={data.email} onKeyDown={(event) => this.keyDown(event)} onBlur={(event) => {this.props.getContentByParam("checkStudentEmail",event.target.value.trim())}}/>
 		  					<div style={{color: "red"}}>
 		  					<InlineNotification
 					          defaultMessage='Email người học không tồn tại! Xin nhập email đã tồn tại trong hệ thống.'
@@ -71,10 +93,42 @@ class StudentTransfer extends Component {
 					<a className="btn btn-success btn-xs" onClick={() => {this.submit("#changeStudentForm")}}>Đổi người đi học</a>
 				</td>
 			</tr>);
-		info_arr.push(<tr><td><b>Tình trạng: </b></td><td>{data.data.atcp_statusatcp_status}</td></tr>);
+		info_arr.push(<tr><td><b>Tình trạng: </b></td><td>{data.atcp_statusatcp_status}</td></tr>);
 		return info_arr;
 	}
-	
+	renderVoucherInfo() {
+		let data = this.props.data;
+		if (!data) return "";
+		let info_arr = [];
+		info_arr.push(<tr><td><b>Mã voucher: </b></td><td>{data.avouchers_code}</td></tr>);
+		info_arr.push(<tr><td><b>Loại voucher: </b></td><td>{data.avouchers_type} VND</td></tr>);
+		info_arr.push(
+			<tr>
+				<td>
+					<b>Email người đi học: </b>
+				</td>
+				<td> 
+					<form id="changeStudentForm">
+						<div className="form-group">
+							<input type="hidden" className="form-control" name="voucherid" value={data.avouchersid}/>
+		  					<input type="text" className="form-control" name="email" defaultValue={data.email} onKeyDown={(event) => this.keyDown(event)} onBlur={(event) => {this.props.getContentByParam("checkStudentEmail",event.target.value.trim())}}/>
+		  					<div style={{color: "red"}}>
+		  					<InlineNotification
+					          defaultMessage='Email người học không tồn tại! Xin nhập email đã tồn tại trong hệ thống.'
+					          hideAfter={2500}
+					          triggeredBy={NO_EMAIL} /></div>
+							</div>
+							<div style={{color: "green"}}>
+							<InlineNotification
+					          defaultMessage='Có thể chuyển vé cho người đi học này!'
+					          hideAfter={2500}
+					          triggeredBy={EMAIL_EXIST} /></div>
+					</form>
+					<a className="btn btn-success btn-xs" onClick={() => {this.submit("#changeStudentForm")}}>Chuyển nhượng voucher</a>
+				</td>
+			</tr>);
+		return info_arr;
+	}
 	render() {
 		this.props.data? console.log(this.props.data.data): "";
 		return (
@@ -86,7 +140,8 @@ class StudentTransfer extends Component {
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Thông tin cơ bản: </div>
 	              <table className="table">
-	                <tbody>{this.props.data? this.renderProductInfo() : ""}
+	                <tbody>{this.props.route.formname=="TransferCourse"? (this.props.data? this.renderProductInfo() : ""):""}
+	                {this.props.route.formname=="TransferVoucher"? (this.props.data? this.renderVoucherInfo() : ""):""}
 	                </tbody>
 	               </table>
 	            </div>

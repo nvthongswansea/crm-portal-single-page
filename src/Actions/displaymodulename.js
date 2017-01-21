@@ -245,6 +245,21 @@ export function getContentByParam(module, param) {
 
 				},
 			};
+		case "VoucherDetail":
+			return {
+				type: REFRESH_ATICKCONTPRODEDITOR,
+				AWAIT_MARKER,
+				payload: {
+					loadedATCPeditor: axios.get("/portal/AVouchers/" + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
 		case "addticket":
 			axios.post("/portal/createnewticket", param)
 				.then(function(response) {
@@ -367,6 +382,27 @@ export function getContentByParam(module, param) {
 						if (response.data) {
 							hashHistory.push({
 								pathname: '/ATickConProd/main',
+								query: {
+									noti: 'Changed student successfully!'
+								}
+							});
+						} else {
+							dispatch({
+								type: NO_EMAIL
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
+		case "changeVoucherOwner":
+			return dispatch => {
+				axios.post("/portal/changeVoucherOwner", param)
+					.then((response) => {
+						if (response.data) {
+							hashHistory.push({
+								pathname: '/AVouchers/main',
 								query: {
 									noti: 'Changed student successfully!'
 								}

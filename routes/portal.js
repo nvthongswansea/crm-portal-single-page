@@ -391,6 +391,27 @@ router.get('/ATickConProd/:atickcontprodid', _helper.loginRequired, function(req
 		}
 	});
 });
+router.get('/AVouchers/:AVouchersId', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		voucherid: req.params.AVouchersId
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getVoucherDetail',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
 
 router.post('/checkemailexistence', _helper.loginRequired, function(req, res, next) {
 	var formData = {
@@ -446,6 +467,28 @@ router.post('/changeStudent', _helper.loginRequired, function(req, res, next) {
 	};
 	request.post({
 		url: VT_URL + '/vtigerservice.php?service=restful&do=updateStudentATickContProd',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+router.post('/changeVoucherOwner', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		voucherid: req.body.voucherid,
+		email: req.body.email
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=updateStudentVoucher',
 		formData: formData
 	}, function(errordata, responsedata, bodydata) {
 		if (!errordata && responsedata.statusCode == 200) {

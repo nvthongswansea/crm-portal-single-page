@@ -72,7 +72,7 @@ window.onload = () => {
               <Route path="ATickConProd" component={MainContent} title="ATickConProd"> 
                 <IndexRedirect to="/ATickConProd/main"/>
                 <Route path ="/ATickConProd/main" component={Datatable} tablename="ATickConProd"/>
-                <Route path="/ATickConProd/edit/:ATickConProdId" component={StudentTransfer}/>
+                <Route path="/ATickConProd/edit/:ATickConProdId" component={StudentTransfer} formname="TransferCourse"/>
               </Route>
               <Route path="Opportunities" component={MainContent} title="Opportunities"> 
                 <IndexRedirect to="/Opportunities/main"/>
@@ -86,6 +86,7 @@ window.onload = () => {
               <Route path="AVouchers" component={MainContent} title="AVouchers"> 
                 <IndexRedirect to="/AVouchers/main"/>
                 <Route path ="/AVouchers/main" component={Datatable} tablename="AVouchers"/>
+                <Route path="/AVouchers/edit/:AVouchersId" component={StudentTransfer} formname="TransferVoucher"/>
               </Route>
         		</Route>
         	</Router>
