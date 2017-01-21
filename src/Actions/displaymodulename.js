@@ -14,7 +14,11 @@ import {
 	REFRESH_TICKETPICKER,
 	REFRESH_ATICKCONTPRODEDITOR,
 	NO_EMAIL,
-	EMAIL_EXIST
+	EMAIL_EXIST,
+	NO_COUPON,
+	COUPON_EXIST,
+	COUPON_USED,
+	COUPON_INVALID
 } from './actiontypes.js';
 
 export function refreshContent(menutitle) {
@@ -100,6 +104,21 @@ export function refreshContent(menutitle) {
 				AWAIT_MARKER,
 				payload: {
 					loadedTable: axios.get('/portal/listopportunities')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "AVouchers":
+			return {
+				type: REFRESH_TABLE,
+				AWAIT_MARKER,
+				payload: {
+					loadedTable: axios.get('/portal/listvouchers')
 						.then((response) => {
 							return response.data;
 						})
@@ -251,7 +270,30 @@ export function getContentByParam(module, param) {
 				payload: {
 					loadedTicketPicker: axios.post("/portal/aticketsproduct/update", {
 							productid: param.productid,
-							tickcontproductid: param.tickcontproductid
+							tickcontproductid: param.tickcontproductid,
+							cancelrequest: param.cancelrequest
+						})
+						.then((response) => {
+							return axios.get("/portal/aticketsproduct/" + param.defaultprodid)
+								.then((responsed) => {
+									return responsed.data;
+								})
+								.catch((errd) => {
+									return errd;
+								});
+						})
+						.catch((err) => {
+							return err;
+						})
+				},
+			};
+		case "updateCoupon":
+			return {
+				type: REFRESH_TICKETPICKER,
+				AWAIT_MARKER,
+				payload: {
+					loadedTicketPicker: axios.post("/portal/coupon/update", {
+							atickcontprodid: param.atickcontprodid
 						})
 						.then((response) => {
 							return axios.get("/portal/aticketsproduct/" + param.defaultprodid)
@@ -288,6 +330,36 @@ export function getContentByParam(module, param) {
 						return err;
 					})
 			}
+		case 'checkCoupon':
+			return dispatch => {
+				axios.post("/portal/checkcouponexistence", {
+						coupon: param.coupon,
+						productid: param.productid
+					})
+					.then((response) => {
+						console.log(response.data);
+						if (!response.data) {
+							dispatch({
+								type: NO_COUPON
+							});
+						} else if (response.data.acouponsid) {
+							dispatch({
+								type: COUPON_EXIST
+							});
+						} else if (response.data == "used") {
+							dispatch({
+								type: COUPON_USED
+							});
+						} else if (response.data == "invalid") {
+							dispatch({
+								type: COUPON_INVALID
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
 		case "changeStudent":
 			return dispatch => {
 				axios.post("/portal/changeStudent", param)
@@ -314,7 +386,7 @@ export function getContentByParam(module, param) {
 				type: REFRESH_TABLE,
 				AWAIT_MARKER,
 				payload: {
-					loadedTable: axios.get('/portal/listATCPbypotential/'+param)
+					loadedTable: axios.get('/portal/listATCPbypotential/' + param)
 						.then((response) => {
 							return response.data;
 						})
@@ -329,7 +401,7 @@ export function getContentByParam(module, param) {
 				type: REFRESH_TABLE,
 				AWAIT_MARKER,
 				payload: {
-					loadedTable: axios.get('/portal/listTransbypotential/'+param)
+					loadedTable: axios.get('/portal/listTransbypotential/' + param)
 						.then((response) => {
 							return response.data;
 						})
@@ -339,6 +411,59 @@ export function getContentByParam(module, param) {
 
 				},
 			};
+
+		case "registerCoupon":
+			return dispatch => {
+				axios.post("/portal/checkcouponexistence", {
+						coupon: param.couponcode,
+						productid: param.productid
+					})
+					.then((response) => {
+						if (!response.data) {
+							dispatch({
+								type: NO_COUPON
+							});
+						} else if (response.data.acouponsid) {
+							axios.post("/portal/addATCPCoupon", {
+									"aticketid": response.data.acouponsid,
+									"productid": param.productid
+								})
+								.then((responsenext) => {
+									if (responsenext.data.atcp_no) {
+										dispatch ({
+											type: REFRESH_TICKETPICKER,
+											AWAIT_MARKER,
+											COUPON_EXIST,
+											payload: {
+												loadedTicketPicker: axios.get("/portal/aticketsproduct/" + param.productid)
+													.then((response) => {
+														return response.data;
+													})
+													.catch((err) => {
+														return err;
+													})
+
+											},
+										});
+									}
+								})
+								.catch((err) => {
+									return err;
+								})
+						} else if (response.data == "used") {
+							dispatch({
+								type: COUPON_USED
+							});
+						} else if (response.data == "invalid") {
+							dispatch({
+								type: COUPON_INVALID
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
 
 	}
 }

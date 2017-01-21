@@ -13,7 +13,7 @@ import AddTicket from './Containers/addticket.jsx';
 import TicketDetail from './Containers/ticketdetail.jsx';
 import ContactDetail from './Containers/contactdetail.jsx';
 import TicketPicker from './Containers/aticketpicker.jsx';
-import ATCPEditor from './Containers/ATCPEditor.jsx';
+import StudentTransfer from './Containers/StudentTransfer.jsx';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRedirect, Link, hashHistory } from 'react-router';
 
@@ -72,16 +72,20 @@ window.onload = () => {
               <Route path="ATickConProd" component={MainContent} title="ATickConProd"> 
                 <IndexRedirect to="/ATickConProd/main"/>
                 <Route path ="/ATickConProd/main" component={Datatable} tablename="ATickConProd"/>
-                <Route path="/ATickConProd/edit/:ATickConProdId" component={ATCPEditor}/>
+                <Route path="/ATickConProd/edit/:ATickConProdId" component={StudentTransfer}/>
               </Route>
               <Route path="Opportunities" component={MainContent} title="Opportunities"> 
                 <IndexRedirect to="/Opportunities/main"/>
                 <Route path ="/Opportunities/main" component={Datatable} tablename="Opportunities"/>
                 <Route path="/Opportunities/potential/:potentialid" component={PotentialDetail}>
                   <IndexRedirect to="/Opportunities/potential/:potentialid/PotentialATCP"/>
-                  <Route path ="/Opportunities/potential/:potentialid/PotentialATCP" component={Datatable} tablename="PotentialATCP"/>
-                  <Route path ="/Opportunities/potential/:potentialid/PotentialTrans" component={Datatable} tablename="PotentialTrans"/>
+                  <Route path ="/Opportunities/potential/:potentialid/PotentialATCP" component={{Main: Datatable}} tablename="PotentialATCP"/>
+                  <Route path ="/Opportunities/potential/:potentialid/PotentialTrans" component={{Main: Datatable}} tablename="PotentialTrans"/>
                 </Route>
+              </Route>
+              <Route path="AVouchers" component={MainContent} title="AVouchers"> 
+                <IndexRedirect to="/AVouchers/main"/>
+                <Route path ="/AVouchers/main" component={Datatable} tablename="AVouchers"/>
               </Route>
         		</Route>
         	</Router>

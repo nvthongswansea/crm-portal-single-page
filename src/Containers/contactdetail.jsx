@@ -33,7 +33,7 @@ class ContactDetail extends Component {
 		if (!data.Contacts) return "";
 		let ticketinfo_arr = [];
 		data.Contacts.map( (field, index) => {
-			if (field.blockname == "Basic Information"){
+			if (field.blockname == "Th\u00f4ng tin H\u1ecdc vi\u00ean"){
 				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td dangerouslySetInnerHTML={{__html: field.fieldvalue}} /></tr>);
 			}
 		});
@@ -44,7 +44,7 @@ class ContactDetail extends Component {
 		if (!data.Contacts) return "";
 		let ticketinfo_arr = [];
 		data.Contacts.map( (field, index) => {
-			if (field.blockname == "Customer Portal Details"){
+			if (field.blockname == "C\u1ed5ng th\u00f4ng tin kh\u00e1ch h\u00e0ng"){
 				ticketinfo_arr.push(<tr><td><b>{field.fieldlabel}: </b></td><td dangerouslySetInnerHTML={{__html: field.fieldvalue}} /></tr>);
 			}
 		});

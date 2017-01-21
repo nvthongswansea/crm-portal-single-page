@@ -13,7 +13,6 @@ const VT_URL = config.URL;
 
 /* GET home page. */
 router.get('/', _helper.loginRequired, function(req, res, next) {
-	//getChallenge(res);
 
 	request(VT_URL + '/vtigerservice.php?service=restful&do=getmodules', function(error, response, body) {
 		if (!error && response.statusCode == 200) {
@@ -23,8 +22,9 @@ router.get('/', _helper.loginRequired, function(req, res, next) {
 				"6": "Products",
 				"9": "Contacts",
 				"11": "ATickets",
-				"12": "ATickConProd",
-				"13": "Opportunities"
+				"12": "AVouchers",
+				"14": "ATickConProd",
+				"15": "Opportunities"
 			};
 			var modulelist = [];
 			for (module in objectValues(body)) {
@@ -330,10 +330,33 @@ router.post('/aticketsproduct/update', _helper.loginRequired, function(req, res,
 		sessionid: req.session.sessid,
 		id: req.session.userid,
 		productid: req.body.productid,
-		tickcontproductid: req.body.tickcontproductid
+		tickcontproductid: req.body.tickcontproductid,
+		cancelrequest: req.body.cancelrequest
 	};
 	request.post({
 		url: VT_URL + '/vtigerservice.php?service=restful&do=updatetickcontprod',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+
+router.post('/coupon/update', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		atickcontprodid: req.body.atickcontprodid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=updateCoupon',
 		formData: formData
 	}, function(errordata, responsedata, bodydata) {
 		if (!errordata && responsedata.statusCode == 200) {
@@ -378,6 +401,28 @@ router.post('/checkemailexistence', _helper.loginRequired, function(req, res, ne
 	};
 	request.post({
 		url: VT_URL + '/vtigerservice.php?service=restful&do=checkEmail',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+router.post('/checkcouponexistence', _helper.loginRequired, function(req, res, next) {
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid,
+		coupon: req.body.coupon,
+		productid: req.body.productid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=checkCoupon',
 		formData: formData
 	}, function(errordata, responsedata, bodydata) {
 		if (!errordata && responsedata.statusCode == 200) {
@@ -477,4 +522,76 @@ router.get('/listTransbypotential/:potentialid', _helper.loginRequired, function
 		}
 	});
 });
+
+router.get('/listvouchers', _helper.loginRequired, function(req, res, next) {
+	console.log(ProductModuleId);
+	var formData = {
+		// Pass a simple key-value pair
+		sessionid: req.session.sessid,
+		id: req.session.userid
+	};
+	request.post({
+		url: VT_URL + '/vtigerservice.php?service=restful&do=getvouchers',
+		formData: formData
+	}, function(errordata, responsedata, bodydata) {
+		if (!errordata && responsedata.statusCode == 200) {
+			res.send(JSON.parse(bodydata));
+		} else {
+			res.status(400).json({
+				success: false,
+				message: 'Could not update.'
+			});
+		}
+	});
+});
+//get modules ID for inserting.
+var contactModuleId;
+request.post({
+	url: VT_URL + '/vtigerservice.php?service=restful&do=getContactTypeId'
+}, function(errordata, responsedata, bodydata) {
+	if (!errordata && responsedata.statusCode == 200) {
+		contactModuleId = bodydata;
+	} else {
+
+	}
+});
+var AticketModuleId;
+request.post({
+	url: VT_URL + '/vtigerservice.php?service=restful&do=getATicketsTypeId'
+}, function(errordata, responsedata, bodydata) {
+	if (!errordata && responsedata.statusCode == 200) {
+		AticketModuleId = bodydata;
+	} else {
+
+	}
+});
+var ProductModuleId;
+request.post({
+	url: VT_URL + '/vtigerservice.php?service=restful&do=getProductsTypeId'
+}, function(errordata, responsedata, bodydata) {
+	if (!errordata && responsedata.statusCode == 200) {
+		ProductModuleId = bodydata;
+		console.log(ProductModuleId);
+	} else {
+
+	}
+});
+router.post('/addATCPCoupon', _helper.loginRequired, function(req, res, next) {
+	//res.send(JSON.parse(contactModuleId));
+	var values = {
+		'atcp_contact_id': parseInt(contactModuleId) + "x" + req.session.userid,
+		'aticket_id': parseInt(AticketModuleId) + "x" + req.body.aticketid,
+		'product_id': parseInt(ProductModuleId) + "x" + req.body.productid,
+		'atcp_status': "Pending",
+		'assigned_user_id': 1
+	};
+	client.doCreate('ATickContProd', values, function(args, modules) {
+		if (modules) res.status(201).json(modules);
+		else res.status(400).json({
+			success: false,
+			message: "failed!"
+		});
+	});
+});
+
 module.exports = router;

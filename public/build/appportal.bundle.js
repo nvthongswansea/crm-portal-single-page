@@ -53,7 +53,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.connect = exports.reducer = exports.getFailedActionType = exports.getPendingActionType = exports.middleware = exports.AWAIT_META_CONTAINER = exports.AWAIT_MARKER = undefined;
 
-var _constants = __webpack_require__(98);
+var _constants = __webpack_require__(99);
 
 Object.defineProperty(exports, 'AWAIT_MARKER', {
   enumerable: true,
@@ -68,7 +68,7 @@ Object.defineProperty(exports, 'AWAIT_META_CONTAINER', {
   }
 });
 
-var _middleware = __webpack_require__(381);
+var _middleware = __webpack_require__(382);
 
 Object.defineProperty(exports, 'middleware', {
   enumerable: true,
@@ -89,11 +89,11 @@ Object.defineProperty(exports, 'getFailedActionType', {
   }
 });
 
-var _reducer2 = __webpack_require__(382);
+var _reducer2 = __webpack_require__(383);
 
 var _reducer3 = _interopRequireDefault(_reducer2);
 
-var _connect2 = __webpack_require__(380);
+var _connect2 = __webpack_require__(381);
 
 var _connect3 = _interopRequireDefault(_connect2);
 
@@ -103,9 +103,7 @@ exports.reducer = _reducer3.default;
 exports.connect = _connect3.default;
 
 /***/ },
-/* 16 */,
-/* 17 */,
-/* 18 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -137,8 +135,22 @@ const NO_EMAIL = "NO_EMAIL";
 const EMAIL_EXIST = "EMAIL_EXIST";
 /* harmony export (immutable) */ exports["EMAIL_EXIST"] = EMAIL_EXIST;
 
+const NO_COUPON = "NO_COUPON";
+/* harmony export (immutable) */ exports["NO_COUPON"] = NO_COUPON;
+
+const COUPON_EXIST = "COUPON_EXIST";
+/* harmony export (immutable) */ exports["COUPON_EXIST"] = COUPON_EXIST;
+
+const COUPON_USED = "COUPON_USED";
+/* harmony export (immutable) */ exports["COUPON_USED"] = COUPON_USED;
+
+const COUPON_INVALID = "COUPON_INVALID";
+/* harmony export (immutable) */ exports["COUPON_INVALID"] = COUPON_INVALID;
+
 
 /***/ },
+/* 17 */,
+/* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
@@ -158,8 +170,8 @@ const EMAIL_EXIST = "EMAIL_EXIST";
 
 'use strict'
 
-var base64 = __webpack_require__(204)
-var ieee754 = __webpack_require__(251)
+var base64 = __webpack_require__(205)
+var ieee754 = __webpack_require__(252)
 var isArray = __webpack_require__(121)
 
 exports.Buffer = Buffer
@@ -1948,8 +1960,8 @@ function isnan (val) {
 'use strict';
 
 var React = __webpack_require__(0);
-var assign = __webpack_require__(212);
-var insertKeyframesRule = __webpack_require__(216);
+var assign = __webpack_require__(213);
+var insertKeyframesRule = __webpack_require__(217);
 
 /**
  * @type {Object}
@@ -2088,7 +2100,7 @@ var objectKeys = Object.keys || function (obj) {
 module.exports = Duplex;
 
 /*<replacement>*/
-var processNextTick = __webpack_require__(70);
+var processNextTick = __webpack_require__(72);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -2097,7 +2109,7 @@ util.inherits = __webpack_require__(13);
 /*</replacement>*/
 
 var Readable = __webpack_require__(164);
-var Writable = __webpack_require__(97);
+var Writable = __webpack_require__(98);
 
 util.inherits(Duplex, Readable);
 
@@ -2154,9 +2166,9 @@ function forEach(xs, f) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_await__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_await___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_redux_await__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__ = __webpack_require__(16);
 Object.defineProperty(exports, "__esModule", { value: true });
 /* harmony export (immutable) */ exports["refreshContent"] = refreshContent;
 /* harmony export (immutable) */ exports["getContentByParam"] = getContentByParam;
@@ -2248,6 +2260,21 @@ function refreshContent(menutitle) {
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
 					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listopportunities')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "AVouchers":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listvouchers')
 						.then((response) => {
 							return response.data;
 						})
@@ -2399,7 +2426,30 @@ function getContentByParam(module, param) {
 				payload: {
 					loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/aticketsproduct/update", {
 							productid: param.productid,
-							tickcontproductid: param.tickcontproductid
+							tickcontproductid: param.tickcontproductid,
+							cancelrequest: param.cancelrequest
+						})
+						.then((response) => {
+							return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param.defaultprodid)
+								.then((responsed) => {
+									return responsed.data;
+								})
+								.catch((errd) => {
+									return errd;
+								});
+						})
+						.catch((err) => {
+							return err;
+						})
+				},
+			};
+		case "updateCoupon":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TICKETPICKER"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/coupon/update", {
+							atickcontprodid: param.atickcontprodid
 						})
 						.then((response) => {
 							return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param.defaultprodid)
@@ -2436,6 +2486,36 @@ function getContentByParam(module, param) {
 						return err;
 					})
 			}
+		case 'checkCoupon':
+			return dispatch => {
+				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkcouponexistence", {
+						coupon: param.coupon,
+						productid: param.productid
+					})
+					.then((response) => {
+						console.log(response.data);
+						if (!response.data) {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_COUPON"]
+							});
+						} else if (response.data.acouponsid) {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_EXIST"]
+							});
+						} else if (response.data == "used") {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_USED"]
+							});
+						} else if (response.data == "invalid") {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_INVALID"]
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
 		case "changeStudent":
 			return dispatch => {
 				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/changeStudent", param)
@@ -2462,7 +2542,7 @@ function getContentByParam(module, param) {
 				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listATCPbypotential/'+param)
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listATCPbypotential/' + param)
 						.then((response) => {
 							return response.data;
 						})
@@ -2477,7 +2557,7 @@ function getContentByParam(module, param) {
 				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
 				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
 				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listTransbypotential/'+param)
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listTransbypotential/' + param)
 						.then((response) => {
 							return response.data;
 						})
@@ -2487,6 +2567,59 @@ function getContentByParam(module, param) {
 
 				},
 			};
+
+		case "registerCoupon":
+			return dispatch => {
+				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkcouponexistence", {
+						coupon: param.couponcode,
+						productid: param.productid
+					})
+					.then((response) => {
+						if (!response.data) {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_COUPON"]
+							});
+						} else if (response.data.acouponsid) {
+							__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/addATCPCoupon", {
+									"aticketid": response.data.acouponsid,
+									"productid": param.productid
+								})
+								.then((responsenext) => {
+									if (responsenext.data.atcp_no) {
+										dispatch ({
+											type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TICKETPICKER"],
+											AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+											COUPON_EXIST: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_EXIST"],
+											payload: {
+												loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param.productid)
+													.then((response) => {
+														return response.data;
+													})
+													.catch((err) => {
+														return err;
+													})
+
+											},
+										});
+									}
+								})
+								.catch((err) => {
+									return err;
+								})
+						} else if (response.data == "used") {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_USED"]
+							});
+						} else if (response.data == "invalid") {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_INVALID"]
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
 
 	}
 }
@@ -2498,7 +2631,7 @@ function getContentByParam(module, param) {
 /***/ function(module, exports, __webpack_require__) {
 
 var Parser = __webpack_require__(118),
-    DomHandler = __webpack_require__(210);
+    DomHandler = __webpack_require__(211);
 
 function defineProp(name, value){
 	delete module.exports[name];
@@ -2512,22 +2645,22 @@ module.exports = {
 	ElementType: __webpack_require__(43),
 	DomHandler: DomHandler,
 	get FeedHandler(){
-		return defineProp("FeedHandler", __webpack_require__(248));
+		return defineProp("FeedHandler", __webpack_require__(249));
 	},
 	get Stream(){
-		return defineProp("Stream", __webpack_require__(250));
+		return defineProp("Stream", __webpack_require__(251));
 	},
 	get WritableStream(){
 		return defineProp("WritableStream", __webpack_require__(120));
 	},
 	get ProxyHandler(){
-		return defineProp("ProxyHandler", __webpack_require__(249));
+		return defineProp("ProxyHandler", __webpack_require__(250));
 	},
 	get DomUtils(){
-		return defineProp("DomUtils", __webpack_require__(218));
+		return defineProp("DomUtils", __webpack_require__(219));
 	},
 	get CollectingHandler(){
-		return defineProp("CollectingHandler", __webpack_require__(247));
+		return defineProp("CollectingHandler", __webpack_require__(248));
 	},
 	// For legacy support
 	DefaultHandler: DomHandler,
@@ -3037,6 +3170,32 @@ function isUndefined(arg) {
 /* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
+"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.InlineNotification = exports.middleware = exports.reducer = undefined;
+
+var _InlineNotification = __webpack_require__(338);
+
+var _InlineNotification2 = _interopRequireDefault(_InlineNotification);
+
+var _notifications = __webpack_require__(145);
+
+var _notifications2 = _interopRequireDefault(_notifications);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.reducer = _notifications2.default;
+exports.middleware = _notifications.middleware;
+exports.InlineNotification = _InlineNotification2.default;
+
+/***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3064,11 +3223,11 @@ var EE = __webpack_require__(44).EventEmitter;
 var inherits = __webpack_require__(13);
 
 inherits(Stream, EE);
-Stream.Readable = __webpack_require__(377);
-Stream.Writable = __webpack_require__(379);
-Stream.Duplex = __webpack_require__(374);
-Stream.Transform = __webpack_require__(378);
-Stream.PassThrough = __webpack_require__(376);
+Stream.Readable = __webpack_require__(378);
+Stream.Writable = __webpack_require__(380);
+Stream.Duplex = __webpack_require__(375);
+Stream.Transform = __webpack_require__(379);
+Stream.PassThrough = __webpack_require__(377);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -3167,8 +3326,230 @@ Stream.prototype.pipe = function(dest, options) {
 
 
 /***/ },
-/* 60 */,
-/* 61 */
+/* 61 */,
+/* 62 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _displaymodulename = __webpack_require__(29);
+
+var _redux = __webpack_require__(10);
+
+var _reactRouter = __webpack_require__(19);
+
+var _jquery = __webpack_require__(30);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _datatables = __webpack_require__(207);
+
+var _datatables2 = _interopRequireDefault(_datatables);
+
+var _reactHtmlParser = __webpack_require__(89);
+
+var _reactHtmlParser2 = _interopRequireDefault(_reactHtmlParser);
+
+var _reduxAwait = __webpack_require__(15);
+
+var _PulseLoader = __webpack_require__(25);
+
+var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import { connect } from 'react-redux';
+
+
+var Datatable = function (_Component) {
+	_inherits(Datatable, _Component);
+
+	function Datatable(props) {
+		_classCallCheck(this, Datatable);
+
+		var _this = _possibleConstructorReturn(this, (Datatable.__proto__ || Object.getPrototypeOf(Datatable)).call(this, props));
+
+		_this.state = { tablename: _this.props.route.tablename, selectedProd: null };
+		if (_this.state.tablename == "PotentialATCP") {
+			_this.props.getContentByParam("PotentialATCP", _this.props.params.potentialid);
+		} else if (_this.state.tablename == "PotentialTrans") {
+			_this.props.getContentByParam("PotentialTrans", _this.props.params.potentialid);
+		} else {
+			_this.props.refreshContent(_this.state.tablename);
+		}
+		_this.renderTable = _this.renderTable.bind(_this);
+		_this.rerenderTable = _this.rerenderTable.bind(_this);
+		_this.displayNodata = _this.displayNodata.bind(_this);
+		_this.displayLoader = _this.displayLoader.bind(_this);
+		return _this;
+	}
+
+	_createClass(Datatable, [{
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			var _this2 = this;
+
+			if (this.state.tablename != nextProps.route.tablename) this.setState({
+				tablename: nextProps.route.tablename
+			}, function () {
+				if (_this2.state.tablename == "PotentialATCP") {
+					nextProps.getContentByParam("PotentialATCP", nextProps.params.potentialid);
+				} else if (_this2.state.tablename == "PotentialTrans") {
+					nextProps.getContentByParam("PotentialTrans", nextProps.params.potentialid);
+				} else {
+					nextProps.refreshContent(_this2.state.tablename);
+				}
+			});
+		}
+	}, {
+		key: 'shouldComponentUpdate',
+		value: function shouldComponentUpdate(nextProps, nextState) {
+			return true;
+		}
+	}, {
+		key: 'rerenderTable',
+		value: function rerenderTable(data, columns) {
+			var that = this;
+			(0, _jquery2.default)(document).ready(function () {
+				(0, _jquery2.default)('#dataTables-example_wrapper').remove();
+				(0, _jquery2.default)("#toremove").append('<div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid"><table id="dataTables-example" class="table table-striped table-bordered table-hover dataTable no-footer"></table></div> ');
+				(0, _jquery2.default)('#dataTables-example').DataTable({
+					data: data,
+					columns: columns
+				});
+			});
+		}
+	}, {
+		key: 'renderTable',
+		value: function renderTable() {
+
+			var data = this.props.data;
+			if (!data[0] || !data[1]) return "No data";
+			var headers = [];
+			data[0].head.map(function (header) {
+				headers.push({ title: header.fielddata });
+			});
+			var rows = [];
+			var cells = [];
+			data[1].data.map(function (row) {
+				row.map(function (column) {
+					if (column.fielddata == null) {
+						cells.push("");
+					} else {
+						cells.push(column.fielddata);
+					}
+				});
+				rows.push(cells);
+				cells = [];
+			});
+			this.rerenderTable(rows, headers);
+		}
+	}, {
+		key: 'displayNodata',
+		value: function displayNodata() {
+			(0, _jquery2.default)(document).ready(function () {
+				(0, _jquery2.default)('#dataTables-example_wrapper').remove();
+			});
+			return _react2.default.createElement(
+				'p',
+				null,
+				'No data'
+			);
+		}
+	}, {
+		key: 'displayLoader',
+		value: function displayLoader() {
+			(0, _jquery2.default)(document).ready(function () {
+				(0, _jquery2.default)('#dataTables-example_wrapper').remove();
+			});
+			return _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' });
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var data = null;
+			var that = this;
+			(0, _jquery2.default)(document).ready(function () {
+				(0, _jquery2.default)(document).on("click", ".openticketpicker", function () {
+					var dataid = (0, _jquery2.default)(this).data('id');
+					that.setState({ selectedProd: dataid });
+				});
+			});
+
+			return _react2.default.createElement(
+				'div',
+				{ className: 'row' },
+				_react2.default.createElement(
+					'div',
+					{ className: 'col-lg-12' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'panel panel-default' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'panel-heading' },
+							this.props.route.tablename == "HelpDesk" ? "Tickets" : "",
+							this.props.route.tablename == "Contacts" ? "Contacts" : "",
+							this.props.route.tablename == "Products" ? "Products" : "",
+							_react2.default.createElement(
+								'div',
+								{ className: 'input-group pull-right' },
+								this.props.route.tablename == "HelpDesk" ? _react2.default.createElement(
+									_reactRouter.Link,
+									{ className: 'btn btn-warning btn-sm pull-right', to: 'HelpDesk/add' },
+									'New Ticket'
+								) : ""
+							),
+							_react2.default.createElement('div', { className: 'clearfix' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'panel-body' },
+							_react2.default.createElement(
+								'div',
+								{ id: 'toremove', className: 'table-responsive' },
+								this.props.statuses.loadedTable === 'success' && (this.props.data ? this.renderTable() : this.displayNodata()),
+								this.props.statuses.loadedTable === 'pending' && this.displayLoader()
+							)
+						)
+					)
+				)
+			);
+		}
+	}]);
+
+	return Datatable;
+}(_react.Component);
+
+function mapStateToProps(state) {
+	return {
+		data: state.datatable
+	};
+}
+function mapDispatchToProps(dispatch) {
+	return (0, _redux.bindActionCreators)({ refreshContent: _displaymodulename.refreshContent, getContentByParam: _displaymodulename.getContentByParam }, dispatch);
+}
+
+exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(Datatable);
+
+/***/ },
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3284,7 +3665,7 @@ exports.allocUnsafeSlow = function allocUnsafeSlow(size) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
 
 /***/ },
-/* 62 */
+/* 64 */
 /***/ function(module, exports) {
 
 module.exports = {
@@ -5416,7 +5797,7 @@ module.exports = {
 };
 
 /***/ },
-/* 63 */
+/* 65 */
 /***/ function(module, exports) {
 
 module.exports = {
@@ -5428,13 +5809,13 @@ module.exports = {
 };
 
 /***/ },
-/* 64 */,
-/* 65 */,
 /* 66 */,
 /* 67 */,
 /* 68 */,
 /* 69 */,
-/* 70 */
+/* 70 */,
+/* 71 */,
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5482,11 +5863,9 @@ function nextTick(fn, arg1, arg2, arg3) {
   }
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
 
 /***/ },
-/* 71 */,
-/* 72 */,
 /* 73 */,
 /* 74 */,
 /* 75 */,
@@ -5501,7 +5880,9 @@ function nextTick(fn, arg1, arg2, arg3) {
 /* 84 */,
 /* 85 */,
 /* 86 */,
-/* 87 */
+/* 87 */,
+/* 88 */,
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5511,7 +5892,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _HtmlParser = __webpack_require__(325);
+var _HtmlParser = __webpack_require__(326);
 
 var _HtmlParser2 = _interopRequireDefault(_HtmlParser);
 
@@ -5520,40 +5901,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _HtmlParser2.default;
 
 /***/ },
-/* 88 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.InlineNotification = exports.middleware = exports.reducer = undefined;
-
-var _InlineNotification = __webpack_require__(337);
-
-var _InlineNotification2 = _interopRequireDefault(_InlineNotification);
-
-var _notifications = __webpack_require__(145);
-
-var _notifications2 = _interopRequireDefault(_notifications);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.reducer = _notifications2.default;
-exports.middleware = _notifications.middleware;
-exports.InlineNotification = _InlineNotification2.default;
-
-/***/ },
-/* 89 */,
 /* 90 */,
 /* 91 */,
 /* 92 */,
 /* 93 */,
 /* 94 */,
 /* 95 */,
-/* 96 */
+/* 96 */,
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5741,7 +6096,7 @@ function done(stream, er, data) {
 }
 
 /***/ },
-/* 97 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5754,7 +6109,7 @@ function done(stream, er, data) {
 module.exports = Writable;
 
 /*<replacement>*/
-var processNextTick = __webpack_require__(70);
+var processNextTick = __webpack_require__(72);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -5774,7 +6129,7 @@ util.inherits = __webpack_require__(13);
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(399)
+  deprecate: __webpack_require__(400)
 };
 /*</replacement>*/
 
@@ -5782,7 +6137,7 @@ var internalUtil = {
 var Stream;
 (function () {
   try {
-    Stream = __webpack_require__(59);
+    Stream = __webpack_require__(60);
   } catch (_) {} finally {
     if (!Stream) Stream = __webpack_require__(44).EventEmitter;
   }
@@ -5791,7 +6146,7 @@ var Stream;
 
 var Buffer = __webpack_require__(24).Buffer;
 /*<replacement>*/
-var bufferShim = __webpack_require__(61);
+var bufferShim = __webpack_require__(63);
 /*</replacement>*/
 
 util.inherits(Writable, Stream);
@@ -6299,10 +6654,10 @@ function CorkedRequest(state) {
     }
   };
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20), __webpack_require__(398).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21), __webpack_require__(399).setImmediate))
 
 /***/ },
-/* 98 */
+/* 99 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -6315,7 +6670,7 @@ var AWAIT_MARKER = exports.AWAIT_MARKER = '@@redux-await/AWAIT_MARKER';
 var AWAIT_META_CONTAINER = exports.AWAIT_META_CONTAINER = '@@redux-await/AWAIT_META_CONTAINER';
 
 /***/ },
-/* 99 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -6542,233 +6897,11 @@ function base64DetectIncompleteChar(buffer) {
 
 
 /***/ },
-/* 100 */,
 /* 101 */,
 /* 102 */,
 /* 103 */,
 /* 104 */,
-/* 105 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _displaymodulename = __webpack_require__(29);
-
-var _redux = __webpack_require__(9);
-
-var _reactRouter = __webpack_require__(23);
-
-var _jquery = __webpack_require__(30);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _datatables = __webpack_require__(206);
-
-var _datatables2 = _interopRequireDefault(_datatables);
-
-var _reactHtmlParser = __webpack_require__(87);
-
-var _reactHtmlParser2 = _interopRequireDefault(_reactHtmlParser);
-
-var _reduxAwait = __webpack_require__(15);
-
-var _PulseLoader = __webpack_require__(25);
-
-var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import { connect } from 'react-redux';
-
-
-var Datatable = function (_Component) {
-	_inherits(Datatable, _Component);
-
-	function Datatable(props) {
-		_classCallCheck(this, Datatable);
-
-		var _this = _possibleConstructorReturn(this, (Datatable.__proto__ || Object.getPrototypeOf(Datatable)).call(this, props));
-
-		_this.state = { tablename: _this.props.route.tablename, selectedProd: null };
-		if (_this.state.tablename == "PotentialATCP") {
-			_this.props.getContentByParam("PotentialATCP", _this.props.params.potentialid);
-		} else if (_this.state.tablename == "PotentialTrans") {
-			_this.props.getContentByParam("PotentialTrans", _this.props.params.potentialid);
-		} else {
-			_this.props.refreshContent(_this.state.tablename);
-		}
-		_this.renderTable = _this.renderTable.bind(_this);
-		_this.rerenderTable = _this.rerenderTable.bind(_this);
-		_this.displayNodata = _this.displayNodata.bind(_this);
-		_this.displayLoader = _this.displayLoader.bind(_this);
-		return _this;
-	}
-
-	_createClass(Datatable, [{
-		key: 'componentWillReceiveProps',
-		value: function componentWillReceiveProps(nextProps) {
-			var _this2 = this;
-
-			if (this.state.tablename != nextProps.route.tablename) this.setState({
-				tablename: nextProps.route.tablename
-			}, function () {
-				if (_this2.state.tablename == "PotentialATCP") {
-					nextProps.getContentByParam("PotentialATCP", nextProps.params.potentialid);
-				} else if (_this2.state.tablename == "PotentialTrans") {
-					nextProps.getContentByParam("PotentialTrans", nextProps.params.potentialid);
-				} else {
-					nextProps.refreshContent(_this2.state.tablename);
-				}
-			});
-		}
-	}, {
-		key: 'shouldComponentUpdate',
-		value: function shouldComponentUpdate(nextProps, nextState) {
-			return true;
-		}
-	}, {
-		key: 'rerenderTable',
-		value: function rerenderTable(data, columns) {
-			var that = this;
-			(0, _jquery2.default)(document).ready(function () {
-				(0, _jquery2.default)('#dataTables-example_wrapper').remove();
-				(0, _jquery2.default)("#toremove").append('<div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid"><table id="dataTables-example" class="table table-striped table-bordered table-hover dataTable no-footer"></table></div> ');
-				(0, _jquery2.default)('#dataTables-example').DataTable({
-					data: data,
-					columns: columns
-				});
-			});
-		}
-	}, {
-		key: 'renderTable',
-		value: function renderTable() {
-
-			var data = this.props.data;
-			if (!data[0] || !data[1]) return "No data";
-			var headers = [];
-			data[0].head.map(function (header) {
-				headers.push({ title: header.fielddata });
-			});
-			var rows = [];
-			var cells = [];
-			data[1].data.map(function (row) {
-				row.map(function (column) {
-					if (column.fielddata == null) {
-						cells.push("");
-					} else {
-						cells.push(column.fielddata);
-					}
-				});
-				rows.push(cells);
-				cells = [];
-			});
-			this.rerenderTable(rows, headers);
-		}
-	}, {
-		key: 'displayNodata',
-		value: function displayNodata() {
-			(0, _jquery2.default)(document).ready(function () {
-				(0, _jquery2.default)('#dataTables-example_wrapper').remove();
-			});
-			return _react2.default.createElement(
-				'p',
-				null,
-				'No data'
-			);
-		}
-	}, {
-		key: 'displayLoader',
-		value: function displayLoader() {
-			(0, _jquery2.default)(document).ready(function () {
-				(0, _jquery2.default)('#dataTables-example_wrapper').remove();
-			});
-			return _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' });
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			var data = null;
-			var that = this;
-			(0, _jquery2.default)(document).ready(function () {
-				(0, _jquery2.default)(document).on("click", ".openticketpicker", function () {
-					var dataid = (0, _jquery2.default)(this).data('id');
-					that.setState({ selectedProd: dataid });
-				});
-			});
-
-			return _react2.default.createElement(
-				'div',
-				{ className: 'row' },
-				_react2.default.createElement(
-					'div',
-					{ className: 'col-lg-12' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'panel panel-default' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'panel-heading' },
-							this.props.route.tablename == "HelpDesk" ? "Tickets" : "",
-							this.props.route.tablename == "Contacts" ? "Contacts" : "",
-							this.props.route.tablename == "Products" ? "Products" : "",
-							_react2.default.createElement(
-								'div',
-								{ className: 'input-group pull-right' },
-								this.props.route.tablename == "HelpDesk" ? _react2.default.createElement(
-									_reactRouter.Link,
-									{ className: 'btn btn-warning btn-sm pull-right', to: 'HelpDesk/add' },
-									'New Ticket'
-								) : ""
-							),
-							_react2.default.createElement('div', { className: 'clearfix' })
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'panel-body' },
-							_react2.default.createElement(
-								'div',
-								{ id: 'toremove', className: 'table-responsive' },
-								this.props.statuses.loadedTable === 'success' && (this.props.data ? this.renderTable() : this.displayNodata()),
-								this.props.statuses.loadedTable === 'pending' && this.displayLoader()
-							)
-						)
-					)
-				)
-			);
-		}
-	}]);
-
-	return Datatable;
-}(_react.Component);
-
-function mapStateToProps(state) {
-	return {
-		data: state.datatable
-	};
-}
-function mapDispatchToProps(dispatch) {
-	return (0, _redux.bindActionCreators)({ refreshContent: _displaymodulename.refreshContent, getContentByParam: _displaymodulename.getContentByParam }, dispatch);
-}
-
-exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(Datatable);
-
-/***/ },
+/* 105 */,
 /* 106 */
 /***/ function(module, exports) {
 
@@ -6822,7 +6955,7 @@ Object.keys(domLvl1).forEach(function(key) {
 /* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-var decodeMap = __webpack_require__(228);
+var decodeMap = __webpack_require__(229);
 
 module.exports = decodeCodePoint;
 
@@ -7338,9 +7471,9 @@ module.exports = Parser;
 module.exports = Tokenizer;
 
 var decodeCodePoint = __webpack_require__(107),
-    entityMap = __webpack_require__(62),
+    entityMap = __webpack_require__(64),
     legacyMap = __webpack_require__(108),
-    xmlMap    = __webpack_require__(63),
+    xmlMap    = __webpack_require__(65),
 
     i = 0,
 
@@ -8250,8 +8383,8 @@ Tokenizer.prototype._emitPartial = function(value){
 module.exports = Stream;
 
 var Parser = __webpack_require__(118),
-    WritableStream = __webpack_require__(59).Writable || __webpack_require__(411).Writable,
-    StringDecoder = __webpack_require__(99).StringDecoder,
+    WritableStream = __webpack_require__(60).Writable || __webpack_require__(412).Writable,
+    StringDecoder = __webpack_require__(100).StringDecoder,
     Buffer = __webpack_require__(24).Buffer;
 
 function Stream(cbs, options){
@@ -8320,11 +8453,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports.default = GeneratePropsFromAttributes;
 
-var _HtmlAttributesToReact = __webpack_require__(334);
+var _HtmlAttributesToReact = __webpack_require__(335);
 
 var _HtmlAttributesToReact2 = _interopRequireDefault(_HtmlAttributesToReact);
 
-var _InlineStyleToObject = __webpack_require__(335);
+var _InlineStyleToObject = __webpack_require__(336);
 
 var _InlineStyleToObject2 = _interopRequireDefault(_InlineStyleToObject);
 
@@ -8361,7 +8494,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = ProcessNodes;
 
-var _elementTypes = __webpack_require__(333);
+var _elementTypes = __webpack_require__(334);
 
 var _elementTypes2 = _interopRequireDefault(_elementTypes);
 
@@ -8569,7 +8702,7 @@ var middleware = exports.middleware = function middleware(store) {
 
 module.exports = PassThrough;
 
-var Transform = __webpack_require__(96);
+var Transform = __webpack_require__(97);
 
 /*<replacement>*/
 var util = __webpack_require__(42);
@@ -8598,7 +8731,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 module.exports = Readable;
 
 /*<replacement>*/
-var processNextTick = __webpack_require__(70);
+var processNextTick = __webpack_require__(72);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -8623,7 +8756,7 @@ var EElistenerCount = function (emitter, type) {
 var Stream;
 (function () {
   try {
-    Stream = __webpack_require__(59);
+    Stream = __webpack_require__(60);
   } catch (_) {} finally {
     if (!Stream) Stream = __webpack_require__(44).EventEmitter;
   }
@@ -8632,7 +8765,7 @@ var Stream;
 
 var Buffer = __webpack_require__(24).Buffer;
 /*<replacement>*/
-var bufferShim = __webpack_require__(61);
+var bufferShim = __webpack_require__(63);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -8641,7 +8774,7 @@ util.inherits = __webpack_require__(13);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(412);
+var debugUtil = __webpack_require__(413);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -8650,7 +8783,7 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(375);
+var BufferList = __webpack_require__(376);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -8732,7 +8865,7 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(99).StringDecoder;
+    if (!StringDecoder) StringDecoder = __webpack_require__(100).StringDecoder;
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -8842,7 +8975,7 @@ function needMoreData(state) {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(99).StringDecoder;
+  if (!StringDecoder) StringDecoder = __webpack_require__(100).StringDecoder;
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -9534,7 +9667,7 @@ function indexOf(xs, x) {
   }
   return -1;
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
 
 /***/ },
 /* 165 */
@@ -9633,11 +9766,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(12);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _store = __webpack_require__(203);
+var _store = __webpack_require__(204);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -9649,41 +9782,41 @@ var _Maincontent = __webpack_require__(192);
 
 var _Maincontent2 = _interopRequireDefault(_Maincontent);
 
-var _OpportunitiesDetail = __webpack_require__(423);
+var _OpportunitiesDetail = __webpack_require__(196);
 
 var _OpportunitiesDetail2 = _interopRequireDefault(_OpportunitiesDetail);
 
-var _datatable = __webpack_require__(105);
+var _datatable = __webpack_require__(62);
 
 var _datatable2 = _interopRequireDefault(_datatable);
 
-var _FAQ = __webpack_require__(197);
+var _FAQ = __webpack_require__(198);
 
 var _FAQ2 = _interopRequireDefault(_FAQ);
 
-var _addticket = __webpack_require__(199);
+var _addticket = __webpack_require__(200);
 
 var _addticket2 = _interopRequireDefault(_addticket);
 
-var _ticketdetail = __webpack_require__(202);
+var _ticketdetail = __webpack_require__(203);
 
 var _ticketdetail2 = _interopRequireDefault(_ticketdetail);
 
-var _contactdetail = __webpack_require__(201);
+var _contactdetail = __webpack_require__(202);
 
 var _contactdetail2 = _interopRequireDefault(_contactdetail);
 
-var _aticketpicker = __webpack_require__(200);
+var _aticketpicker = __webpack_require__(201);
 
 var _aticketpicker2 = _interopRequireDefault(_aticketpicker);
 
-var _ATCPEditor = __webpack_require__(196);
+var _StudentTransfer = __webpack_require__(423);
 
-var _ATCPEditor2 = _interopRequireDefault(_ATCPEditor);
+var _StudentTransfer2 = _interopRequireDefault(_StudentTransfer);
 
 var _reactRedux = __webpack_require__(41);
 
-var _reactRouter = __webpack_require__(23);
+var _reactRouter = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9694,7 +9827,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 __webpack_require__(109);
-__webpack_require__(205);
+__webpack_require__(206);
 __webpack_require__(110);
 
 var App = function (_Component) {
@@ -9808,7 +9941,7 @@ window.onload = function () {
           { path: 'ATickConProd', component: _Maincontent2.default, title: 'ATickConProd' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/ATickConProd/main' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/ATickConProd/main', component: _datatable2.default, tablename: 'ATickConProd' }),
-          _react2.default.createElement(_reactRouter.Route, { path: '/ATickConProd/edit/:ATickConProdId', component: _ATCPEditor2.default })
+          _react2.default.createElement(_reactRouter.Route, { path: '/ATickConProd/edit/:ATickConProdId', component: _StudentTransfer2.default })
         ),
         _react2.default.createElement(
           _reactRouter.Route,
@@ -9819,9 +9952,15 @@ window.onload = function () {
             _reactRouter.Route,
             { path: '/Opportunities/potential/:potentialid', component: _OpportunitiesDetail2.default },
             _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/Opportunities/potential/:potentialid/PotentialATCP' }),
-            _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/potential/:potentialid/PotentialATCP', component: _datatable2.default, tablename: 'PotentialATCP' }),
-            _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/potential/:potentialid/PotentialTrans', component: _datatable2.default, tablename: 'PotentialTrans' })
+            _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/potential/:potentialid/PotentialATCP', component: { Main: _datatable2.default }, tablename: 'PotentialATCP' }),
+            _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/potential/:potentialid/PotentialTrans', component: { Main: _datatable2.default }, tablename: 'PotentialTrans' })
           )
+        ),
+        _react2.default.createElement(
+          _reactRouter.Route,
+          { path: 'AVouchers', component: _Maincontent2.default, title: 'AVouchers' },
+          _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/AVouchers/main' }),
+          _react2.default.createElement(_reactRouter.Route, { path: '/AVouchers/main', component: _datatable2.default, tablename: 'AVouchers' })
         )
       )
     )
@@ -9865,11 +10004,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(12);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _datatable = __webpack_require__(105);
+var _datatable = __webpack_require__(62);
 
 var _datatable2 = _interopRequireDefault(_datatable);
 
@@ -9941,7 +10080,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(12);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -10019,7 +10158,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(12);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -10096,7 +10235,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(12);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -10104,7 +10243,7 @@ var _Navheader = __webpack_require__(193);
 
 var _Navheader2 = _interopRequireDefault(_Navheader);
 
-var _Navsidebar = __webpack_require__(198);
+var _Navsidebar = __webpack_require__(199);
 
 var _Navsidebar2 = _interopRequireDefault(_Navsidebar);
 
@@ -10164,23 +10303,15 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reduxAwait = __webpack_require__(15);
+var _reactDom = __webpack_require__(9);
 
-var _displaymodulename = __webpack_require__(29);
+var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _redux = __webpack_require__(9);
+var _datatable = __webpack_require__(62);
 
-var _PulseLoader = __webpack_require__(25);
+var _datatable2 = _interopRequireDefault(_datatable);
 
-var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
-
-var _reactReduxNotifications = __webpack_require__(88);
-
-var _actiontypes = __webpack_require__(18);
-
-var _jquery = __webpack_require__(30);
-
-var _jquery2 = _interopRequireDefault(_jquery);
+var _reactRouter = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10190,225 +10321,57 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ATCPEditor = function (_Component) {
-	_inherits(ATCPEditor, _Component);
+var PotentialDetail = function (_Component) {
+	_inherits(PotentialDetail, _Component);
 
-	function ATCPEditor(props) {
-		_classCallCheck(this, ATCPEditor);
+	function PotentialDetail() {
+		_classCallCheck(this, PotentialDetail);
 
-		var _this = _possibleConstructorReturn(this, (ATCPEditor.__proto__ || Object.getPrototypeOf(ATCPEditor)).call(this, props));
-
-		_this.state = { ATickConProdId: _this.props.params.ATickConProdId };
-		_this.props.getContentByParam("ATCPDetail", _this.state.ATickConProdId);
-		_this.renderProductInfo = _this.renderProductInfo.bind(_this);
-		_this.keyDown = _this.keyDown.bind(_this);
-		_this.submit = _this.submit.bind(_this);
-		return _this;
+		return _possibleConstructorReturn(this, (PotentialDetail.__proto__ || Object.getPrototypeOf(PotentialDetail)).apply(this, arguments));
 	}
 
-	_createClass(ATCPEditor, [{
-		key: 'componentWillReceiveProps',
-		value: function componentWillReceiveProps(nextProps) {
-			var _this2 = this;
-
-			if (this.state.ATickConProdId != nextProps.params.ATickConProdId) this.setState({
-				ATickConProdId: nextProps.params.ATickConProdId
-			}, function () {
-				nextProps.getContentByParam("ATCPDetail", _this2.state.ATickConProdId);
-			});
-		}
-	}, {
-		key: 'keyDown',
-		value: function keyDown(event) {
-			if (event.keyCode === 13) {
-				this.props.getContentByParam("checkStudentEmail", event.target.value.trim());
-				event.preventDefault();
-			}
-		}
-	}, {
-		key: 'submit',
-		value: function submit(dom) {
-			var txt = void 0;
-			var res = confirm("Lưu ý: Sau khi đổi tên người đi học, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin vé này nữa. Bạn có chắc chắn muốn đổi?");
-			if (res == true) {
-				var Jsondata = (0, _jquery2.default)(dom).serialize();
-				this.props.getContentByParam("changeStudent", Jsondata);
-			}
-		}
-	}, {
-		key: 'renderProductInfo',
-		value: function renderProductInfo() {
-			var _this3 = this;
-
-			var data = this.props.data;
-			if (!data.data) return "";
-			var info_arr = [];
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
+	_createClass(PotentialDetail, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'container' },
 				_react2.default.createElement(
-					'td',
-					null,
+					'ul',
+					{ className: 'nav nav-tabs' },
 					_react2.default.createElement(
-						'b',
+						'li',
 						null,
-						'T\xEAn Kh\xF3a h\u1ECDc: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.data.productname
-				)
-			));
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'b',
-						null,
-						'M\xE3 v\xE9: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.data.atickets_code
-				)
-			));
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'b',
-						null,
-						'Email ng\u01B0\u1EDDi \u0111i h\u1ECDc: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'form',
-						{ id: 'changeStudentForm' },
+						' ',
 						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement('input', { type: 'hidden', className: 'form-control', name: 'atickcontprodid', value: data.data.atickcontprodid }),
-							_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', defaultValue: data.data.email, onKeyDown: function onKeyDown(event) {
-									return _this3.keyDown(event);
-								}, onBlur: function onBlur(event) {
-									_this3.props.getContentByParam("checkStudentEmail", event.target.value.trim());
-								} }),
-							_react2.default.createElement(
-								'div',
-								{ style: { color: "red" } },
-								_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
-									defaultMessage: 'Email ng\u01B0\u1EDDi h\u1ECDc kh\xF4ng t\u1ED3n t\u1EA1i! Xin nh\u1EADp email \u0111\xE3 t\u1ED3n t\u1EA1i trong h\u1EC7 th\u1ED1ng.',
-									hideAfter: 2500,
-									triggeredBy: _actiontypes.NO_EMAIL })
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ style: { color: "green" } },
-							_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
-								defaultMessage: 'C\xF3 th\u1EC3 chuy\u1EC3n v\xE9 cho ng\u01B0\u1EDDi \u0111i h\u1ECDc n\xE0y!',
-								hideAfter: 2500,
-								triggeredBy: _actiontypes.EMAIL_EXIST })
+							_reactRouter.Link,
+							{ activeClassName: 'active', to: "/Opportunities/potential/" + this.props.params.potentialid + "/PotentialATCP" },
+							'Chi ti\u1EBFt c\xE1c kh\xF3a h\u1ECDc trong h\xF3a \u0111\u01A1n'
 						)
 					),
 					_react2.default.createElement(
-						'a',
-						{ className: 'btn btn-success btn-xs', onClick: function onClick() {
-								_this3.submit("#changeStudentForm");
-							} },
-						'\u0110\u1ED5i ng\u01B0\u1EDDi \u0111i h\u1ECDc'
-					)
-				)
-			));
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'b',
+						'li',
 						null,
-						'T\xECnh tr\u1EA1ng: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.data.atcp_statusatcp_status
-				)
-			));
-			return info_arr;
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			this.props.data ? console.log(this.props.data.data) : "";
-			return _react2.default.createElement(
-				'div',
-				null,
-				this.props.statuses.loadedATCPeditor === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
-				this.props.statuses.loadedATCPeditor === 'success' && _react2.default.createElement(
-					'div',
-					{ className: 'row' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'col-lg-6' },
 						_react2.default.createElement(
-							'div',
-							{ className: 'panel panel-default' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'panel-heading' },
-								'Th\xF4ng tin c\u01A1 b\u1EA3n: '
-							),
-							_react2.default.createElement(
-								'table',
-								{ className: 'table' },
-								_react2.default.createElement(
-									'tbody',
-									null,
-									this.props.data ? this.renderProductInfo() : ""
-								)
-							)
+							_reactRouter.Link,
+							{ activeClassName: 'active', to: "/Opportunities/potential/" + this.props.params.potentialid + "/PotentialTrans" },
+							'Chi ti\u1EBFt ti\u1EBFn tr\xECnh thanh to\xE1n'
 						)
 					)
 				),
-				_react2.default.createElement('div', { className: 'row' })
+				this.props.Main
 			);
 		}
 	}]);
 
-	return ATCPEditor;
+	return PotentialDetail;
 }(_react.Component);
 
-function mapStateToProps(state) {
-	return {
-		data: state.ATCPeditor
-	};
-}
-
-function mapDispatchToProps(dispatch) {
-	return (0, _redux.bindActionCreators)({ getContentByParam: _displaymodulename.getContentByParam }, dispatch);
-}
-
-exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(ATCPEditor);
+exports.default = PotentialDetail;
 
 /***/ },
-/* 197 */
+/* 197 */,
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10428,7 +10391,7 @@ var _reduxAwait = __webpack_require__(15);
 
 var _displaymodulename = __webpack_require__(29);
 
-var _redux = __webpack_require__(9);
+var _redux = __webpack_require__(10);
 
 var _PulseLoader = __webpack_require__(25);
 
@@ -10601,7 +10564,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(FAQ);
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10619,7 +10582,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(41);
 
-var _reactRouter = __webpack_require__(23);
+var _reactRouter = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10687,7 +10650,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(NavSideBar);
 
 /***/ },
-/* 199 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10707,7 +10670,7 @@ var _reduxAwait = __webpack_require__(15);
 
 var _displaymodulename = __webpack_require__(29);
 
-var _redux = __webpack_require__(9);
+var _redux = __webpack_require__(10);
 
 var _PulseLoader = __webpack_require__(25);
 
@@ -11062,7 +11025,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(AddTicket);
 
 /***/ },
-/* 200 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11082,11 +11045,15 @@ var _reduxAwait = __webpack_require__(15);
 
 var _displaymodulename = __webpack_require__(29);
 
-var _redux = __webpack_require__(9);
+var _redux = __webpack_require__(10);
 
 var _PulseLoader = __webpack_require__(25);
 
 var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
+
+var _reactReduxNotifications = __webpack_require__(59);
+
+var _actiontypes = __webpack_require__(16);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11104,12 +11071,19 @@ var TicketPicker = function (_Component) {
 
 		var _this = _possibleConstructorReturn(this, (TicketPicker.__proto__ || Object.getPrototypeOf(TicketPicker)).call(this, props));
 
-		_this.state = { productId: _this.props.params.productId };
+		_this.state = { productId: _this.props.params.productId, couponcode: null };
+
 		_this.props.getContentByParam("ticketpicker", _this.state.productId);
 		_this.renderProductInfo = _this.renderProductInfo.bind(_this);
 		_this.renderTicket = _this.renderTicket.bind(_this);
+		_this.renderCouponInput = _this.renderCouponInput.bind(_this);
 		_this.registerTimtable = _this.registerTimtable.bind(_this);
 		_this.cancelTimetable = _this.cancelTimetable.bind(_this);
+		_this.submit = _this.submit.bind(_this);
+		_this.keyDown = _this.keyDown.bind(_this);
+		_this.renderUsedCoupon = _this.renderUsedCoupon.bind(_this);
+		_this.cancelTimetableCoupon = _this.cancelTimetableCoupon.bind(_this);
+		_this.couponChange = _this.couponChange.bind(_this);
 		return _this;
 	}
 
@@ -11142,11 +11116,7 @@ var TicketPicker = function (_Component) {
 						'T\xEAn Kh\xF3a h\u1ECDc: '
 					)
 				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.productinfo.productname
-				)
+				_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: data.productinfo.productname } })
 			));
 			info_arr.push(_react2.default.createElement(
 				'tr',
@@ -11160,11 +11130,7 @@ var TicketPicker = function (_Component) {
 						'\u0110\u1ECBa ch\u1EC9 t\u1ED5 ch\u1EE9c: '
 					)
 				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.productinfo.address
-				)
+				_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: data.productinfo.address } })
 			));
 			info_arr.push(_react2.default.createElement(
 				'tr',
@@ -11178,25 +11144,27 @@ var TicketPicker = function (_Component) {
 						'Ng\xE0y b\u1EAFt \u0111\u1EA7u h\u1ECDc: '
 					)
 				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.productinfo.startdate
-				)
+				_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: data.productinfo.startdate } })
 			));
 			return info_arr;
 		}
 	}, {
 		key: 'registerTimtable',
 		value: function registerTimtable(tickcontproductid, productid) {
-			var param = { tickcontproductid: tickcontproductid, productid: productid, defaultprodid: this.state.productId };
+			var param = { tickcontproductid: tickcontproductid, productid: productid, defaultprodid: this.state.productId, cancelrequest: "false" };
 			this.props.getContentByParam("updateAtickContProd", param);
 		}
 	}, {
 		key: 'cancelTimetable',
 		value: function cancelTimetable(tickcontproductid, productid) {
-			var param = { tickcontproductid: tickcontproductid, productid: productid, defaultprodid: this.state.productId };
+			var param = { tickcontproductid: tickcontproductid, productid: productid, defaultprodid: this.state.productId, cancelrequest: "true" };
 			this.props.getContentByParam("updateAtickContProd", param);
+		}
+	}, {
+		key: 'cancelTimetableCoupon',
+		value: function cancelTimetableCoupon(atickcontprodid) {
+			var param = { atickcontprodid: atickcontprodid, defaultprodid: this.state.productId };
+			this.props.getContentByParam("updateCoupon", param);
 		}
 	}, {
 		key: 'renderTicket',
@@ -11206,64 +11174,233 @@ var TicketPicker = function (_Component) {
 			var data = this.props.data;
 			if (!data.ticketinfo && !data.usedticketinfo) return "";
 			var info_arr = [];
-			if (data.ticketinfo) data.ticketinfo.map(function (field, index) {
+			if (!data.usedcouponinfo) {
+				if (data.usedticketinfo) {
+					data.usedticketinfo.map(function (field, index) {
+						info_arr.push(_react2.default.createElement(
+							'tr',
+							null,
+							_react2.default.createElement(
+								'td',
+								null,
+								_react2.default.createElement(
+									'b',
+									null,
+									'V\xE9 ',
+									field.atickets_type,
+									' ',
+									field.atickets_code
+								)
+							),
+							_react2.default.createElement(
+								'td',
+								null,
+								field.status == "CANCEL_REQUEST" ? _react2.default.createElement(
+									'p',
+									{ style: { color: "#ff9900" } },
+									'\u0110ang ch\u1EDD x\u1EED l\xFD y\xEAu c\u1EA7u h\u1EE7y! '
+								) : _react2.default.createElement(
+									'a',
+									{ className: 'btn btn-danger btn-sm', onClick: function onClick() {
+											_this3.cancelTimetable(field.atickcontprodid, data.defaultprodid);
+										} },
+									'H\u1EE7y \u0111\u0103ng k\xED'
+								)
+							)
+						));
+					});
+				} else {
+					if (data.ticketinfo) data.ticketinfo.map(function (field, index) {
+						info_arr.push(_react2.default.createElement(
+							'tr',
+							null,
+							_react2.default.createElement(
+								'td',
+								null,
+								_react2.default.createElement(
+									'b',
+									null,
+									'V\xE9 ',
+									field.atickets_type,
+									' ',
+									field.atickets_code
+								)
+							),
+							_react2.default.createElement(
+								'td',
+								null,
+								_react2.default.createElement(
+									'a',
+									{ className: 'btn btn-primary btn-sm', onClick: function onClick() {
+											_this3.registerTimtable(field.atickcontprodid, _this3.state.productId);
+										} },
+									'\u0110\u0103ng k\xED'
+								)
+							)
+						));
+					});
+				}
+			}
+			return info_arr;
+		}
+	}, {
+		key: 'submit',
+		value: function submit() {
+			var param = {
+				couponcode: this.state.couponcode,
+				productid: this.state.productId
+			};
+			this.props.getContentByParam("registerCoupon", param);
+		}
+	}, {
+		key: 'keyDown',
+		value: function keyDown(event) {
+			if (event.keyCode === 13) {
+				var param = {
+					coupon: event.target.value.trim(),
+					productid: this.state.productId
+				};
+				this.props.getContentByParam("checkCoupon", param);
+				event.preventDefault();
+				//console.log(this.state.vouchercode);
+			}
+		}
+	}, {
+		key: 'renderUsedCoupon',
+		value: function renderUsedCoupon() {
+			var _this4 = this;
+
+			var data = this.props.data;
+			if (!data.couponinfo && !data.usedcouponinfo) return "";
+			var info_arr = [];
+			if (data.usedcouponinfo) data.usedcouponinfo.map(function (field, index) {
 				info_arr.push(_react2.default.createElement(
 					'tr',
 					null,
 					_react2.default.createElement(
 						'td',
 						null,
-						_react2.default.createElement(
-							'b',
-							null,
-							'V\xE9 ',
-							field.atickets_type,
-							' ',
-							field.atickets_code
-						)
+						_react2.default.createElement('b', { dangerouslySetInnerHTML: { __html: "Coupon " + field.acoupons_code } })
 					),
 					_react2.default.createElement(
 						'td',
 						null,
-						_react2.default.createElement(
-							'a',
-							{ className: 'btn btn-primary btn-sm', onClick: function onClick() {
-									_this3.registerTimtable(field.atickcontprodid, _this3.state.productId);
-								} },
-							'\u0110\u0103ng k\xED'
-						)
-					)
-				));
-			});
-			if (data.usedticketinfo) data.usedticketinfo.map(function (field, index) {
-				info_arr.push(_react2.default.createElement(
-					'tr',
-					null,
-					_react2.default.createElement(
-						'td',
-						null,
-						_react2.default.createElement(
-							'b',
-							null,
-							'V\xE9 ',
-							field.atickets_type,
-							' ',
-							field.atickets_code
-						)
-					),
-					_react2.default.createElement(
-						'td',
-						null,
-						_react2.default.createElement(
+						field.status == "CANCEL_REQUEST" ? _react2.default.createElement(
+							'p',
+							{ style: { color: "#ff9900" } },
+							'\u0110ang ch\u1EDD x\u1EED l\xFD y\xEAu c\u1EA7u h\u1EE7y! '
+						) : _react2.default.createElement(
 							'a',
 							{ className: 'btn btn-danger btn-sm', onClick: function onClick() {
-									_this3.cancelTimetable(field.atickcontprodid, data.defaultprodid);
+									_this4.cancelTimetableCoupon(field.atickcontprodid);
 								} },
 							'H\u1EE7y \u0111\u0103ng k\xED'
 						)
 					)
 				));
 			});
+			return info_arr;
+		}
+	}, {
+		key: 'couponChange',
+		value: function couponChange(e) {
+			this.setState({ couponcode: e.target.value.trim() });
+		}
+	}, {
+		key: 'renderCouponInput',
+		value: function renderCouponInput() {
+			var _this5 = this;
+
+			var data = this.props.data;
+			var info_arr = void 0;
+
+			if (!data.usedticketinfo) {
+				if (!data.usedcouponinfo) {
+					info_arr = _react2.default.createElement(
+						'tbody',
+						null,
+						this.renderUsedCoupon(),
+						_react2.default.createElement(
+							'tr',
+							null,
+							_react2.default.createElement(
+								'td',
+								null,
+								_react2.default.createElement(
+									'b',
+									null,
+									'\u0110i\u1EC1n coupon (n\u1EBFu c\xF3):'
+								)
+							),
+							' ',
+							_react2.default.createElement(
+								'td',
+								null,
+								_react2.default.createElement(
+									'form',
+									{ id: 'fillCouponForm' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'form-group' },
+										_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', onChange: function onChange(event) {
+												return _this5.couponChange(event);
+											},
+											onKeyDown: function onKeyDown(event) {
+												return _this5.keyDown(event);
+											} }),
+										_react2.default.createElement(
+											'div',
+											{ style: { color: "red" } },
+											_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+												defaultMessage: 'Coupon n\xE0y kh\xF4ng t\u1ED3n t\u1EA1i!',
+												hideAfter: 2500,
+												triggeredBy: _actiontypes.NO_COUPON })
+										),
+										_react2.default.createElement(
+											'div',
+											{ style: { color: "red" } },
+											_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+												defaultMessage: 'B\u1EA1n \u0111\xE3 s\u1EED d\u1EE5ng coupon n\xE0y!',
+												hideAfter: 2500,
+												triggeredBy: _actiontypes.COUPON_USED })
+										),
+										_react2.default.createElement(
+											'div',
+											{ style: { color: "green" } },
+											_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+												defaultMessage: 'C\xF3 th\u1EC3 s\u1EED d\u1EE5ng coupon n\xE0y!',
+												hideAfter: 2500,
+												triggeredBy: _actiontypes.COUPON_EXIST })
+										),
+										_react2.default.createElement(
+											'div',
+											{ style: { color: "red" } },
+											_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+												defaultMessage: 'Coupon kh\xF4ng \u0111\u01B0\u1EE3c s\u1EED d\u1EE5ng cho kh\xF3a n\xE0y!',
+												hideAfter: 2500,
+												triggeredBy: _actiontypes.COUPON_INVALID })
+										)
+									)
+								),
+								_react2.default.createElement(
+									'a',
+									{ className: 'btn btn-success btn-xs', onClick: function onClick() {
+											_this5.submit();
+										} },
+									'\u0110\u0103ng k\xFD'
+								)
+							)
+						)
+					);
+				} else {
+					info_arr = _react2.default.createElement(
+						'tbody',
+						null,
+						this.renderUsedCoupon()
+					);
+				}
+			}
+
 			return info_arr;
 		}
 	}, {
@@ -11307,7 +11444,7 @@ var TicketPicker = function (_Component) {
 							_react2.default.createElement(
 								'div',
 								{ className: 'panel-heading' },
-								'Ch\u1ECDn v\xE9: '
+								'\u0110\u0103ng k\xED b\u1EB1ng v\xE9: '
 							),
 							_react2.default.createElement(
 								'table',
@@ -11317,6 +11454,24 @@ var TicketPicker = function (_Component) {
 									null,
 									this.props.data ? this.renderTicket() : ""
 								)
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-lg-6' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'panel panel-default' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'panel-heading' },
+								'\u0110\u0103ng k\xED b\u1EB1ng Coupon: '
+							),
+							_react2.default.createElement(
+								'table',
+								{ className: 'table' },
+								this.props.data ? this.renderCouponInput() : ""
 							)
 						)
 					)
@@ -11342,7 +11497,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(TicketPicker);
 
 /***/ },
-/* 201 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11362,9 +11517,9 @@ var _reduxAwait = __webpack_require__(15);
 
 var _displaymodulename = __webpack_require__(29);
 
-var _redux = __webpack_require__(9);
+var _redux = __webpack_require__(10);
 
-var _reactRouter = __webpack_require__(23);
+var _reactRouter = __webpack_require__(19);
 
 var _axios = __webpack_require__(51);
 
@@ -11374,7 +11529,7 @@ var _PulseLoader = __webpack_require__(25);
 
 var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
 
-var _reactHtmlParser = __webpack_require__(87);
+var _reactHtmlParser = __webpack_require__(89);
 
 var _reactHtmlParser2 = _interopRequireDefault(_reactHtmlParser);
 
@@ -11422,7 +11577,7 @@ var ContactDetail = function (_Component) {
 			if (!data.Contacts) return "";
 			var ticketinfo_arr = [];
 			data.Contacts.map(function (field, index) {
-				if (field.blockname == "Basic Information") {
+				if (field.blockname == 'Th\xF4ng tin H\u1ECDc vi\xEAn') {
 					ticketinfo_arr.push(_react2.default.createElement(
 						'tr',
 						null,
@@ -11449,7 +11604,7 @@ var ContactDetail = function (_Component) {
 			if (!data.Contacts) return "";
 			var ticketinfo_arr = [];
 			data.Contacts.map(function (field, index) {
-				if (field.blockname == "Customer Portal Details") {
+				if (field.blockname == 'C\u1ED5ng th\xF4ng tin kh\xE1ch h\xE0ng') {
 					ticketinfo_arr.push(_react2.default.createElement(
 						'tr',
 						null,
@@ -11696,7 +11851,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(ContactDetail);
 
 /***/ },
-/* 202 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11716,15 +11871,15 @@ var _reduxAwait = __webpack_require__(15);
 
 var _displaymodulename = __webpack_require__(29);
 
-var _redux = __webpack_require__(9);
+var _redux = __webpack_require__(10);
 
-var _reactRouter = __webpack_require__(23);
+var _reactRouter = __webpack_require__(19);
 
 var _PulseLoader = __webpack_require__(25);
 
 var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
 
-var _reactHtmlParser = __webpack_require__(87);
+var _reactHtmlParser = __webpack_require__(89);
 
 var _reactHtmlParser2 = _interopRequireDefault(_reactHtmlParser);
 
@@ -12128,7 +12283,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(TicketDetail);
 
 /***/ },
-/* 203 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12138,27 +12293,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reduxLogger = __webpack_require__(386);
+var _reduxLogger = __webpack_require__(387);
 
 var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-var _index = __webpack_require__(401);
+var _index = __webpack_require__(402);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _reduxThunk = __webpack_require__(389);
+var _reduxThunk = __webpack_require__(390);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reduxPromiseMiddleware = __webpack_require__(387);
+var _reduxPromiseMiddleware = __webpack_require__(388);
 
 var _reduxPromiseMiddleware2 = _interopRequireDefault(_reduxPromiseMiddleware);
 
-var _redux = __webpack_require__(9);
+var _redux = __webpack_require__(10);
 
 var _reduxAwait = __webpack_require__(15);
 
-var _reactReduxNotifications = __webpack_require__(88);
+var _reactReduxNotifications = __webpack_require__(59);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12167,7 +12322,7 @@ var store = (0, _redux.applyMiddleware)((0, _reduxPromiseMiddleware2.default)(),
 exports.default = store;
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -12288,7 +12443,7 @@ function fromByteArray (uint8) {
 
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -12301,7 +12456,7 @@ this.activeTarget=b,this.clear();var c=this.selector+'[data-target="'+b+'"],'+th
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(30)))
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.13
@@ -27613,7 +27768,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -28042,14 +28197,14 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 /*
   Module dependencies
 */
-var ElementType = __webpack_require__(209);
-var entities = __webpack_require__(225);
+var ElementType = __webpack_require__(210);
+var entities = __webpack_require__(226);
 
 /*
   Boolean Attributes
@@ -28226,7 +28381,7 @@ function renderComment(elem) {
 
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports) {
 
 //Types of elements found in the DOM
@@ -28245,14 +28400,14 @@ module.exports = {
 };
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 var ElementType = __webpack_require__(43);
 
 var re_whitespace = /\s+/g;
 var NodePrototype = __webpack_require__(106);
-var ElementPrototype = __webpack_require__(211);
+var ElementPrototype = __webpack_require__(212);
 
 function DomHandler(callback, options, elementCB){
 	if(typeof callback === "object"){
@@ -28433,7 +28588,7 @@ module.exports = DomHandler;
 
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 // DOM-Level-1-compliant structure
@@ -28459,13 +28614,13 @@ Object.keys(domLvl1).forEach(function(key) {
 
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var getVendorPropertyName = __webpack_require__(215);
+var getVendorPropertyName = __webpack_require__(216);
 
 module.exports = function(target, sources) {
   var to = Object(target);
@@ -28496,7 +28651,7 @@ module.exports = function(target, sources) {
 
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -28506,7 +28661,7 @@ module.exports = document.createElement('div').style;
 
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -28526,13 +28681,13 @@ module.exports = function() {
 
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var builtinStyle = __webpack_require__(213);
+var builtinStyle = __webpack_require__(214);
 var prefixes = ['Moz', 'Webkit', 'O', 'ms'];
 var domVendorPrefix;
 
@@ -28570,14 +28725,14 @@ module.exports = function(prop, isSupportTest) {
 
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var insertRule = __webpack_require__(217);
-var vendorPrefix = __webpack_require__(214)();
+var insertRule = __webpack_require__(218);
+var vendorPrefix = __webpack_require__(215)();
 var index = 0;
 
 module.exports = function(keyframes) {
@@ -28607,7 +28762,7 @@ module.exports = function(keyframes) {
 
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -28633,18 +28788,18 @@ module.exports = function(css) {
 
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 var DomUtils = module.exports;
 
 [
-	__webpack_require__(223),
 	__webpack_require__(224),
-	__webpack_require__(221),
+	__webpack_require__(225),
 	__webpack_require__(222),
-	__webpack_require__(220),
-	__webpack_require__(219)
+	__webpack_require__(223),
+	__webpack_require__(221),
+	__webpack_require__(220)
 ].forEach(function(ext){
 	Object.keys(ext).forEach(function(key){
 		DomUtils[key] = ext[key].bind(DomUtils);
@@ -28653,7 +28808,7 @@ var DomUtils = module.exports;
 
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports) {
 
 // removeSubsets
@@ -28800,7 +28955,7 @@ exports.uniqueSort = function(nodes) {
 
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 var ElementType = __webpack_require__(43);
@@ -28893,7 +29048,7 @@ exports.getElementsByTagType = function(type, element, recurse, limit){
 
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports) {
 
 exports.removeElement = function(elem){
@@ -28976,7 +29131,7 @@ exports.prepend = function(elem, prev){
 
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isTag = __webpack_require__(43).isTag;
@@ -29076,11 +29231,11 @@ function findAll(test, elems){
 
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 var ElementType = __webpack_require__(43),
-    getOuterHTML = __webpack_require__(208),
+    getOuterHTML = __webpack_require__(209),
     isTag = ElementType.isTag;
 
 module.exports = {
@@ -29104,7 +29259,7 @@ function getText(elem){
 
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports) {
 
 var getChildren = exports.getChildren = function(elem){
@@ -29134,11 +29289,11 @@ exports.getName = function(elem){
 
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
-var encode = __webpack_require__(227),
-    decode = __webpack_require__(226);
+var encode = __webpack_require__(228),
+    decode = __webpack_require__(227);
 
 exports.decode = function(data, level){
 	return (!level || level <= 0 ? decode.XML : decode.HTML)(data);
@@ -29173,12 +29328,12 @@ exports.escape = encode.escape;
 
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
-var entityMap = __webpack_require__(62),
+var entityMap = __webpack_require__(64),
     legacyMap = __webpack_require__(108),
-    xmlMap    = __webpack_require__(63),
+    xmlMap    = __webpack_require__(65),
     decodeCodePoint = __webpack_require__(107);
 
 var decodeXMLStrict  = getStrictDecoder(xmlMap),
@@ -29250,15 +29405,15 @@ module.exports = {
 };
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
-var inverseXML = getInverseObj(__webpack_require__(63)),
+var inverseXML = getInverseObj(__webpack_require__(65)),
     xmlReplacer = getInverseReplacer(inverseXML);
 
 exports.XML = getInverse(inverseXML, xmlReplacer);
 
-var inverseHTML = getInverseObj(__webpack_require__(62)),
+var inverseHTML = getInverseObj(__webpack_require__(64)),
     htmlReplacer = getInverseReplacer(inverseHTML);
 
 exports.HTML = getInverse(inverseHTML, htmlReplacer);
@@ -29329,7 +29484,7 @@ exports.escape = escapeXML;
 
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports) {
 
 module.exports = {
@@ -29364,7 +29519,6 @@ module.exports = {
 };
 
 /***/ },
-/* 229 */,
 /* 230 */,
 /* 231 */,
 /* 232 */,
@@ -29382,7 +29536,8 @@ module.exports = {
 /* 244 */,
 /* 245 */,
 /* 246 */,
-/* 247 */
+/* 247 */,
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = CollectingHandler;
@@ -29443,7 +29598,7 @@ CollectingHandler.prototype.restart = function(){
 
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 var index = __webpack_require__(32),
@@ -29544,7 +29699,7 @@ module.exports = FeedHandler;
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = ProxyHandler;
@@ -29576,7 +29731,7 @@ Object.keys(EVENTS).forEach(function(name){
 });
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = Stream;
@@ -29616,7 +29771,7 @@ Object.keys(EVENTS).forEach(function(name){
 });
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -29706,7 +29861,6 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ },
-/* 252 */,
 /* 253 */,
 /* 254 */,
 /* 255 */,
@@ -29779,7 +29933,8 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 /* 322 */,
 /* 323 */,
 /* 324 */,
-/* 325 */
+/* 325 */,
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29812,7 +29967,7 @@ function HtmlParser(html) {
 }
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -29832,7 +29987,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = ['allowfullScreen', 'async', 'autoplay', 'capture', 'checked', 'controls', 'default', 'defer', 'disabled', 'formnovalidate', 'hidden', 'loop', 'multiple', 'muted', 'novalidate', 'open', 'readonly', 'required', 'reversed', 'scoped', 'seamless', 'selected', 'itemscope'];
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30001,7 +30156,7 @@ exports.default = {
 };
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30018,7 +30173,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30063,7 +30218,7 @@ function StyleElementType(node, key) {
 }
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30086,11 +30241,11 @@ var _GeneratePropsFromAttributes = __webpack_require__(143);
 
 var _GeneratePropsFromAttributes2 = _interopRequireDefault(_GeneratePropsFromAttributes);
 
-var _TransformTagName = __webpack_require__(336);
+var _TransformTagName = __webpack_require__(337);
 
 var _TransformTagName2 = _interopRequireDefault(_TransformTagName);
 
-var _VoidElements = __webpack_require__(328);
+var _VoidElements = __webpack_require__(329);
 
 var _VoidElements2 = _interopRequireDefault(_VoidElements);
 
@@ -30122,7 +30277,7 @@ function TagElementType(node, key) {
 }
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30145,7 +30300,7 @@ function TextElementType(node) {
 }
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30167,7 +30322,7 @@ function UnsupportedElementType() {
 }
 
 /***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30181,19 +30336,19 @@ var _ElementType$Text$Ele;
 
 var _htmlparser = __webpack_require__(32);
 
-var _TextElementType = __webpack_require__(331);
+var _TextElementType = __webpack_require__(332);
 
 var _TextElementType2 = _interopRequireDefault(_TextElementType);
 
-var _TagElementType = __webpack_require__(330);
+var _TagElementType = __webpack_require__(331);
 
 var _TagElementType2 = _interopRequireDefault(_TagElementType);
 
-var _StyleElementType = __webpack_require__(329);
+var _StyleElementType = __webpack_require__(330);
 
 var _StyleElementType2 = _interopRequireDefault(_StyleElementType);
 
-var _UnsupportedElementType = __webpack_require__(332);
+var _UnsupportedElementType = __webpack_require__(333);
 
 var _UnsupportedElementType2 = _interopRequireDefault(_UnsupportedElementType);
 
@@ -30208,7 +30363,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 exports.default = (_ElementType$Text$Ele = {}, _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Text, _TextElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Tag, _TagElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Style, _StyleElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Directive, _UnsupportedElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Comment, _UnsupportedElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Script, _UnsupportedElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.CDATA, _UnsupportedElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Doctype, _UnsupportedElementType2.default), _ElementType$Text$Ele);
 
 /***/ },
-/* 334 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30219,11 +30374,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = HtmlAttributesToReact;
 
-var _BooleanAttributes = __webpack_require__(326);
+var _BooleanAttributes = __webpack_require__(327);
 
 var _BooleanAttributes2 = _interopRequireDefault(_BooleanAttributes);
 
-var _ReactAttributes = __webpack_require__(327);
+var _ReactAttributes = __webpack_require__(328);
 
 var _ReactAttributes2 = _interopRequireDefault(_ReactAttributes);
 
@@ -30275,7 +30430,7 @@ function HtmlAttributesToReact(attributes) {
 }
 
 /***/ },
-/* 335 */
+/* 336 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30339,7 +30494,7 @@ function InlineStyleToObject() {
 }
 
 /***/ },
-/* 336 */
+/* 337 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30370,7 +30525,7 @@ function TransformTagName(tagName) {
 }
 
 /***/ },
-/* 337 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30503,7 +30658,6 @@ exports.default = (0, _reactRedux.connect)(function (state) {
 })(InlineNotification);
 
 /***/ },
-/* 338 */,
 /* 339 */,
 /* 340 */,
 /* 341 */,
@@ -30539,14 +30693,15 @@ exports.default = (0, _reactRedux.connect)(function (state) {
 /* 371 */,
 /* 372 */,
 /* 373 */,
-/* 374 */
+/* 374 */,
+/* 375 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(27)
 
 
 /***/ },
-/* 375 */
+/* 376 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30554,7 +30709,7 @@ module.exports = __webpack_require__(27)
 
 var Buffer = __webpack_require__(24).Buffer;
 /*<replacement>*/
-var bufferShim = __webpack_require__(61);
+var bufferShim = __webpack_require__(63);
 /*</replacement>*/
 
 module.exports = BufferList;
@@ -30616,41 +30771,34 @@ BufferList.prototype.concat = function (n) {
 };
 
 /***/ },
-/* 376 */
+/* 377 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(163)
 
 
 /***/ },
-/* 377 */
+/* 378 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {var Stream = (function (){
   try {
-    return __webpack_require__(59); // hack to fix a circular dependency issue when used with browserify
+    return __webpack_require__(60); // hack to fix a circular dependency issue when used with browserify
   } catch(_){}
 }());
 exports = module.exports = __webpack_require__(164);
 exports.Stream = Stream || exports;
 exports.Readable = exports;
-exports.Writable = __webpack_require__(97);
+exports.Writable = __webpack_require__(98);
 exports.Duplex = __webpack_require__(27);
-exports.Transform = __webpack_require__(96);
+exports.Transform = __webpack_require__(97);
 exports.PassThrough = __webpack_require__(163);
 
 if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
   module.exports = Stream;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
-
-/***/ },
-/* 378 */
-/***/ function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(96)
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
 
 /***/ },
 /* 379 */
@@ -30661,6 +30809,13 @@ module.exports = __webpack_require__(97)
 
 /***/ },
 /* 380 */
+/***/ function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(98)
+
+
+/***/ },
+/* 381 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30693,7 +30848,7 @@ exports.default = function (mapStateToProps) {
 };
 
 /***/ },
-/* 381 */
+/* 382 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30708,7 +30863,7 @@ exports.middleware = exports.getFailedActionType = exports.getPendingActionType 
 
 var _utils = __webpack_require__(165);
 
-var _constants = __webpack_require__(98);
+var _constants = __webpack_require__(99);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -30769,7 +30924,7 @@ var middleware = exports.middleware = function middleware(_ref) {
 };
 
 /***/ },
-/* 382 */
+/* 383 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30781,7 +30936,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _constants = __webpack_require__(98);
+var _constants = __webpack_require__(99);
 
 var _utils = __webpack_require__(165);
 
@@ -30822,7 +30977,7 @@ exports.default = function () {
 };
 
 /***/ },
-/* 383 */
+/* 384 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30835,7 +30990,7 @@ exports.printBuffer = printBuffer;
 
 var _helpers = __webpack_require__(166);
 
-var _diff = __webpack_require__(385);
+var _diff = __webpack_require__(386);
 
 var _diff2 = _interopRequireDefault(_diff);
 
@@ -30964,7 +31119,7 @@ function printBuffer(buffer, options) {
 }
 
 /***/ },
-/* 384 */
+/* 385 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -31016,7 +31171,7 @@ exports.default = {
 module.exports = exports['default'];
 
 /***/ },
-/* 385 */
+/* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31027,7 +31182,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = diffLogger;
 
-var _deepDiff = __webpack_require__(207);
+var _deepDiff = __webpack_require__(208);
 
 var _deepDiff2 = _interopRequireDefault(_deepDiff);
 
@@ -31113,7 +31268,7 @@ function diffLogger(prevState, newState, logger, isCollapsed) {
 module.exports = exports['default'];
 
 /***/ },
-/* 386 */
+/* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31125,11 +31280,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _core = __webpack_require__(383);
+var _core = __webpack_require__(384);
 
 var _helpers = __webpack_require__(166);
 
-var _defaults = __webpack_require__(384);
+var _defaults = __webpack_require__(385);
 
 var _defaults2 = _interopRequireDefault(_defaults);
 
@@ -31232,7 +31387,7 @@ exports.default = createLogger;
 module.exports = exports['default'];
 
 /***/ },
-/* 387 */
+/* 388 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31250,7 +31405,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 exports.default = promiseMiddleware;
 
-var _isPromise = __webpack_require__(388);
+var _isPromise = __webpack_require__(389);
 
 var _isPromise2 = _interopRequireDefault(_isPromise);
 
@@ -31407,7 +31562,7 @@ function promiseMiddleware() {
 }
 
 /***/ },
-/* 388 */
+/* 389 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -31429,7 +31584,7 @@ function isPromise(value) {
 }
 
 /***/ },
-/* 389 */
+/* 390 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -31458,10 +31613,10 @@ thunk.withExtraArgument = createThunkMiddleware;
 exports['default'] = thunk;
 
 /***/ },
-/* 390 */,
 /* 391 */,
 /* 392 */,
-/* 393 */
+/* 393 */,
+/* 394 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -31651,14 +31806,14 @@ exports['default'] = thunk;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28), __webpack_require__(20)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28), __webpack_require__(21)))
 
 /***/ },
-/* 394 */,
 /* 395 */,
 /* 396 */,
 /* 397 */,
-/* 398 */
+/* 398 */,
+/* 399 */
 /***/ function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -31711,13 +31866,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(393);
+__webpack_require__(394);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ },
-/* 399 */
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -31791,24 +31946,24 @@ function config (name) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
 
 /***/ },
-/* 400 */,
-/* 401 */
+/* 401 */,
+/* 402 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__producer_books_js__ = __webpack_require__(404);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__producer_sidemenu_js__ = __webpack_require__(408);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__producer_datatable_js__ = __webpack_require__(406);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__producer_faq_js__ = __webpack_require__(407);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__producer_addticket_js__ = __webpack_require__(402);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__producer_ticket_js__ = __webpack_require__(409);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__producer_contact_js__ = __webpack_require__(405);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__producer_ticketpicker_js__ = __webpack_require__(410);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__producer_atickconprod_js__ = __webpack_require__(403);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__producer_books_js__ = __webpack_require__(405);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__producer_sidemenu_js__ = __webpack_require__(409);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__producer_datatable_js__ = __webpack_require__(407);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__producer_faq_js__ = __webpack_require__(408);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__producer_addticket_js__ = __webpack_require__(403);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__producer_ticket_js__ = __webpack_require__(410);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__producer_contact_js__ = __webpack_require__(406);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__producer_ticketpicker_js__ = __webpack_require__(411);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__producer_atickconprod_js__ = __webpack_require__(404);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_redux_await__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_redux_await___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_redux_await__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_redux_notifications__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_redux_notifications__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_redux_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_react_redux_notifications__);
 Object.defineProperty(exports, "__esModule", { value: true });
  
@@ -31841,11 +31996,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 /* harmony default export */ exports["default"] = rootReducer;
 
 /***/ },
-/* 402 */
+/* 403 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -31856,11 +32011,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 403 */
+/* 404 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -31871,7 +32026,7 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 404 */
+/* 405 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31886,11 +32041,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 405 */
+/* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -31901,11 +32056,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 406 */
+/* 407 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -31916,11 +32071,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 407 */
+/* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -31931,7 +32086,7 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 408 */
+/* 409 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31940,11 +32095,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 409 */
+/* 410 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -31955,11 +32110,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 410 */
+/* 411 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -31970,27 +32125,26 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 411 */
-/***/ function(module, exports) {
-
-/* (ignored) */
-
-/***/ },
 /* 412 */
 /***/ function(module, exports) {
 
 /* (ignored) */
 
 /***/ },
-/* 413 */,
-/* 414 */
+/* 413 */
+/***/ function(module, exports) {
+
+/* (ignored) */
+
+/***/ },
+/* 414 */,
+/* 415 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(171);
 
 
 /***/ },
-/* 415 */,
 /* 416 */,
 /* 417 */,
 /* 418 */,
@@ -32014,15 +32168,23 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(12);
+var _reduxAwait = __webpack_require__(15);
 
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _displaymodulename = __webpack_require__(29);
 
-var _datatable = __webpack_require__(105);
+var _redux = __webpack_require__(10);
 
-var _datatable2 = _interopRequireDefault(_datatable);
+var _PulseLoader = __webpack_require__(25);
 
-var _reactRouter = __webpack_require__(23);
+var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
+
+var _reactReduxNotifications = __webpack_require__(59);
+
+var _actiontypes = __webpack_require__(16);
+
+var _jquery = __webpack_require__(30);
+
+var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32032,53 +32194,222 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PotentialDetail = function (_Component) {
-	_inherits(PotentialDetail, _Component);
+var StudentTransfer = function (_Component) {
+	_inherits(StudentTransfer, _Component);
 
-	function PotentialDetail() {
-		_classCallCheck(this, PotentialDetail);
+	function StudentTransfer(props) {
+		_classCallCheck(this, StudentTransfer);
 
-		return _possibleConstructorReturn(this, (PotentialDetail.__proto__ || Object.getPrototypeOf(PotentialDetail)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (StudentTransfer.__proto__ || Object.getPrototypeOf(StudentTransfer)).call(this, props));
+
+		_this.state = { ATickConProdId: _this.props.params.ATickConProdId };
+		_this.props.getContentByParam("ATCPDetail", _this.state.ATickConProdId);
+		_this.renderProductInfo = _this.renderProductInfo.bind(_this);
+		_this.keyDown = _this.keyDown.bind(_this);
+		_this.submit = _this.submit.bind(_this);
+		return _this;
 	}
 
-	_createClass(PotentialDetail, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				{ className: 'container' },
+	_createClass(StudentTransfer, [{
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			var _this2 = this;
+
+			if (this.state.ATickConProdId != nextProps.params.ATickConProdId) this.setState({
+				ATickConProdId: nextProps.params.ATickConProdId
+			}, function () {
+				nextProps.getContentByParam("ATCPDetail", _this2.state.ATickConProdId);
+			});
+		}
+	}, {
+		key: 'keyDown',
+		value: function keyDown(event) {
+			if (event.keyCode === 13) {
+				this.props.getContentByParam("checkStudentEmail", event.target.value.trim());
+				event.preventDefault();
+			}
+		}
+	}, {
+		key: 'submit',
+		value: function submit(dom) {
+			var txt = void 0;
+			var res = confirm("Lưu ý: Sau khi đổi tên người đi học, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin vé này nữa. Bạn có chắc chắn muốn đổi?");
+			if (res == true) {
+				var Jsondata = (0, _jquery2.default)(dom).serialize();
+				this.props.getContentByParam("changeStudent", Jsondata);
+			}
+		}
+	}, {
+		key: 'renderProductInfo',
+		value: function renderProductInfo() {
+			var _this3 = this;
+
+			var data = this.props.data;
+			if (!data.data) return "";
+			var info_arr = [];
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
 				_react2.default.createElement(
-					'ul',
-					{ className: 'nav nav-tabs' },
+					'td',
+					null,
 					_react2.default.createElement(
-						'li',
+						'b',
 						null,
-						' ',
+						'T\xEAn Kh\xF3a h\u1ECDc: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					data.data.productname
+				)
+			));
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'M\xE3 v\xE9: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					data.data.atickets_code
+				)
+			));
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'Email ng\u01B0\u1EDDi \u0111i h\u1ECDc: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'form',
+						{ id: 'changeStudentForm' },
 						_react2.default.createElement(
-							_reactRouter.Link,
-							{ activeClassName: 'active', to: "/Opportunities/potential/" + this.props.params.potentialid + "/PotentialATCP" },
-							'Chi ti\u1EBFt c\xE1c kh\xF3a h\u1ECDc trong h\xF3a \u0111\u01A1n'
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement('input', { type: 'hidden', className: 'form-control', name: 'atickcontprodid', value: data.data.atickcontprodid }),
+							_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', defaultValue: data.data.email, onKeyDown: function onKeyDown(event) {
+									return _this3.keyDown(event);
+								}, onBlur: function onBlur(event) {
+									_this3.props.getContentByParam("checkStudentEmail", event.target.value.trim());
+								} }),
+							_react2.default.createElement(
+								'div',
+								{ style: { color: "red" } },
+								_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+									defaultMessage: 'Email ng\u01B0\u1EDDi h\u1ECDc kh\xF4ng t\u1ED3n t\u1EA1i! Xin nh\u1EADp email \u0111\xE3 t\u1ED3n t\u1EA1i trong h\u1EC7 th\u1ED1ng.',
+									hideAfter: 2500,
+									triggeredBy: _actiontypes.NO_EMAIL })
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ style: { color: "green" } },
+							_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+								defaultMessage: 'C\xF3 th\u1EC3 chuy\u1EC3n v\xE9 cho ng\u01B0\u1EDDi \u0111i h\u1ECDc n\xE0y!',
+								hideAfter: 2500,
+								triggeredBy: _actiontypes.EMAIL_EXIST })
 						)
 					),
 					_react2.default.createElement(
-						'li',
+						'a',
+						{ className: 'btn btn-success btn-xs', onClick: function onClick() {
+								_this3.submit("#changeStudentForm");
+							} },
+						'\u0110\u1ED5i ng\u01B0\u1EDDi \u0111i h\u1ECDc'
+					)
+				)
+			));
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
 						null,
+						'T\xECnh tr\u1EA1ng: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					data.data.atcp_statusatcp_status
+				)
+			));
+			return info_arr;
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			this.props.data ? console.log(this.props.data.data) : "";
+			return _react2.default.createElement(
+				'div',
+				null,
+				this.props.statuses.loadedATCPeditor === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
+				this.props.statuses.loadedATCPeditor === 'success' && _react2.default.createElement(
+					'div',
+					{ className: 'row' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-lg-6' },
 						_react2.default.createElement(
-							_reactRouter.Link,
-							{ activeClassName: 'active', to: "/Opportunities/potential/" + this.props.params.potentialid + "/PotentialTrans" },
-							'Chi ti\u1EBFt ti\u1EBFn tr\xECnh thanh to\xE1n'
+							'div',
+							{ className: 'panel panel-default' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'panel-heading' },
+								'Th\xF4ng tin c\u01A1 b\u1EA3n: '
+							),
+							_react2.default.createElement(
+								'table',
+								{ className: 'table' },
+								_react2.default.createElement(
+									'tbody',
+									null,
+									this.props.data ? this.renderProductInfo() : ""
+								)
+							)
 						)
 					)
 				),
-				this.props.children
+				_react2.default.createElement('div', { className: 'row' })
 			);
 		}
 	}]);
 
-	return PotentialDetail;
+	return StudentTransfer;
 }(_react.Component);
 
-exports.default = PotentialDetail;
+function mapStateToProps(state) {
+	return {
+		data: state.ATCPeditor
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return (0, _redux.bindActionCreators)({ getContentByParam: _displaymodulename.getContentByParam }, dispatch);
+}
+
+exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(StudentTransfer);
 
 /***/ }
-],[414]);
+],[415]);

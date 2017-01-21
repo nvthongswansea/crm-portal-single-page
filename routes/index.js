@@ -10,7 +10,7 @@ const config = require('../config/main');
 const VT_URL = config.URL;
 
 /* GET home page. */
-router.get('/',  _helper.loginRedirect, function(req, res, next) {
+router.get('/', _helper.loginRedirect, function(req, res, next) {
 	//getChallenge(res);
 
 	res.render('index', {
@@ -48,7 +48,7 @@ router.post('/login', (req, res, next) => {
 		password: body.pass
 	}
 	request.post({
-		url: VT_URL+'/vtigerservice.php?service=restful&do=signin',
+		url: VT_URL + '/vtigerservice.php?service=restful&do=signin',
 		formData: formData
 	}, function optionalCallback(err, httpResponse, body) {
 		if (err) {
@@ -84,7 +84,7 @@ router.get('/signout', _helper.loginRequired, (req, res, next) => {
 		sessionid: req.session.sessid
 	};
 	request.post({
-		url: VT_URL+'/vtigerservice.php?service=restful&do=signout',
+		url: VT_URL + '/vtigerservice.php?service=restful&do=signout',
 		formData: formData
 	}, function optionalCallback(err, httpResponse, body) {
 		if (err) {
@@ -98,6 +98,38 @@ router.get('/signout', _helper.loginRequired, (req, res, next) => {
 
 router.get('/listAllModules', (req, res, next) => {
 	client.doListtypes(function(args, modules) {
+		console.log(args);
+		if (modules) res.status(201).json(modules);
+		else res.status(400).json({
+			success: false,
+			message: "failed!"
+		});
+	});
+});
+
+router.get('/describe/:module', (req, res, next) => {
+	client.doDescribe(req.params.module, function(args, modules) {
+		console.log(modules);
+		if (modules) res.status(201).json(modules);
+		else res.status(400).json({
+			success: false,
+			message: "failed!"
+		});
+	});
+});
+
+router.post('/addATCP', (req, res, next) => {
+	let body = req.body;
+	console.log(body);
+	var values = {
+		'atcp_contact_id': "12x936",
+		'aticket_id': "36x973",
+		'product_id': "14x470",
+		'atcp_status': "Pending",
+		'assigned_user_id': 1
+	};
+	client.doCreate('ATickContProd', values, function(args, modules) {
+		console.log(args);
 		if (modules) res.status(201).json(modules);
 		else res.status(400).json({
 			success: false,
