@@ -13,6 +13,7 @@ import AddTicket from './Containers/addticket.jsx';
 import TicketDetail from './Containers/ticketdetail.jsx';
 import ContactDetail from './Containers/contactdetail.jsx';
 import TicketPicker from './Containers/aticketpicker.jsx';
+import SumTable from './Containers/sumtable.jsx';
 import StudentTransfer from './Containers/StudentTransfer.jsx';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRedirect, Link, hashHistory } from 'react-router';
@@ -80,7 +81,7 @@ window.onload = () => {
                 <Route path="/Opportunities/potential/:potentialid" component={PotentialDetail}>
                   <IndexRedirect to="/Opportunities/potential/:potentialid/PotentialATCP"/>
                   <Route path ="/Opportunities/potential/:potentialid/PotentialATCP" component={{Main: Datatable}} tablename="PotentialATCP"/>
-                  <Route path ="/Opportunities/potential/:potentialid/PotentialTrans" component={{Main: Datatable}} tablename="PotentialTrans"/>
+                  <Route path ="/Opportunities/potential/:potentialid/PotentialTrans" component={{Main: Datatable, Tab: SumTable}} tablename="PotentialTrans"/>
                 </Route>
               </Route>
               <Route path="AVouchers" component={MainContent} title="AVouchers"> 

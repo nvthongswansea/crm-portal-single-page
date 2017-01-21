@@ -8,6 +8,7 @@ import TicketReducer from './producer_ticket.js';
 import ContactReducer from './producer_contact.js';
 import TicketPickerReducer from './producer_ticketpicker.js';
 import ATickConProdReducer from './producer_atickconprod.js';
+import SumTableReducer from './producer_sumtable.js';
 import { reducer as awaitReducer } from 'redux-await';
 import { reducer as notifications } from 'react-redux-notifications';
 
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
 	ticketpickerdata: TicketPickerReducer,
 	ATCPeditor: ATickConProdReducer,
 	await: awaitReducer,
+	SumTable: SumTableReducer,
 	notifications
 });
 

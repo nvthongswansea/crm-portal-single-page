@@ -18,7 +18,8 @@ import {
 	NO_COUPON,
 	COUPON_EXIST,
 	COUPON_USED,
-	COUPON_INVALID
+	COUPON_INVALID,
+	REFRESH_SUMTABLE
 } from './actiontypes.js';
 
 export function refreshContent(menutitle) {
@@ -447,7 +448,21 @@ export function getContentByParam(module, param) {
 
 				},
 			};
+		case "Sumtable":
+			return {
+				type: REFRESH_SUMTABLE,
+				AWAIT_MARKER,
+				payload: {
+					loadedSumTable: axios.get('/portal/sum/' + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
 
+				},
+			};
 		case "registerCoupon":
 			return dispatch => {
 				axios.post("/portal/checkcouponexistence", {

@@ -117,6 +117,9 @@ const REFRESH_FAQ = "REFRESH_FAQ";
 const REFRESH_ADDTICKET = "REFRESH_ADDTICKET";
 /* harmony export (immutable) */ exports["REFRESH_ADDTICKET"] = REFRESH_ADDTICKET;
 
+const REFRESH_SUMTABLE = "REFRESH_SUMTABLE";
+/* harmony export (immutable) */ exports["REFRESH_SUMTABLE"] = REFRESH_SUMTABLE;
+
 const GET_TICKET = "GET_TICKET";
 /* harmony export (immutable) */ exports["GET_TICKET"] = GET_TICKET;
 
@@ -2603,7 +2606,21 @@ function getContentByParam(module, param) {
 
 				},
 			};
+		case "Sumtable":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_SUMTABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedSumTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/sum/' + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
 
+				},
+			};
 		case "registerCoupon":
 			return dispatch => {
 				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkcouponexistence", {
@@ -9846,6 +9863,10 @@ var _aticketpicker = __webpack_require__(201);
 
 var _aticketpicker2 = _interopRequireDefault(_aticketpicker);
 
+var _sumtable = __webpack_require__(426);
+
+var _sumtable2 = _interopRequireDefault(_sumtable);
+
 var _StudentTransfer = __webpack_require__(423);
 
 var _StudentTransfer2 = _interopRequireDefault(_StudentTransfer);
@@ -9989,7 +10010,7 @@ window.onload = function () {
             { path: '/Opportunities/potential/:potentialid', component: _OpportunitiesDetail2.default },
             _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/Opportunities/potential/:potentialid/PotentialATCP' }),
             _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/potential/:potentialid/PotentialATCP', component: { Main: _datatable2.default }, tablename: 'PotentialATCP' }),
-            _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/potential/:potentialid/PotentialTrans', component: { Main: _datatable2.default }, tablename: 'PotentialTrans' })
+            _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/potential/:potentialid/PotentialTrans', component: { Main: _datatable2.default, Tab: _sumtable2.default }, tablename: 'PotentialTrans' })
           )
         ),
         _react2.default.createElement(
@@ -10396,6 +10417,7 @@ var PotentialDetail = function (_Component) {
 						)
 					)
 				),
+				this.props.Tab ? this.props.Tab : "",
 				this.props.Main
 			);
 		}
@@ -31998,12 +32020,14 @@ function config (name) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__producer_contact_js__ = __webpack_require__(406);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__producer_ticketpicker_js__ = __webpack_require__(411);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__producer_atickconprod_js__ = __webpack_require__(404);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_redux_await__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_redux_await___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_redux_await__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_redux_notifications__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_redux_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_react_redux_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__producer_sumtable_js__ = __webpack_require__(425);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_redux_await__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_redux_await___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_redux_await__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_react_redux_notifications__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_react_redux_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_react_redux_notifications__);
 Object.defineProperty(exports, "__esModule", { value: true });
  
+
 
 
 
@@ -32026,8 +32050,9 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 	contactdata: __WEBPACK_IMPORTED_MODULE_7__producer_contact_js__["a" /* default */],
 	ticketpickerdata: __WEBPACK_IMPORTED_MODULE_8__producer_ticketpicker_js__["a" /* default */],
 	ATCPeditor: __WEBPACK_IMPORTED_MODULE_9__producer_atickconprod_js__["a" /* default */],
-	await: __WEBPACK_IMPORTED_MODULE_10_redux_await__["reducer"],
-	notifications: __WEBPACK_IMPORTED_MODULE_11_react_redux_notifications__["reducer"]
+	await: __WEBPACK_IMPORTED_MODULE_11_redux_await__["reducer"],
+	SumTable: __WEBPACK_IMPORTED_MODULE_10__producer_sumtable_js__["a" /* default */],
+	notifications: __WEBPACK_IMPORTED_MODULE_12_react_redux_notifications__["reducer"]
 });
 
 /* harmony default export */ exports["default"] = rootReducer;
@@ -32571,6 +32596,250 @@ function mapDispatchToProps(dispatch) {
 }
 
 exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(StudentTransfer);
+
+/***/ },
+/* 424 */,
+/* 425 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
+
+/* harmony default export */ exports["a"] = function(state=null, action) {
+	switch(action.type) {
+		case __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__["REFRESH_SUMTABLE"]:
+		return action.payload.loadedSumTable;
+	}
+	return state;
+};
+
+/***/ },
+/* 426 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reduxAwait = __webpack_require__(15);
+
+var _displaymodulename = __webpack_require__(29);
+
+var _redux = __webpack_require__(10);
+
+var _PulseLoader = __webpack_require__(25);
+
+var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SumTable = function (_Component) {
+	_inherits(SumTable, _Component);
+
+	function SumTable(props) {
+		_classCallCheck(this, SumTable);
+
+		var _this = _possibleConstructorReturn(this, (SumTable.__proto__ || Object.getPrototypeOf(SumTable)).call(this, props));
+
+		_this.state = { potentialid: _this.props.params.potentialid };
+		console.log(_this.state.potentialid);
+		_this.props.getContentByParam("Sumtable", _this.state.potentialid);
+		_this.renderSumData = _this.renderSumData.bind(_this);
+		return _this;
+	}
+
+	_createClass(SumTable, [{
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			var _this2 = this;
+
+			if (this.state.potentialid != nextProps.params.potentialid) this.setState({
+				potentialid: nextProps.params.potentialid
+			}, function () {
+				nextProps.getContentByParam("Sumtable", _this2.state.potentialid);
+			});
+		}
+	}, {
+		key: 'renderSumData',
+		value: function renderSumData() {
+			console.log(this.props.data);
+			var ticketinfo_arr = [];
+			var data = this.props.data;
+			var grandtotal = 0;
+			var total = 0;
+			var refund = 0;
+			if (data.total) {
+				grandtotal += data.total;
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng ti\u1EC1n h\xF3a \u0111\u01A1n: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: data.total.toLocaleString() + " VND" } })
+				));
+			}
+			if (data.penalty) {
+				grandtotal += data.penalty;
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng ph\xED ph\u1EA1t: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: data.penalty.toLocaleString() + " VND" } })
+				));
+			}
+			if (data.detail) {
+				data.detail.map(function (field) {
+					if (field.acashflow_type != "Refund") {
+						total += field.sum;
+					} else {
+						refund += field.sum;
+					}
+				});
+				grandtotal -= total;
+				grandtotal -= refund;
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng \u0111\xE3 thanh to\xE1n: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: total.toLocaleString() + " VND" } })
+				));
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng tr\u1EA3 l\u1EA1i: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: refund.toLocaleString() + " VND" } })
+				));
+			}
+			if (grandtotal < 0) {
+				grandtotal *= -1;
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng ti\u1EC1n d\u01B0: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: grandtotal.toLocaleString() + " VND" } })
+				));
+			} else {
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng ti\u1EC1n c\xF2n thi\u1EBFu: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: grandtotal.toLocaleString() + " VND" } })
+				));
+			}
+			return ticketinfo_arr;
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				this.props.statuses.loadedSumTable === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
+				this.props.statuses.loadedSumTable === 'success' && _react2.default.createElement(
+					'div',
+					{ className: 'row' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-lg-6' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'panel panel-default' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'panel-heading' },
+								'T\xF3m t\u1EAFt th\xF4ng tin thanh to\xE1n: '
+							),
+							_react2.default.createElement(
+								'table',
+								{ className: 'table' },
+								_react2.default.createElement(
+									'tbody',
+									null,
+									this.props.data ? this.renderSumData() : ""
+								)
+							)
+						)
+					)
+				)
+			);
+		}
+	}]);
+
+	return SumTable;
+}(_react.Component);
+
+function mapStateToProps(state) {
+	return {
+		data: state.SumTable
+	};
+}
+function mapDispatchToProps(dispatch) {
+	return (0, _redux.bindActionCreators)({ refreshContent: _displaymodulename.refreshContent, getContentByParam: _displaymodulename.getContentByParam }, dispatch);
+}
+
+exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(SumTable);
 
 /***/ }
 ],[415]);
