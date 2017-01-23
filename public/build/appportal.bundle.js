@@ -10394,7 +10394,11 @@ var PotentialDetail = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				null,
-				this.props.Tab ? this.props.Tab : "",
+				_react2.default.createElement(
+					'div',
+					{ className: 'container' },
+					this.props.Tab ? this.props.Tab : ""
+				),
 				_react2.default.createElement(
 					'div',
 					{ className: 'container' },

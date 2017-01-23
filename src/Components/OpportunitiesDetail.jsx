@@ -7,7 +7,9 @@ export default class PotentialDetail extends Component {4
 	render() {
 		return (
 			<div>
+			<div className="container">
 			{this.props.Tab? this.props.Tab: ""}
+			</div>
 			<div className="container">
 			  <ul className="nav nav-tabs">
 			    <li> <Link activeClassName="active" to={"/Opportunities/potential/"+this.props.params.potentialid + "/PotentialATCP"} >Chi tiết các khóa học trong hóa đơn</Link></li>
