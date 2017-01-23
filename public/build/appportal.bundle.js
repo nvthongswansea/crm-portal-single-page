@@ -13,36 +13,6 @@ webpackJsonp([0],[
 /* 11 */,
 /* 12 */,
 /* 13 */
-/***/ function(module, exports) {
-
-if (typeof Object.create === 'function') {
-  // implementation from standard node.js 'util' module
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-  };
-} else {
-  // old school shim for old browsers
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    var TempCtor = function () {}
-    TempCtor.prototype = superCtor.prototype
-    ctor.prototype = new TempCtor()
-    ctor.prototype.constructor = ctor
-  }
-}
-
-
-/***/ },
-/* 14 */,
-/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68,7 +38,7 @@ Object.defineProperty(exports, 'AWAIT_META_CONTAINER', {
   }
 });
 
-var _middleware = __webpack_require__(382);
+var _middleware = __webpack_require__(383);
 
 Object.defineProperty(exports, 'middleware', {
   enumerable: true,
@@ -89,11 +59,11 @@ Object.defineProperty(exports, 'getFailedActionType', {
   }
 });
 
-var _reducer2 = __webpack_require__(383);
+var _reducer2 = __webpack_require__(384);
 
 var _reducer3 = _interopRequireDefault(_reducer2);
 
-var _connect2 = __webpack_require__(381);
+var _connect2 = __webpack_require__(382);
 
 var _connect3 = _interopRequireDefault(_connect2);
 
@@ -103,7 +73,7 @@ exports.reducer = _reducer3.default;
 exports.connect = _connect3.default;
 
 /***/ },
-/* 16 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -152,14 +122,683 @@ const COUPON_INVALID = "COUPON_INVALID";
 
 
 /***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+
+/***/ },
+/* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
-/* 20 */,
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+var React = __webpack_require__(0);
+var assign = __webpack_require__(214);
+var insertKeyframesRule = __webpack_require__(218);
+
+/**
+ * @type {Object}
+ */
+var keyframes = {
+    '0%': {
+        transform: 'scale(1)',
+        opacity: 1
+    },
+    '45%': {
+        transform: 'scale(0.1)',
+        opacity: 0.7
+    },
+    '80%': {
+        transform: 'scale(1)',
+        opacity: 1
+    }
+};
+
+/**
+ * @type {String}
+ */
+var animationName = insertKeyframesRule(keyframes);
+
+var Loader = React.createClass({
+    displayName: 'Loader',
+
+    /**
+     * @type {Object}
+     */
+    propTypes: {
+        loading: React.PropTypes.bool,
+        color: React.PropTypes.string,
+        size: React.PropTypes.string,
+        margin: React.PropTypes.string
+    },
+
+    /**
+     * @return {Object}
+     */
+    getDefaultProps: function getDefaultProps() {
+        return {
+            loading: true,
+            color: '#ffffff',
+            size: '15px',
+            margin: '2px'
+        };
+    },
+
+    /**
+     * @return {Object}
+     */
+    getBallStyle: function getBallStyle() {
+        return {
+            backgroundColor: this.props.color,
+            width: this.props.size,
+            height: this.props.size,
+            margin: this.props.margin,
+            borderRadius: '100%',
+            verticalAlign: this.props.verticalAlign
+        };
+    },
+
+    /**
+     * @param  {Number} i
+     * @return {Object}
+     */
+    getAnimationStyle: function getAnimationStyle(i) {
+        var animation = [animationName, '0.75s', i * 0.12 + 's', 'infinite', 'cubic-bezier(.2,.68,.18,1.08)'].join(' ');
+        var animationFillMode = 'both';
+
+        return {
+            animation: animation,
+            animationFillMode: animationFillMode
+        };
+    },
+
+    /**
+     * @param  {Number} i
+     * @return {Object}
+     */
+    getStyle: function getStyle(i) {
+        return assign(this.getBallStyle(i), this.getAnimationStyle(i), {
+            display: 'inline-block'
+        });
+    },
+
+    /**
+     * @param  {Boolean} loading
+     * @return {ReactComponent || null}
+     */
+    renderLoader: function renderLoader(loading) {
+        if (loading) {
+            return React.createElement(
+                'div',
+                { id: this.props.id, className: this.props.className },
+                React.createElement('div', { style: this.getStyle(1) }),
+                React.createElement('div', { style: this.getStyle(2) }),
+                React.createElement('div', { style: this.getStyle(3) })
+            );
+        }
+
+        return null;
+    },
+
+    render: function render() {
+        return this.renderLoader(this.props.loading);
+    }
+});
+
+module.exports = Loader;
+
+/***/ },
 /* 21 */,
 /* 22 */,
 /* 23 */,
-/* 24 */
+/* 24 */,
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_await__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_await___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_redux_await__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__ = __webpack_require__(14);
+Object.defineProperty(exports, "__esModule", { value: true });
+/* harmony export (immutable) */ exports["refreshContent"] = refreshContent;
+/* harmony export (immutable) */ exports["getContentByParam"] = getContentByParam;
+
+
+
+
+
+function refreshContent(menutitle) {
+	switch (menutitle) {
+		case 'HelpDesk':
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listtickets')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "Contacts":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listcontacts')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "Products":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listproducts')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "ATickets":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listatickets')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "ATickConProd":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listatickcontprod')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "Opportunities":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listopportunities')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "AVouchers":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listvouchers')
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case 'Faq':
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_FAQ"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedFAQ: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/listfaq")
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case 'newticket':
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_ADDTICKET"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedAddTicketForm: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/inforaddnewticket")
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+
+	}
+
+}
+
+function getContentByParam(module, param) {
+	switch (module) {
+		case 'ticketdetail':
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["GET_TICKET"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTicketInfo: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/ticket/" + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "closeticket":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["GET_TICKET"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTicketInfo: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/closeticket/" + param)
+						.then((response) => {
+							return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/ticket/" + response.data.ticketid)
+								.then((responset) => {
+									return responset.data;
+								})
+								.catch((err) => {
+									return errt;
+								})
+						})
+						.catch((err) => {
+							conosle.log(err);
+						})
+				},
+			};
+		case "contactdetail":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["GET_CONTACT"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedContactInfo: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/contact/" + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case 'ticketpicker':
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TICKETPICKER"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "ATCPDetail":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_ATICKCONTPRODEDITOR"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedATCPeditor: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/ATickConProd/" + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "VoucherDetail":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_ATICKCONTPRODEDITOR"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedATCPeditor: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/AVouchers/" + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "addticket":
+			__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/createnewticket", param)
+				.then(function(response) {
+					__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
+						pathname: '/HelpDesk/main',
+						query: {
+							noti: 'Added new ticket successfully!'
+						}
+					});
+				})
+				.catch(function(error) {
+					__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
+						pathname: '/HelpDesk/main',
+						query: {
+							noti: 'Failed!'
+						}
+					});
+				});
+		case "updateAtickContProd":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TICKETPICKER"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/aticketsproduct/update", {
+							productid: param.productid,
+							tickcontproductid: param.tickcontproductid,
+							cancelrequest: param.cancelrequest
+						})
+						.then((response) => {
+							return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param.defaultprodid)
+								.then((responsed) => {
+									return responsed.data;
+								})
+								.catch((errd) => {
+									return errd;
+								});
+						})
+						.catch((err) => {
+							return err;
+						})
+				},
+			};
+		case "updateCoupon":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TICKETPICKER"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/coupon/update", {
+							atickcontprodid: param.atickcontprodid
+						})
+						.then((response) => {
+							return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param.defaultprodid)
+								.then((responsed) => {
+									return responsed.data;
+								})
+								.catch((errd) => {
+									return errd;
+								});
+						})
+						.catch((err) => {
+							return err;
+						})
+				},
+			};
+		case 'checkStudentEmail':
+			return dispatch => {
+				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkemailexistence", {
+						email: param
+					})
+					.then((response) => {
+						console.log(response.data);
+						if (!response.data) {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
+							});
+						} else if (response.data.contactid) {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["EMAIL_EXIST"]
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
+		case 'checkCoupon':
+			return dispatch => {
+				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkcouponexistence", {
+						coupon: param.coupon,
+						productid: param.productid
+					})
+					.then((response) => {
+						console.log(response.data);
+						if (!response.data) {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_COUPON"]
+							});
+						} else if (response.data.acouponsid) {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_EXIST"]
+							});
+						} else if (response.data == "used") {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_USED"]
+							});
+						} else if (response.data == "invalid") {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_INVALID"]
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
+		case "changeStudent":
+			return dispatch => {
+				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/changeStudent", param)
+					.then((response) => {
+						if (response.data) {
+							__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
+								pathname: '/ATickConProd/main',
+								query: {
+									noti: 'Changed student successfully!'
+								}
+							});
+						} else {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
+		case "changeVoucherOwner":
+			return dispatch => {
+				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/changeVoucherOwner", param)
+					.then((response) => {
+						if (response.data) {
+							__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
+								pathname: '/AVouchers/main',
+								query: {
+									noti: 'Changed student successfully!'
+								}
+							});
+						} else {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
+		case "PotentialATCP":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listATCPbypotential/' + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "PotentialTrans":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listTransbypotential/' + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "Sumtable":
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_SUMTABLE"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					loadedSumTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/sum/' + param)
+						.then((response) => {
+							return response.data;
+						})
+						.catch((err) => {
+							return err;
+						})
+
+				},
+			};
+		case "registerCoupon":
+			return dispatch => {
+				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkcouponexistence", {
+						coupon: param.couponcode,
+						productid: param.productid
+					})
+					.then((response) => {
+						if (!response.data) {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_COUPON"]
+							});
+						} else if (response.data.acouponsid) {
+							__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/addATCPCoupon", {
+									"aticketid": response.data.acouponsid,
+									"productid": param.productid
+								})
+								.then((responsenext) => {
+									if (responsenext.data.atcp_no) {
+										dispatch ({
+											type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TICKETPICKER"],
+											AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+											COUPON_EXIST: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_EXIST"],
+											payload: {
+												loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param.productid)
+													.then((response) => {
+														return response.data;
+													})
+													.catch((err) => {
+														return err;
+													})
+
+											},
+										});
+									}
+								})
+								.catch((err) => {
+									return err;
+								})
+						} else if (response.data == "used") {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_USED"]
+							});
+						} else if (response.data == "invalid") {
+							dispatch({
+								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_INVALID"]
+							});
+						}
+					})
+					.catch((err) => {
+						return err;
+					})
+			}
+
+	}
+}
+
+/***/ },
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -173,8 +812,8 @@ const COUPON_INVALID = "COUPON_INVALID";
 
 'use strict'
 
-var base64 = __webpack_require__(205)
-var ieee754 = __webpack_require__(252)
+var base64 = __webpack_require__(206)
+var ieee754 = __webpack_require__(253)
 var isArray = __webpack_require__(121)
 
 exports.Buffer = Buffer
@@ -1953,133 +2592,11 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
 
 /***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-var React = __webpack_require__(0);
-var assign = __webpack_require__(213);
-var insertKeyframesRule = __webpack_require__(217);
-
-/**
- * @type {Object}
- */
-var keyframes = {
-    '0%': {
-        transform: 'scale(1)',
-        opacity: 1
-    },
-    '45%': {
-        transform: 'scale(0.1)',
-        opacity: 0.7
-    },
-    '80%': {
-        transform: 'scale(1)',
-        opacity: 1
-    }
-};
-
-/**
- * @type {String}
- */
-var animationName = insertKeyframesRule(keyframes);
-
-var Loader = React.createClass({
-    displayName: 'Loader',
-
-    /**
-     * @type {Object}
-     */
-    propTypes: {
-        loading: React.PropTypes.bool,
-        color: React.PropTypes.string,
-        size: React.PropTypes.string,
-        margin: React.PropTypes.string
-    },
-
-    /**
-     * @return {Object}
-     */
-    getDefaultProps: function getDefaultProps() {
-        return {
-            loading: true,
-            color: '#ffffff',
-            size: '15px',
-            margin: '2px'
-        };
-    },
-
-    /**
-     * @return {Object}
-     */
-    getBallStyle: function getBallStyle() {
-        return {
-            backgroundColor: this.props.color,
-            width: this.props.size,
-            height: this.props.size,
-            margin: this.props.margin,
-            borderRadius: '100%',
-            verticalAlign: this.props.verticalAlign
-        };
-    },
-
-    /**
-     * @param  {Number} i
-     * @return {Object}
-     */
-    getAnimationStyle: function getAnimationStyle(i) {
-        var animation = [animationName, '0.75s', i * 0.12 + 's', 'infinite', 'cubic-bezier(.2,.68,.18,1.08)'].join(' ');
-        var animationFillMode = 'both';
-
-        return {
-            animation: animation,
-            animationFillMode: animationFillMode
-        };
-    },
-
-    /**
-     * @param  {Number} i
-     * @return {Object}
-     */
-    getStyle: function getStyle(i) {
-        return assign(this.getBallStyle(i), this.getAnimationStyle(i), {
-            display: 'inline-block'
-        });
-    },
-
-    /**
-     * @param  {Boolean} loading
-     * @return {ReactComponent || null}
-     */
-    renderLoader: function renderLoader(loading) {
-        if (loading) {
-            return React.createElement(
-                'div',
-                { id: this.props.id, className: this.props.className },
-                React.createElement('div', { style: this.getStyle(1) }),
-                React.createElement('div', { style: this.getStyle(2) }),
-                React.createElement('div', { style: this.getStyle(3) })
-            );
-        }
-
-        return null;
-    },
-
-    render: function render() {
-        return this.renderLoader(this.props.loading);
-    }
-});
-
-module.exports = Loader;
-
-/***/ },
-/* 26 */,
-/* 27 */
+/* 27 */,
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2108,7 +2625,7 @@ var processNextTick = __webpack_require__(72);
 
 /*<replacement>*/
 var util = __webpack_require__(42);
-util.inherits = __webpack_require__(13);
+util.inherits = __webpack_require__(15);
 /*</replacement>*/
 
 var Readable = __webpack_require__(164);
@@ -2160,531 +2677,14 @@ function forEach(xs, f) {
 }
 
 /***/ },
-/* 28 */,
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_await__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_await___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_redux_await__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__ = __webpack_require__(16);
-Object.defineProperty(exports, "__esModule", { value: true });
-/* harmony export (immutable) */ exports["refreshContent"] = refreshContent;
-/* harmony export (immutable) */ exports["getContentByParam"] = getContentByParam;
-
-
-
-
-
-function refreshContent(menutitle) {
-	switch (menutitle) {
-		case 'HelpDesk':
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listtickets')
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "Contacts":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listcontacts')
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "Products":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listproducts')
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "ATickets":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listatickets')
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "ATickConProd":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listatickcontprod')
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "Opportunities":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listopportunities')
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "AVouchers":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listvouchers')
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case 'Faq':
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_FAQ"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedFAQ: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/listfaq")
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case 'newticket':
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_ADDTICKET"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedAddTicketForm: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/inforaddnewticket")
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-
-	}
-
-}
-
-function getContentByParam(module, param) {
-	switch (module) {
-		case 'ticketdetail':
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["GET_TICKET"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTicketInfo: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/ticket/" + param)
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "closeticket":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["GET_TICKET"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTicketInfo: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/closeticket/" + param)
-						.then((response) => {
-							return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/ticket/" + response.data.ticketid)
-								.then((responset) => {
-									return responset.data;
-								})
-								.catch((err) => {
-									return errt;
-								})
-						})
-						.catch((err) => {
-							conosle.log(err);
-						})
-				},
-			};
-		case "contactdetail":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["GET_CONTACT"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedContactInfo: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/contact/" + param)
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case 'ticketpicker':
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TICKETPICKER"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param)
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "ATCPDetail":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_ATICKCONTPRODEDITOR"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedATCPeditor: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/ATickConProd/" + param)
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "VoucherDetail":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_ATICKCONTPRODEDITOR"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedATCPeditor: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/AVouchers/" + param)
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "addticket":
-			__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/createnewticket", param)
-				.then(function(response) {
-					__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
-						pathname: '/HelpDesk/main',
-						query: {
-							noti: 'Added new ticket successfully!'
-						}
-					});
-				})
-				.catch(function(error) {
-					__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
-						pathname: '/HelpDesk/main',
-						query: {
-							noti: 'Failed!'
-						}
-					});
-				});
-		case "updateAtickContProd":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TICKETPICKER"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/aticketsproduct/update", {
-							productid: param.productid,
-							tickcontproductid: param.tickcontproductid,
-							cancelrequest: param.cancelrequest
-						})
-						.then((response) => {
-							return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param.defaultprodid)
-								.then((responsed) => {
-									return responsed.data;
-								})
-								.catch((errd) => {
-									return errd;
-								});
-						})
-						.catch((err) => {
-							return err;
-						})
-				},
-			};
-		case "updateCoupon":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TICKETPICKER"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/coupon/update", {
-							atickcontprodid: param.atickcontprodid
-						})
-						.then((response) => {
-							return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param.defaultprodid)
-								.then((responsed) => {
-									return responsed.data;
-								})
-								.catch((errd) => {
-									return errd;
-								});
-						})
-						.catch((err) => {
-							return err;
-						})
-				},
-			};
-		case 'checkStudentEmail':
-			return dispatch => {
-				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkemailexistence", {
-						email: param
-					})
-					.then((response) => {
-						console.log(response.data);
-						if (!response.data) {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
-							});
-						} else if (response.data.contactid) {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["EMAIL_EXIST"]
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
-		case 'checkCoupon':
-			return dispatch => {
-				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkcouponexistence", {
-						coupon: param.coupon,
-						productid: param.productid
-					})
-					.then((response) => {
-						console.log(response.data);
-						if (!response.data) {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_COUPON"]
-							});
-						} else if (response.data.acouponsid) {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_EXIST"]
-							});
-						} else if (response.data == "used") {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_USED"]
-							});
-						} else if (response.data == "invalid") {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_INVALID"]
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
-		case "changeStudent":
-			return dispatch => {
-				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/changeStudent", param)
-					.then((response) => {
-						if (response.data) {
-							__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
-								pathname: '/ATickConProd/main',
-								query: {
-									noti: 'Changed student successfully!'
-								}
-							});
-						} else {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
-		case "changeVoucherOwner":
-			return dispatch => {
-				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/changeVoucherOwner", param)
-					.then((response) => {
-						if (response.data) {
-							__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
-								pathname: '/AVouchers/main',
-								query: {
-									noti: 'Changed student successfully!'
-								}
-							});
-						} else {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
-		case "PotentialATCP":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listATCPbypotential/' + param)
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "PotentialTrans":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/listTransbypotential/' + param)
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "Sumtable":
-			return {
-				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_SUMTABLE"],
-				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-				payload: {
-					loadedSumTable: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/portal/sum/' + param)
-						.then((response) => {
-							return response.data;
-						})
-						.catch((err) => {
-							return err;
-						})
-
-				},
-			};
-		case "registerCoupon":
-			return dispatch => {
-				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkcouponexistence", {
-						coupon: param.couponcode,
-						productid: param.productid
-					})
-					.then((response) => {
-						if (!response.data) {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_COUPON"]
-							});
-						} else if (response.data.acouponsid) {
-							__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/addATCPCoupon", {
-									"aticketid": response.data.acouponsid,
-									"productid": param.productid
-								})
-								.then((responsenext) => {
-									if (responsenext.data.atcp_no) {
-										dispatch ({
-											type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TICKETPICKER"],
-											AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
-											COUPON_EXIST: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_EXIST"],
-											payload: {
-												loadedTicketPicker: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/portal/aticketsproduct/" + param.productid)
-													.then((response) => {
-														return response.data;
-													})
-													.catch((err) => {
-														return err;
-													})
-
-											},
-										});
-									}
-								})
-								.catch((err) => {
-									return err;
-								})
-						} else if (response.data == "used") {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_USED"]
-							});
-						} else if (response.data == "invalid") {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["COUPON_INVALID"]
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
-
-	}
-}
-
-/***/ },
+/* 29 */,
 /* 30 */,
 /* 31 */,
 /* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 var Parser = __webpack_require__(118),
-    DomHandler = __webpack_require__(211);
+    DomHandler = __webpack_require__(212);
 
 function defineProp(name, value){
 	delete module.exports[name];
@@ -2698,22 +2698,22 @@ module.exports = {
 	ElementType: __webpack_require__(43),
 	DomHandler: DomHandler,
 	get FeedHandler(){
-		return defineProp("FeedHandler", __webpack_require__(249));
+		return defineProp("FeedHandler", __webpack_require__(250));
 	},
 	get Stream(){
-		return defineProp("Stream", __webpack_require__(251));
+		return defineProp("Stream", __webpack_require__(252));
 	},
 	get WritableStream(){
 		return defineProp("WritableStream", __webpack_require__(120));
 	},
 	get ProxyHandler(){
-		return defineProp("ProxyHandler", __webpack_require__(250));
+		return defineProp("ProxyHandler", __webpack_require__(251));
 	},
 	get DomUtils(){
-		return defineProp("DomUtils", __webpack_require__(219));
+		return defineProp("DomUtils", __webpack_require__(220));
 	},
 	get CollectingHandler(){
-		return defineProp("CollectingHandler", __webpack_require__(248));
+		return defineProp("CollectingHandler", __webpack_require__(249));
 	},
 	// For legacy support
 	DefaultHandler: DomHandler,
@@ -2874,7 +2874,7 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26).Buffer))
 
 /***/ },
 /* 43 */
@@ -3231,7 +3231,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.InlineNotification = exports.middleware = exports.reducer = undefined;
 
-var _InlineNotification = __webpack_require__(338);
+var _InlineNotification = __webpack_require__(339);
 
 var _InlineNotification2 = _interopRequireDefault(_InlineNotification);
 
@@ -3273,14 +3273,14 @@ exports.InlineNotification = _InlineNotification2.default;
 module.exports = Stream;
 
 var EE = __webpack_require__(44).EventEmitter;
-var inherits = __webpack_require__(13);
+var inherits = __webpack_require__(15);
 
 inherits(Stream, EE);
-Stream.Readable = __webpack_require__(378);
-Stream.Writable = __webpack_require__(380);
-Stream.Duplex = __webpack_require__(375);
-Stream.Transform = __webpack_require__(379);
-Stream.PassThrough = __webpack_require__(377);
+Stream.Readable = __webpack_require__(379);
+Stream.Writable = __webpack_require__(381);
+Stream.Duplex = __webpack_require__(376);
+Stream.Transform = __webpack_require__(380);
+Stream.PassThrough = __webpack_require__(378);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -3396,9 +3396,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _displaymodulename = __webpack_require__(29);
+var _displaymodulename = __webpack_require__(25);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(8);
 
 var _reactRouter = __webpack_require__(19);
 
@@ -3406,7 +3406,7 @@ var _jquery = __webpack_require__(30);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _datatables = __webpack_require__(207);
+var _datatables = __webpack_require__(208);
 
 var _datatables2 = _interopRequireDefault(_datatables);
 
@@ -3414,9 +3414,9 @@ var _reactHtmlParser = __webpack_require__(89);
 
 var _reactHtmlParser2 = _interopRequireDefault(_reactHtmlParser);
 
-var _reduxAwait = __webpack_require__(15);
+var _reduxAwait = __webpack_require__(13);
 
-var _PulseLoader = __webpack_require__(25);
+var _PulseLoader = __webpack_require__(20);
 
 var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
 
@@ -3608,7 +3608,7 @@ exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
-var buffer = __webpack_require__(24);
+var buffer = __webpack_require__(26);
 var Buffer = buffer.Buffer;
 var SlowBuffer = buffer.SlowBuffer;
 var MAX_LEN = buffer.kMaxLength || 2147483647;
@@ -3715,7 +3715,7 @@ exports.allocUnsafeSlow = function allocUnsafeSlow(size) {
   return new SlowBuffer(size);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
 
 /***/ },
 /* 64 */
@@ -5916,7 +5916,7 @@ function nextTick(fn, arg1, arg2, arg3) {
   }
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
 
 /***/ },
 /* 73 */,
@@ -5945,7 +5945,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _HtmlParser = __webpack_require__(326);
+var _HtmlParser = __webpack_require__(327);
 
 var _HtmlParser2 = _interopRequireDefault(_HtmlParser);
 
@@ -6011,11 +6011,11 @@ exports.default = _HtmlParser2.default;
 
 module.exports = Transform;
 
-var Duplex = __webpack_require__(27);
+var Duplex = __webpack_require__(28);
 
 /*<replacement>*/
 var util = __webpack_require__(42);
-util.inherits = __webpack_require__(13);
+util.inherits = __webpack_require__(15);
 /*</replacement>*/
 
 util.inherits(Transform, Duplex);
@@ -6177,12 +6177,12 @@ Writable.WritableState = WritableState;
 
 /*<replacement>*/
 var util = __webpack_require__(42);
-util.inherits = __webpack_require__(13);
+util.inherits = __webpack_require__(15);
 /*</replacement>*/
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(400)
+  deprecate: __webpack_require__(401)
 };
 /*</replacement>*/
 
@@ -6197,7 +6197,7 @@ var Stream;
 })();
 /*</replacement>*/
 
-var Buffer = __webpack_require__(24).Buffer;
+var Buffer = __webpack_require__(26).Buffer;
 /*<replacement>*/
 var bufferShim = __webpack_require__(63);
 /*</replacement>*/
@@ -6214,7 +6214,7 @@ function WriteReq(chunk, encoding, cb) {
 }
 
 function WritableState(options, stream) {
-  Duplex = Duplex || __webpack_require__(27);
+  Duplex = Duplex || __webpack_require__(28);
 
   options = options || {};
 
@@ -6348,7 +6348,7 @@ if (typeof Symbol === 'function' && Symbol.hasInstance && typeof Function.protot
 }
 
 function Writable(options) {
-  Duplex = Duplex || __webpack_require__(27);
+  Duplex = Duplex || __webpack_require__(28);
 
   // Writable ctor is applied to Duplexes, too.
   // `realHasInstance` is necessary because using plain `instanceof`
@@ -6707,7 +6707,7 @@ function CorkedRequest(state) {
     }
   };
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21), __webpack_require__(399).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22), __webpack_require__(400).setImmediate))
 
 /***/ },
 /* 99 */
@@ -6747,7 +6747,7 @@ var AWAIT_META_CONTAINER = exports.AWAIT_META_CONTAINER = '@@redux-await/AWAIT_M
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var Buffer = __webpack_require__(24).Buffer;
+var Buffer = __webpack_require__(26).Buffer;
 
 var isBufferEncoding = Buffer.isEncoding
   || function(encoding) {
@@ -7008,7 +7008,7 @@ Object.keys(domLvl1).forEach(function(key) {
 /* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-var decodeMap = __webpack_require__(229);
+var decodeMap = __webpack_require__(230);
 
 module.exports = decodeCodePoint;
 
@@ -7284,7 +7284,7 @@ function Parser(cbs, options){
 	if(this._cbs.onparserinit) this._cbs.onparserinit(this);
 }
 
-__webpack_require__(13)(Parser, __webpack_require__(44).EventEmitter);
+__webpack_require__(15)(Parser, __webpack_require__(44).EventEmitter);
 
 Parser.prototype._updatePosition = function(initialOffset){
 	if(this.endIndex === null){
@@ -8436,9 +8436,9 @@ Tokenizer.prototype._emitPartial = function(value){
 module.exports = Stream;
 
 var Parser = __webpack_require__(118),
-    WritableStream = __webpack_require__(60).Writable || __webpack_require__(412).Writable,
+    WritableStream = __webpack_require__(60).Writable || __webpack_require__(414).Writable,
     StringDecoder = __webpack_require__(100).StringDecoder,
-    Buffer = __webpack_require__(24).Buffer;
+    Buffer = __webpack_require__(26).Buffer;
 
 function Stream(cbs, options){
 	var parser = this._parser = new Parser(cbs, options);
@@ -8451,7 +8451,7 @@ function Stream(cbs, options){
 	});
 }
 
-__webpack_require__(13)(Stream, WritableStream);
+__webpack_require__(15)(Stream, WritableStream);
 
 WritableStream.prototype._write = function(chunk, encoding, cb){
 	if(chunk instanceof Buffer) chunk = this._decoder.write(chunk);
@@ -8506,11 +8506,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports.default = GeneratePropsFromAttributes;
 
-var _HtmlAttributesToReact = __webpack_require__(335);
+var _HtmlAttributesToReact = __webpack_require__(336);
 
 var _HtmlAttributesToReact2 = _interopRequireDefault(_HtmlAttributesToReact);
 
-var _InlineStyleToObject = __webpack_require__(336);
+var _InlineStyleToObject = __webpack_require__(337);
 
 var _InlineStyleToObject2 = _interopRequireDefault(_InlineStyleToObject);
 
@@ -8547,7 +8547,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = ProcessNodes;
 
-var _elementTypes = __webpack_require__(334);
+var _elementTypes = __webpack_require__(335);
 
 var _elementTypes2 = _interopRequireDefault(_elementTypes);
 
@@ -8759,7 +8759,7 @@ var Transform = __webpack_require__(97);
 
 /*<replacement>*/
 var util = __webpack_require__(42);
-util.inherits = __webpack_require__(13);
+util.inherits = __webpack_require__(15);
 /*</replacement>*/
 
 util.inherits(PassThrough, Transform);
@@ -8816,18 +8816,18 @@ var Stream;
 })();
 /*</replacement>*/
 
-var Buffer = __webpack_require__(24).Buffer;
+var Buffer = __webpack_require__(26).Buffer;
 /*<replacement>*/
 var bufferShim = __webpack_require__(63);
 /*</replacement>*/
 
 /*<replacement>*/
 var util = __webpack_require__(42);
-util.inherits = __webpack_require__(13);
+util.inherits = __webpack_require__(15);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(413);
+var debugUtil = __webpack_require__(415);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -8836,7 +8836,7 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(376);
+var BufferList = __webpack_require__(377);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -8856,7 +8856,7 @@ function prependListener(emitter, event, fn) {
 }
 
 function ReadableState(options, stream) {
-  Duplex = Duplex || __webpack_require__(27);
+  Duplex = Duplex || __webpack_require__(28);
 
   options = options || {};
 
@@ -8925,7 +8925,7 @@ function ReadableState(options, stream) {
 }
 
 function Readable(options) {
-  Duplex = Duplex || __webpack_require__(27);
+  Duplex = Duplex || __webpack_require__(28);
 
   if (!(this instanceof Readable)) return new Readable(options);
 
@@ -9720,7 +9720,7 @@ function indexOf(xs, x) {
   }
   return -1;
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
 
 /***/ },
 /* 165 */
@@ -9819,11 +9819,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(9);
+var _reactDom = __webpack_require__(10);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _store = __webpack_require__(204);
+var _store = __webpack_require__(205);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -9843,7 +9843,7 @@ var _datatable = __webpack_require__(62);
 
 var _datatable2 = _interopRequireDefault(_datatable);
 
-var _FAQ = __webpack_require__(198);
+var _FAQ = __webpack_require__(197);
 
 var _FAQ2 = _interopRequireDefault(_FAQ);
 
@@ -9851,7 +9851,7 @@ var _addticket = __webpack_require__(200);
 
 var _addticket2 = _interopRequireDefault(_addticket);
 
-var _ticketdetail = __webpack_require__(203);
+var _ticketdetail = __webpack_require__(204);
 
 var _ticketdetail2 = _interopRequireDefault(_ticketdetail);
 
@@ -9863,11 +9863,11 @@ var _aticketpicker = __webpack_require__(201);
 
 var _aticketpicker2 = _interopRequireDefault(_aticketpicker);
 
-var _sumtable = __webpack_require__(426);
+var _sumtable = __webpack_require__(203);
 
 var _sumtable2 = _interopRequireDefault(_sumtable);
 
-var _StudentTransfer = __webpack_require__(423);
+var _StudentTransfer = __webpack_require__(199);
 
 var _StudentTransfer2 = _interopRequireDefault(_StudentTransfer);
 
@@ -9884,7 +9884,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 __webpack_require__(109);
-__webpack_require__(206);
+__webpack_require__(207);
 __webpack_require__(110);
 
 var App = function (_Component) {
@@ -10009,7 +10009,7 @@ window.onload = function () {
             _reactRouter.Route,
             { path: '/Opportunities/potential/:potentialid', component: _OpportunitiesDetail2.default },
             _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/Opportunities/potential/:potentialid/PotentialATCP' }),
-            _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/potential/:potentialid/PotentialATCP', component: { Main: _datatable2.default }, tablename: 'PotentialATCP' }),
+            _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/potential/:potentialid/PotentialATCP', component: { Main: _datatable2.default, Tab: _sumtable2.default }, tablename: 'PotentialATCP' }),
             _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/potential/:potentialid/PotentialTrans', component: { Main: _datatable2.default, Tab: _sumtable2.default }, tablename: 'PotentialTrans' })
           )
         ),
@@ -10062,7 +10062,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(9);
+var _reactDom = __webpack_require__(10);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -10138,7 +10138,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(9);
+var _reactDom = __webpack_require__(10);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -10216,7 +10216,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(9);
+var _reactDom = __webpack_require__(10);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -10293,7 +10293,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(9);
+var _reactDom = __webpack_require__(10);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -10301,7 +10301,7 @@ var _Navheader = __webpack_require__(193);
 
 var _Navheader2 = _interopRequireDefault(_Navheader);
 
-var _Navsidebar = __webpack_require__(199);
+var _Navsidebar = __webpack_require__(198);
 
 var _Navsidebar2 = _interopRequireDefault(_Navsidebar);
 
@@ -10361,7 +10361,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(9);
+var _reactDom = __webpack_require__(10);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -10429,8 +10429,7 @@ var PotentialDetail = function (_Component) {
 exports.default = PotentialDetail;
 
 /***/ },
-/* 197 */,
-/* 198 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10446,13 +10445,13 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reduxAwait = __webpack_require__(15);
+var _reduxAwait = __webpack_require__(13);
 
-var _displaymodulename = __webpack_require__(29);
+var _displaymodulename = __webpack_require__(25);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(8);
 
-var _PulseLoader = __webpack_require__(25);
+var _PulseLoader = __webpack_require__(20);
 
 var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
 
@@ -10623,7 +10622,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(FAQ);
 
 /***/ },
-/* 199 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10709,6 +10708,390 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(NavSideBar);
 
 /***/ },
+/* 199 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reduxAwait = __webpack_require__(13);
+
+var _displaymodulename = __webpack_require__(25);
+
+var _redux = __webpack_require__(8);
+
+var _PulseLoader = __webpack_require__(20);
+
+var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
+
+var _reactReduxNotifications = __webpack_require__(59);
+
+var _actiontypes = __webpack_require__(14);
+
+var _jquery = __webpack_require__(30);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StudentTransfer = function (_Component) {
+	_inherits(StudentTransfer, _Component);
+
+	function StudentTransfer(props) {
+		_classCallCheck(this, StudentTransfer);
+
+		var _this = _possibleConstructorReturn(this, (StudentTransfer.__proto__ || Object.getPrototypeOf(StudentTransfer)).call(this, props));
+
+		if (_this.props.route.formname == "TransferCourse") {
+			_this.state = { ATickConProdId: _this.props.params.ATickConProdId };
+			_this.props.getContentByParam("ATCPDetail", _this.state.ATickConProdId);
+		} else if (_this.props.route.formname == "TransferVoucher") {
+			_this.state = { AVouchersId: _this.props.params.AVouchersId };
+			_this.props.getContentByParam("VoucherDetail", _this.state.AVouchersId);
+		}
+		_this.renderProductInfo = _this.renderProductInfo.bind(_this);
+		_this.renderVoucherInfo = _this.renderVoucherInfo.bind(_this);
+		_this.keyDown = _this.keyDown.bind(_this);
+		_this.submit = _this.submit.bind(_this);
+		return _this;
+	}
+
+	_createClass(StudentTransfer, [{
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			var _this2 = this;
+
+			if (this.props.route.formname == "TransferCourse") {
+				if (this.state.ATickConProdId != nextProps.params.ATickConProdId) this.setState({
+					ATickConProdId: nextProps.params.ATickConProdId
+				}, function () {
+					nextProps.getContentByParam("ATCPDetail", _this2.state.ATickConProdId);
+				});
+			} else if (this.props.route.formname == "TransferVoucher") {
+				if (this.state.AVouchersId != nextProps.params.AVouchersId) this.setState({
+					AVouchersId: nextProps.params.AVouchersId
+				}, function () {
+					nextProps.getContentByParam("VoucherDetail", _this2.state.AVouchersId);
+				});
+			}
+		}
+	}, {
+		key: 'keyDown',
+		value: function keyDown(event) {
+			if (event.keyCode === 13) {
+				this.props.getContentByParam("checkStudentEmail", event.target.value.trim());
+				event.preventDefault();
+			}
+		}
+	}, {
+		key: 'submit',
+		value: function submit(dom) {
+			var txt = void 0;
+			if (this.props.route.formname == "TransferCourse") {
+				var res = confirm("Lưu ý: Sau khi đổi tên người đi học, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin vé này nữa. Bạn có chắc chắn muốn đổi?");
+				if (res == true) {
+					var Jsondata = (0, _jquery2.default)(dom).serialize();
+					this.props.getContentByParam("changeStudent", Jsondata);
+				}
+			} else if (this.props.route.formname == "TransferVoucher") {
+				var _res = confirm("Lưu ý: Sau khi chuyển nhượng, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin voucher này nữa. Bạn có chắc chắn muốn chuyển?");
+				if (_res == true) {
+					var _Jsondata = (0, _jquery2.default)(dom).serialize();
+					this.props.getContentByParam("changeVoucherOwner", _Jsondata);
+				}
+			}
+		}
+	}, {
+		key: 'renderProductInfo',
+		value: function renderProductInfo() {
+			var _this3 = this;
+
+			var data = this.props.data;
+			if (!data) return "";
+			var info_arr = [];
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'T\xEAn Kh\xF3a h\u1ECDc: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					data.productname
+				)
+			));
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'M\xE3 v\xE9: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					data.atickets_code
+				)
+			));
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'Email ng\u01B0\u1EDDi \u0111i h\u1ECDc: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'form',
+						{ id: 'changeStudentForm' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement('input', { type: 'hidden', className: 'form-control', name: 'atickcontprodid', value: data.atickcontprodid }),
+							_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', defaultValue: data.email, onKeyDown: function onKeyDown(event) {
+									return _this3.keyDown(event);
+								}, onBlur: function onBlur(event) {
+									_this3.props.getContentByParam("checkStudentEmail", event.target.value.trim());
+								} }),
+							_react2.default.createElement(
+								'div',
+								{ style: { color: "red" } },
+								_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+									defaultMessage: 'Email ng\u01B0\u1EDDi h\u1ECDc kh\xF4ng t\u1ED3n t\u1EA1i! Xin nh\u1EADp email \u0111\xE3 t\u1ED3n t\u1EA1i trong h\u1EC7 th\u1ED1ng.',
+									hideAfter: 2500,
+									triggeredBy: _actiontypes.NO_EMAIL })
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ style: { color: "green" } },
+							_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+								defaultMessage: 'C\xF3 th\u1EC3 chuy\u1EC3n v\xE9 cho ng\u01B0\u1EDDi \u0111i h\u1ECDc n\xE0y!',
+								hideAfter: 2500,
+								triggeredBy: _actiontypes.EMAIL_EXIST })
+						)
+					),
+					_react2.default.createElement(
+						'a',
+						{ className: 'btn btn-success btn-xs', onClick: function onClick() {
+								_this3.submit("#changeStudentForm");
+							} },
+						'\u0110\u1ED5i ng\u01B0\u1EDDi \u0111i h\u1ECDc'
+					)
+				)
+			));
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'T\xECnh tr\u1EA1ng: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					data.atcp_statusatcp_status
+				)
+			));
+			return info_arr;
+		}
+	}, {
+		key: 'renderVoucherInfo',
+		value: function renderVoucherInfo() {
+			var _this4 = this;
+
+			var data = this.props.data;
+			if (!data) return "";
+			var info_arr = [];
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'M\xE3 voucher: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					data.avouchers_code
+				)
+			));
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'Lo\u1EA1i voucher: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					data.avouchers_type,
+					' VND'
+				)
+			));
+			info_arr.push(_react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'b',
+						null,
+						'Email ng\u01B0\u1EDDi \u0111i h\u1ECDc: '
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'form',
+						{ id: 'changeStudentForm' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement('input', { type: 'hidden', className: 'form-control', name: 'voucherid', value: data.avouchersid }),
+							_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', defaultValue: data.email, onKeyDown: function onKeyDown(event) {
+									return _this4.keyDown(event);
+								}, onBlur: function onBlur(event) {
+									_this4.props.getContentByParam("checkStudentEmail", event.target.value.trim());
+								} }),
+							_react2.default.createElement(
+								'div',
+								{ style: { color: "red" } },
+								_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+									defaultMessage: 'Email ng\u01B0\u1EDDi h\u1ECDc kh\xF4ng t\u1ED3n t\u1EA1i! Xin nh\u1EADp email \u0111\xE3 t\u1ED3n t\u1EA1i trong h\u1EC7 th\u1ED1ng.',
+									hideAfter: 2500,
+									triggeredBy: _actiontypes.NO_EMAIL })
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ style: { color: "green" } },
+							_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
+								defaultMessage: 'C\xF3 th\u1EC3 chuy\u1EC3n v\xE9 cho ng\u01B0\u1EDDi \u0111i h\u1ECDc n\xE0y!',
+								hideAfter: 2500,
+								triggeredBy: _actiontypes.EMAIL_EXIST })
+						)
+					),
+					_react2.default.createElement(
+						'a',
+						{ className: 'btn btn-success btn-xs', onClick: function onClick() {
+								_this4.submit("#changeStudentForm");
+							} },
+						'Chuy\u1EC3n nh\u01B0\u1EE3ng voucher'
+					)
+				)
+			));
+			return info_arr;
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			this.props.data ? console.log(this.props.data.data) : "";
+			return _react2.default.createElement(
+				'div',
+				null,
+				this.props.statuses.loadedATCPeditor === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
+				this.props.statuses.loadedATCPeditor === 'success' && _react2.default.createElement(
+					'div',
+					{ className: 'row' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-lg-6' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'panel panel-default' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'panel-heading' },
+								'Th\xF4ng tin c\u01A1 b\u1EA3n: '
+							),
+							_react2.default.createElement(
+								'table',
+								{ className: 'table' },
+								_react2.default.createElement(
+									'tbody',
+									null,
+									this.props.route.formname == "TransferCourse" ? this.props.data ? this.renderProductInfo() : "" : "",
+									this.props.route.formname == "TransferVoucher" ? this.props.data ? this.renderVoucherInfo() : "" : ""
+								)
+							)
+						)
+					)
+				),
+				_react2.default.createElement('div', { className: 'row' })
+			);
+		}
+	}]);
+
+	return StudentTransfer;
+}(_react.Component);
+
+function mapStateToProps(state) {
+	return {
+		data: state.ATCPeditor
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return (0, _redux.bindActionCreators)({ getContentByParam: _displaymodulename.getContentByParam }, dispatch);
+}
+
+exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(StudentTransfer);
+
+/***/ },
 /* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -10725,13 +11108,13 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reduxAwait = __webpack_require__(15);
+var _reduxAwait = __webpack_require__(13);
 
-var _displaymodulename = __webpack_require__(29);
+var _displaymodulename = __webpack_require__(25);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(8);
 
-var _PulseLoader = __webpack_require__(25);
+var _PulseLoader = __webpack_require__(20);
 
 var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
 
@@ -11100,19 +11483,19 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reduxAwait = __webpack_require__(15);
+var _reduxAwait = __webpack_require__(13);
 
-var _displaymodulename = __webpack_require__(29);
+var _displaymodulename = __webpack_require__(25);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(8);
 
-var _PulseLoader = __webpack_require__(25);
+var _PulseLoader = __webpack_require__(20);
 
 var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
 
 var _reactReduxNotifications = __webpack_require__(59);
 
-var _actiontypes = __webpack_require__(16);
+var _actiontypes = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11572,11 +11955,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reduxAwait = __webpack_require__(15);
+var _reduxAwait = __webpack_require__(13);
 
-var _displaymodulename = __webpack_require__(29);
+var _displaymodulename = __webpack_require__(25);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(8);
 
 var _reactRouter = __webpack_require__(19);
 
@@ -11584,7 +11967,7 @@ var _axios = __webpack_require__(51);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _PulseLoader = __webpack_require__(25);
+var _PulseLoader = __webpack_require__(20);
 
 var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
 
@@ -11926,15 +12309,243 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reduxAwait = __webpack_require__(15);
+var _reduxAwait = __webpack_require__(13);
 
-var _displaymodulename = __webpack_require__(29);
+var _displaymodulename = __webpack_require__(25);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(8);
+
+var _PulseLoader = __webpack_require__(20);
+
+var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SumTable = function (_Component) {
+	_inherits(SumTable, _Component);
+
+	function SumTable(props) {
+		_classCallCheck(this, SumTable);
+
+		var _this = _possibleConstructorReturn(this, (SumTable.__proto__ || Object.getPrototypeOf(SumTable)).call(this, props));
+
+		_this.state = { potentialid: _this.props.params.potentialid };
+		console.log(_this.state.potentialid);
+		_this.props.getContentByParam("Sumtable", _this.state.potentialid);
+		_this.renderSumData = _this.renderSumData.bind(_this);
+		return _this;
+	}
+
+	_createClass(SumTable, [{
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			var _this2 = this;
+
+			if (this.state.potentialid != nextProps.params.potentialid) this.setState({
+				potentialid: nextProps.params.potentialid
+			}, function () {
+				nextProps.getContentByParam("Sumtable", _this2.state.potentialid);
+			});
+		}
+	}, {
+		key: 'renderSumData',
+		value: function renderSumData() {
+			console.log(this.props.data);
+			var ticketinfo_arr = [];
+			var data = this.props.data;
+			var grandtotal = 0;
+			var total = 0;
+			var refund = 0;
+			if (data.total) {
+				grandtotal += data.total;
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng ti\u1EC1n h\xF3a \u0111\u01A1n: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: data.total.toLocaleString() + " VND" } })
+				));
+			}
+			if (data.penalty) {
+				grandtotal += data.penalty;
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng ph\xED ph\u1EA1t: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: data.penalty.toLocaleString() + " VND" } })
+				));
+			}
+			if (data.detail) {
+				data.detail.map(function (field) {
+					if (field.acashflow_type != "Refund") {
+						total += field.sum;
+					} else {
+						refund += field.sum;
+					}
+				});
+				grandtotal -= total;
+				grandtotal -= refund;
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng \u0111\xE3 thanh to\xE1n: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: total.toLocaleString() + " VND" } })
+				));
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng tr\u1EA3 l\u1EA1i: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: refund.toLocaleString() + " VND" } })
+				));
+			}
+			if (grandtotal < 0) {
+				grandtotal *= -1;
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng ti\u1EC1n d\u01B0: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: grandtotal.toLocaleString() + " VND" } })
+				));
+			} else {
+				ticketinfo_arr.push(_react2.default.createElement(
+					'tr',
+					null,
+					_react2.default.createElement(
+						'td',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'T\u1ED5ng ti\u1EC1n c\xF2n thi\u1EBFu: '
+						)
+					),
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: grandtotal.toLocaleString() + " VND" } })
+				));
+			}
+			return ticketinfo_arr;
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				this.props.statuses.loadedSumTable === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
+				this.props.statuses.loadedSumTable === 'success' && _react2.default.createElement(
+					'div',
+					{ className: 'row' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-lg-6' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'panel panel-default' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'panel-heading' },
+								'T\xF3m t\u1EAFt th\xF4ng tin thanh to\xE1n: '
+							),
+							_react2.default.createElement(
+								'table',
+								{ className: 'table' },
+								_react2.default.createElement(
+									'tbody',
+									null,
+									this.props.data ? this.renderSumData() : ""
+								)
+							)
+						)
+					)
+				)
+			);
+		}
+	}]);
+
+	return SumTable;
+}(_react.Component);
+
+function mapStateToProps(state) {
+	return {
+		data: state.SumTable
+	};
+}
+function mapDispatchToProps(dispatch) {
+	return (0, _redux.bindActionCreators)({ refreshContent: _displaymodulename.refreshContent, getContentByParam: _displaymodulename.getContentByParam }, dispatch);
+}
+
+exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(SumTable);
+
+/***/ },
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reduxAwait = __webpack_require__(13);
+
+var _displaymodulename = __webpack_require__(25);
+
+var _redux = __webpack_require__(8);
 
 var _reactRouter = __webpack_require__(19);
 
-var _PulseLoader = __webpack_require__(25);
+var _PulseLoader = __webpack_require__(20);
 
 var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
 
@@ -12342,7 +12953,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(TicketDetail);
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12352,25 +12963,25 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reduxLogger = __webpack_require__(387);
+var _reduxLogger = __webpack_require__(388);
 
 var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-var _index = __webpack_require__(402);
+var _index = __webpack_require__(403);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _reduxThunk = __webpack_require__(390);
+var _reduxThunk = __webpack_require__(391);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reduxPromiseMiddleware = __webpack_require__(388);
+var _reduxPromiseMiddleware = __webpack_require__(389);
 
 var _reduxPromiseMiddleware2 = _interopRequireDefault(_reduxPromiseMiddleware);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(8);
 
-var _reduxAwait = __webpack_require__(15);
+var _reduxAwait = __webpack_require__(13);
 
 var _reactReduxNotifications = __webpack_require__(59);
 
@@ -12381,7 +12992,7 @@ var store = (0, _redux.applyMiddleware)((0, _reduxPromiseMiddleware2.default)(),
 exports.default = store;
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -12502,7 +13113,7 @@ function fromByteArray (uint8) {
 
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -12515,7 +13126,7 @@ this.activeTarget=b,this.clear();var c=this.selector+'[data-target="'+b+'"],'+th
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(30)))
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.13
@@ -27827,7 +28438,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -28253,17 +28864,17 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
   return accumulateDiff;
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 /*
   Module dependencies
 */
-var ElementType = __webpack_require__(210);
-var entities = __webpack_require__(226);
+var ElementType = __webpack_require__(211);
+var entities = __webpack_require__(227);
 
 /*
   Boolean Attributes
@@ -28440,7 +29051,7 @@ function renderComment(elem) {
 
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports) {
 
 //Types of elements found in the DOM
@@ -28459,14 +29070,14 @@ module.exports = {
 };
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 var ElementType = __webpack_require__(43);
 
 var re_whitespace = /\s+/g;
 var NodePrototype = __webpack_require__(106);
-var ElementPrototype = __webpack_require__(212);
+var ElementPrototype = __webpack_require__(213);
 
 function DomHandler(callback, options, elementCB){
 	if(typeof callback === "object"){
@@ -28647,7 +29258,7 @@ module.exports = DomHandler;
 
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 // DOM-Level-1-compliant structure
@@ -28673,13 +29284,13 @@ Object.keys(domLvl1).forEach(function(key) {
 
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var getVendorPropertyName = __webpack_require__(216);
+var getVendorPropertyName = __webpack_require__(217);
 
 module.exports = function(target, sources) {
   var to = Object(target);
@@ -28710,7 +29321,7 @@ module.exports = function(target, sources) {
 
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -28720,7 +29331,7 @@ module.exports = document.createElement('div').style;
 
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -28740,13 +29351,13 @@ module.exports = function() {
 
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var builtinStyle = __webpack_require__(214);
+var builtinStyle = __webpack_require__(215);
 var prefixes = ['Moz', 'Webkit', 'O', 'ms'];
 var domVendorPrefix;
 
@@ -28784,14 +29395,14 @@ module.exports = function(prop, isSupportTest) {
 
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var insertRule = __webpack_require__(218);
-var vendorPrefix = __webpack_require__(215)();
+var insertRule = __webpack_require__(219);
+var vendorPrefix = __webpack_require__(216)();
 var index = 0;
 
 module.exports = function(keyframes) {
@@ -28821,7 +29432,7 @@ module.exports = function(keyframes) {
 
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -28847,18 +29458,18 @@ module.exports = function(css) {
 
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 var DomUtils = module.exports;
 
 [
-	__webpack_require__(224),
 	__webpack_require__(225),
-	__webpack_require__(222),
+	__webpack_require__(226),
 	__webpack_require__(223),
-	__webpack_require__(221),
-	__webpack_require__(220)
+	__webpack_require__(224),
+	__webpack_require__(222),
+	__webpack_require__(221)
 ].forEach(function(ext){
 	Object.keys(ext).forEach(function(key){
 		DomUtils[key] = ext[key].bind(DomUtils);
@@ -28867,7 +29478,7 @@ var DomUtils = module.exports;
 
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports) {
 
 // removeSubsets
@@ -29014,7 +29625,7 @@ exports.uniqueSort = function(nodes) {
 
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 var ElementType = __webpack_require__(43);
@@ -29107,7 +29718,7 @@ exports.getElementsByTagType = function(type, element, recurse, limit){
 
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports) {
 
 exports.removeElement = function(elem){
@@ -29190,7 +29801,7 @@ exports.prepend = function(elem, prev){
 
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isTag = __webpack_require__(43).isTag;
@@ -29290,11 +29901,11 @@ function findAll(test, elems){
 
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 var ElementType = __webpack_require__(43),
-    getOuterHTML = __webpack_require__(209),
+    getOuterHTML = __webpack_require__(210),
     isTag = ElementType.isTag;
 
 module.exports = {
@@ -29318,7 +29929,7 @@ function getText(elem){
 
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports) {
 
 var getChildren = exports.getChildren = function(elem){
@@ -29348,11 +29959,11 @@ exports.getName = function(elem){
 
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
-var encode = __webpack_require__(228),
-    decode = __webpack_require__(227);
+var encode = __webpack_require__(229),
+    decode = __webpack_require__(228);
 
 exports.decode = function(data, level){
 	return (!level || level <= 0 ? decode.XML : decode.HTML)(data);
@@ -29387,7 +29998,7 @@ exports.escape = encode.escape;
 
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 var entityMap = __webpack_require__(64),
@@ -29464,7 +30075,7 @@ module.exports = {
 };
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 var inverseXML = getInverseObj(__webpack_require__(65)),
@@ -29543,7 +30154,7 @@ exports.escape = escapeXML;
 
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports) {
 
 module.exports = {
@@ -29578,7 +30189,6 @@ module.exports = {
 };
 
 /***/ },
-/* 230 */,
 /* 231 */,
 /* 232 */,
 /* 233 */,
@@ -29596,7 +30206,8 @@ module.exports = {
 /* 245 */,
 /* 246 */,
 /* 247 */,
-/* 248 */
+/* 248 */,
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = CollectingHandler;
@@ -29657,7 +30268,7 @@ CollectingHandler.prototype.restart = function(){
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 var index = __webpack_require__(32),
@@ -29669,7 +30280,7 @@ function FeedHandler(callback, options){
 	this.init(callback, options);
 }
 
-__webpack_require__(13)(FeedHandler, DomHandler);
+__webpack_require__(15)(FeedHandler, DomHandler);
 
 FeedHandler.prototype.init = DomHandler;
 
@@ -29758,7 +30369,7 @@ module.exports = FeedHandler;
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = ProxyHandler;
@@ -29790,7 +30401,7 @@ Object.keys(EVENTS).forEach(function(name){
 });
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = Stream;
@@ -29801,7 +30412,7 @@ function Stream(options){
 	Parser.call(this, new Cbs(this), options);
 }
 
-__webpack_require__(13)(Stream, Parser);
+__webpack_require__(15)(Stream, Parser);
 
 Stream.prototype.readable = true;
 
@@ -29830,7 +30441,7 @@ Object.keys(EVENTS).forEach(function(name){
 });
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -29920,7 +30531,6 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ },
-/* 253 */,
 /* 254 */,
 /* 255 */,
 /* 256 */,
@@ -29993,7 +30603,8 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 /* 323 */,
 /* 324 */,
 /* 325 */,
-/* 326 */
+/* 326 */,
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30026,7 +30637,7 @@ function HtmlParser(html) {
 }
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30046,7 +30657,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = ['allowfullScreen', 'async', 'autoplay', 'capture', 'checked', 'controls', 'default', 'defer', 'disabled', 'formnovalidate', 'hidden', 'loop', 'multiple', 'muted', 'novalidate', 'open', 'readonly', 'required', 'reversed', 'scoped', 'seamless', 'selected', 'itemscope'];
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30215,7 +30826,7 @@ exports.default = {
 };
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30232,7 +30843,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30277,7 +30888,7 @@ function StyleElementType(node, key) {
 }
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30300,11 +30911,11 @@ var _GeneratePropsFromAttributes = __webpack_require__(143);
 
 var _GeneratePropsFromAttributes2 = _interopRequireDefault(_GeneratePropsFromAttributes);
 
-var _TransformTagName = __webpack_require__(337);
+var _TransformTagName = __webpack_require__(338);
 
 var _TransformTagName2 = _interopRequireDefault(_TransformTagName);
 
-var _VoidElements = __webpack_require__(329);
+var _VoidElements = __webpack_require__(330);
 
 var _VoidElements2 = _interopRequireDefault(_VoidElements);
 
@@ -30336,7 +30947,7 @@ function TagElementType(node, key) {
 }
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30359,7 +30970,7 @@ function TextElementType(node) {
 }
 
 /***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30381,7 +30992,7 @@ function UnsupportedElementType() {
 }
 
 /***/ },
-/* 334 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30395,19 +31006,19 @@ var _ElementType$Text$Ele;
 
 var _htmlparser = __webpack_require__(32);
 
-var _TextElementType = __webpack_require__(332);
+var _TextElementType = __webpack_require__(333);
 
 var _TextElementType2 = _interopRequireDefault(_TextElementType);
 
-var _TagElementType = __webpack_require__(331);
+var _TagElementType = __webpack_require__(332);
 
 var _TagElementType2 = _interopRequireDefault(_TagElementType);
 
-var _StyleElementType = __webpack_require__(330);
+var _StyleElementType = __webpack_require__(331);
 
 var _StyleElementType2 = _interopRequireDefault(_StyleElementType);
 
-var _UnsupportedElementType = __webpack_require__(333);
+var _UnsupportedElementType = __webpack_require__(334);
 
 var _UnsupportedElementType2 = _interopRequireDefault(_UnsupportedElementType);
 
@@ -30422,7 +31033,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 exports.default = (_ElementType$Text$Ele = {}, _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Text, _TextElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Tag, _TagElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Style, _StyleElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Directive, _UnsupportedElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Comment, _UnsupportedElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Script, _UnsupportedElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.CDATA, _UnsupportedElementType2.default), _defineProperty(_ElementType$Text$Ele, _htmlparser.ElementType.Doctype, _UnsupportedElementType2.default), _ElementType$Text$Ele);
 
 /***/ },
-/* 335 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30433,11 +31044,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = HtmlAttributesToReact;
 
-var _BooleanAttributes = __webpack_require__(327);
+var _BooleanAttributes = __webpack_require__(328);
 
 var _BooleanAttributes2 = _interopRequireDefault(_BooleanAttributes);
 
-var _ReactAttributes = __webpack_require__(328);
+var _ReactAttributes = __webpack_require__(329);
 
 var _ReactAttributes2 = _interopRequireDefault(_ReactAttributes);
 
@@ -30489,7 +31100,7 @@ function HtmlAttributesToReact(attributes) {
 }
 
 /***/ },
-/* 336 */
+/* 337 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30553,7 +31164,7 @@ function InlineStyleToObject() {
 }
 
 /***/ },
-/* 337 */
+/* 338 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -30584,7 +31195,7 @@ function TransformTagName(tagName) {
 }
 
 /***/ },
-/* 338 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30717,7 +31328,6 @@ exports.default = (0, _reactRedux.connect)(function (state) {
 })(InlineNotification);
 
 /***/ },
-/* 339 */,
 /* 340 */,
 /* 341 */,
 /* 342 */,
@@ -30753,20 +31363,21 @@ exports.default = (0, _reactRedux.connect)(function (state) {
 /* 372 */,
 /* 373 */,
 /* 374 */,
-/* 375 */
+/* 375 */,
+/* 376 */
 /***/ function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(27)
+module.exports = __webpack_require__(28)
 
 
 /***/ },
-/* 376 */
+/* 377 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var Buffer = __webpack_require__(24).Buffer;
+var Buffer = __webpack_require__(26).Buffer;
 /*<replacement>*/
 var bufferShim = __webpack_require__(63);
 /*</replacement>*/
@@ -30830,14 +31441,14 @@ BufferList.prototype.concat = function (n) {
 };
 
 /***/ },
-/* 377 */
+/* 378 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(163)
 
 
 /***/ },
-/* 378 */
+/* 379 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {var Stream = (function (){
@@ -30849,7 +31460,7 @@ exports = module.exports = __webpack_require__(164);
 exports.Stream = Stream || exports;
 exports.Readable = exports;
 exports.Writable = __webpack_require__(98);
-exports.Duplex = __webpack_require__(27);
+exports.Duplex = __webpack_require__(28);
 exports.Transform = __webpack_require__(97);
 exports.PassThrough = __webpack_require__(163);
 
@@ -30857,24 +31468,24 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
   module.exports = Stream;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
 
 /***/ },
-/* 379 */
+/* 380 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(97)
 
 
 /***/ },
-/* 380 */
+/* 381 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(98)
 
 
 /***/ },
-/* 381 */
+/* 382 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30907,7 +31518,7 @@ exports.default = function (mapStateToProps) {
 };
 
 /***/ },
-/* 382 */
+/* 383 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30983,7 +31594,7 @@ var middleware = exports.middleware = function middleware(_ref) {
 };
 
 /***/ },
-/* 383 */
+/* 384 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31036,7 +31647,7 @@ exports.default = function () {
 };
 
 /***/ },
-/* 384 */
+/* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31049,7 +31660,7 @@ exports.printBuffer = printBuffer;
 
 var _helpers = __webpack_require__(166);
 
-var _diff = __webpack_require__(386);
+var _diff = __webpack_require__(387);
 
 var _diff2 = _interopRequireDefault(_diff);
 
@@ -31178,7 +31789,7 @@ function printBuffer(buffer, options) {
 }
 
 /***/ },
-/* 385 */
+/* 386 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -31230,7 +31841,7 @@ exports.default = {
 module.exports = exports['default'];
 
 /***/ },
-/* 386 */
+/* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31241,7 +31852,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = diffLogger;
 
-var _deepDiff = __webpack_require__(208);
+var _deepDiff = __webpack_require__(209);
 
 var _deepDiff2 = _interopRequireDefault(_deepDiff);
 
@@ -31327,7 +31938,7 @@ function diffLogger(prevState, newState, logger, isCollapsed) {
 module.exports = exports['default'];
 
 /***/ },
-/* 387 */
+/* 388 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31339,11 +31950,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _core = __webpack_require__(384);
+var _core = __webpack_require__(385);
 
 var _helpers = __webpack_require__(166);
 
-var _defaults = __webpack_require__(385);
+var _defaults = __webpack_require__(386);
 
 var _defaults2 = _interopRequireDefault(_defaults);
 
@@ -31446,7 +32057,7 @@ exports.default = createLogger;
 module.exports = exports['default'];
 
 /***/ },
-/* 388 */
+/* 389 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31464,7 +32075,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 exports.default = promiseMiddleware;
 
-var _isPromise = __webpack_require__(389);
+var _isPromise = __webpack_require__(390);
 
 var _isPromise2 = _interopRequireDefault(_isPromise);
 
@@ -31621,7 +32232,7 @@ function promiseMiddleware() {
 }
 
 /***/ },
-/* 389 */
+/* 390 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -31643,7 +32254,7 @@ function isPromise(value) {
 }
 
 /***/ },
-/* 390 */
+/* 391 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -31672,10 +32283,10 @@ thunk.withExtraArgument = createThunkMiddleware;
 exports['default'] = thunk;
 
 /***/ },
-/* 391 */,
 /* 392 */,
 /* 393 */,
-/* 394 */
+/* 394 */,
+/* 395 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -31865,14 +32476,14 @@ exports['default'] = thunk;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28), __webpack_require__(21)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29), __webpack_require__(22)))
 
 /***/ },
-/* 395 */,
 /* 396 */,
 /* 397 */,
 /* 398 */,
-/* 399 */
+/* 399 */,
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -31925,13 +32536,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(394);
+__webpack_require__(395);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ },
-/* 400 */
+/* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -32002,26 +32613,26 @@ function config (name) {
   return String(val).toLowerCase() === 'true';
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
 
 /***/ },
-/* 401 */,
-/* 402 */
+/* 402 */,
+/* 403 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__producer_books_js__ = __webpack_require__(405);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__producer_sidemenu_js__ = __webpack_require__(409);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__producer_datatable_js__ = __webpack_require__(407);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__producer_faq_js__ = __webpack_require__(408);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__producer_addticket_js__ = __webpack_require__(403);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__producer_ticket_js__ = __webpack_require__(410);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__producer_contact_js__ = __webpack_require__(406);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__producer_ticketpicker_js__ = __webpack_require__(411);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__producer_atickconprod_js__ = __webpack_require__(404);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__producer_sumtable_js__ = __webpack_require__(425);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_redux_await__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__producer_books_js__ = __webpack_require__(406);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__producer_sidemenu_js__ = __webpack_require__(410);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__producer_datatable_js__ = __webpack_require__(408);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__producer_faq_js__ = __webpack_require__(409);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__producer_addticket_js__ = __webpack_require__(404);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__producer_ticket_js__ = __webpack_require__(412);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__producer_contact_js__ = __webpack_require__(407);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__producer_ticketpicker_js__ = __webpack_require__(413);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__producer_atickconprod_js__ = __webpack_require__(405);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__producer_sumtable_js__ = __webpack_require__(411);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_redux_await__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_redux_await___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_redux_await__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_react_redux_notifications__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_react_redux_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_react_redux_notifications__);
@@ -32058,11 +32669,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 /* harmony default export */ exports["default"] = rootReducer;
 
 /***/ },
-/* 403 */
+/* 404 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(14);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -32073,11 +32684,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 404 */
+/* 405 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(14);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -32088,7 +32699,7 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 405 */
+/* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32103,11 +32714,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 406 */
+/* 407 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(14);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -32118,11 +32729,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 407 */
+/* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(14);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -32133,11 +32744,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 408 */
+/* 409 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(14);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -32148,7 +32759,7 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 409 */
+/* 410 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32157,453 +32768,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 };
 
 /***/ },
-/* 410 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
-
-/* harmony default export */ exports["a"] = function(state=null, action) {
-	switch(action.type) {
-		case __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__["GET_TICKET"]:
-		return action.payload.loadedTicketInfo;
-	}
-	return state;
-};
-
-/***/ },
 /* 411 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
-
-/* harmony default export */ exports["a"] = function(state=null, action) {
-	switch(action.type) {
-		case __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__["REFRESH_TICKETPICKER"]:
-		return action.payload.loadedTicketPicker;
-	}
-	return state;
-};
-
-/***/ },
-/* 412 */
-/***/ function(module, exports) {
-
-/* (ignored) */
-
-/***/ },
-/* 413 */
-/***/ function(module, exports) {
-
-/* (ignored) */
-
-/***/ },
-/* 414 */,
-/* 415 */
-/***/ function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(171);
-
-
-/***/ },
-/* 416 */,
-/* 417 */,
-/* 418 */,
-/* 419 */,
-/* 420 */,
-/* 421 */,
-/* 422 */,
-/* 423 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reduxAwait = __webpack_require__(15);
-
-var _displaymodulename = __webpack_require__(29);
-
-var _redux = __webpack_require__(10);
-
-var _PulseLoader = __webpack_require__(25);
-
-var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
-
-var _reactReduxNotifications = __webpack_require__(59);
-
-var _actiontypes = __webpack_require__(16);
-
-var _jquery = __webpack_require__(30);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var StudentTransfer = function (_Component) {
-	_inherits(StudentTransfer, _Component);
-
-	function StudentTransfer(props) {
-		_classCallCheck(this, StudentTransfer);
-
-		var _this = _possibleConstructorReturn(this, (StudentTransfer.__proto__ || Object.getPrototypeOf(StudentTransfer)).call(this, props));
-
-		if (_this.props.route.formname == "TransferCourse") {
-			_this.state = { ATickConProdId: _this.props.params.ATickConProdId };
-			_this.props.getContentByParam("ATCPDetail", _this.state.ATickConProdId);
-		} else if (_this.props.route.formname == "TransferVoucher") {
-			_this.state = { AVouchersId: _this.props.params.AVouchersId };
-			_this.props.getContentByParam("VoucherDetail", _this.state.AVouchersId);
-		}
-		_this.renderProductInfo = _this.renderProductInfo.bind(_this);
-		_this.renderVoucherInfo = _this.renderVoucherInfo.bind(_this);
-		_this.keyDown = _this.keyDown.bind(_this);
-		_this.submit = _this.submit.bind(_this);
-		return _this;
-	}
-
-	_createClass(StudentTransfer, [{
-		key: 'componentWillReceiveProps',
-		value: function componentWillReceiveProps(nextProps) {
-			var _this2 = this;
-
-			if (this.props.route.formname == "TransferCourse") {
-				if (this.state.ATickConProdId != nextProps.params.ATickConProdId) this.setState({
-					ATickConProdId: nextProps.params.ATickConProdId
-				}, function () {
-					nextProps.getContentByParam("ATCPDetail", _this2.state.ATickConProdId);
-				});
-			} else if (this.props.route.formname == "TransferVoucher") {
-				if (this.state.AVouchersId != nextProps.params.AVouchersId) this.setState({
-					AVouchersId: nextProps.params.AVouchersId
-				}, function () {
-					nextProps.getContentByParam("VoucherDetail", _this2.state.AVouchersId);
-				});
-			}
-		}
-	}, {
-		key: 'keyDown',
-		value: function keyDown(event) {
-			if (event.keyCode === 13) {
-				this.props.getContentByParam("checkStudentEmail", event.target.value.trim());
-				event.preventDefault();
-			}
-		}
-	}, {
-		key: 'submit',
-		value: function submit(dom) {
-			var txt = void 0;
-			if (this.props.route.formname == "TransferCourse") {
-				var res = confirm("Lưu ý: Sau khi đổi tên người đi học, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin vé này nữa. Bạn có chắc chắn muốn đổi?");
-				if (res == true) {
-					var Jsondata = (0, _jquery2.default)(dom).serialize();
-					this.props.getContentByParam("changeStudent", Jsondata);
-				}
-			} else if (this.props.route.formname == "TransferVoucher") {
-				var _res = confirm("Lưu ý: Sau khi chuyển nhượng, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin voucher này nữa. Bạn có chắc chắn muốn chuyển?");
-				if (_res == true) {
-					var _Jsondata = (0, _jquery2.default)(dom).serialize();
-					this.props.getContentByParam("changeVoucherOwner", _Jsondata);
-				}
-			}
-		}
-	}, {
-		key: 'renderProductInfo',
-		value: function renderProductInfo() {
-			var _this3 = this;
-
-			var data = this.props.data;
-			if (!data) return "";
-			var info_arr = [];
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'b',
-						null,
-						'T\xEAn Kh\xF3a h\u1ECDc: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.productname
-				)
-			));
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'b',
-						null,
-						'M\xE3 v\xE9: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.atickets_code
-				)
-			));
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'b',
-						null,
-						'Email ng\u01B0\u1EDDi \u0111i h\u1ECDc: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'form',
-						{ id: 'changeStudentForm' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement('input', { type: 'hidden', className: 'form-control', name: 'atickcontprodid', value: data.atickcontprodid }),
-							_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', defaultValue: data.email, onKeyDown: function onKeyDown(event) {
-									return _this3.keyDown(event);
-								}, onBlur: function onBlur(event) {
-									_this3.props.getContentByParam("checkStudentEmail", event.target.value.trim());
-								} }),
-							_react2.default.createElement(
-								'div',
-								{ style: { color: "red" } },
-								_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
-									defaultMessage: 'Email ng\u01B0\u1EDDi h\u1ECDc kh\xF4ng t\u1ED3n t\u1EA1i! Xin nh\u1EADp email \u0111\xE3 t\u1ED3n t\u1EA1i trong h\u1EC7 th\u1ED1ng.',
-									hideAfter: 2500,
-									triggeredBy: _actiontypes.NO_EMAIL })
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ style: { color: "green" } },
-							_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
-								defaultMessage: 'C\xF3 th\u1EC3 chuy\u1EC3n v\xE9 cho ng\u01B0\u1EDDi \u0111i h\u1ECDc n\xE0y!',
-								hideAfter: 2500,
-								triggeredBy: _actiontypes.EMAIL_EXIST })
-						)
-					),
-					_react2.default.createElement(
-						'a',
-						{ className: 'btn btn-success btn-xs', onClick: function onClick() {
-								_this3.submit("#changeStudentForm");
-							} },
-						'\u0110\u1ED5i ng\u01B0\u1EDDi \u0111i h\u1ECDc'
-					)
-				)
-			));
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'b',
-						null,
-						'T\xECnh tr\u1EA1ng: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.atcp_statusatcp_status
-				)
-			));
-			return info_arr;
-		}
-	}, {
-		key: 'renderVoucherInfo',
-		value: function renderVoucherInfo() {
-			var _this4 = this;
-
-			var data = this.props.data;
-			if (!data) return "";
-			var info_arr = [];
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'b',
-						null,
-						'M\xE3 voucher: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.avouchers_code
-				)
-			));
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'b',
-						null,
-						'Lo\u1EA1i voucher: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					data.avouchers_type,
-					' VND'
-				)
-			));
-			info_arr.push(_react2.default.createElement(
-				'tr',
-				null,
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'b',
-						null,
-						'Email ng\u01B0\u1EDDi \u0111i h\u1ECDc: '
-					)
-				),
-				_react2.default.createElement(
-					'td',
-					null,
-					_react2.default.createElement(
-						'form',
-						{ id: 'changeStudentForm' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement('input', { type: 'hidden', className: 'form-control', name: 'voucherid', value: data.avouchersid }),
-							_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', defaultValue: data.email, onKeyDown: function onKeyDown(event) {
-									return _this4.keyDown(event);
-								}, onBlur: function onBlur(event) {
-									_this4.props.getContentByParam("checkStudentEmail", event.target.value.trim());
-								} }),
-							_react2.default.createElement(
-								'div',
-								{ style: { color: "red" } },
-								_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
-									defaultMessage: 'Email ng\u01B0\u1EDDi h\u1ECDc kh\xF4ng t\u1ED3n t\u1EA1i! Xin nh\u1EADp email \u0111\xE3 t\u1ED3n t\u1EA1i trong h\u1EC7 th\u1ED1ng.',
-									hideAfter: 2500,
-									triggeredBy: _actiontypes.NO_EMAIL })
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ style: { color: "green" } },
-							_react2.default.createElement(_reactReduxNotifications.InlineNotification, {
-								defaultMessage: 'C\xF3 th\u1EC3 chuy\u1EC3n v\xE9 cho ng\u01B0\u1EDDi \u0111i h\u1ECDc n\xE0y!',
-								hideAfter: 2500,
-								triggeredBy: _actiontypes.EMAIL_EXIST })
-						)
-					),
-					_react2.default.createElement(
-						'a',
-						{ className: 'btn btn-success btn-xs', onClick: function onClick() {
-								_this4.submit("#changeStudentForm");
-							} },
-						'Chuy\u1EC3n nh\u01B0\u1EE3ng voucher'
-					)
-				)
-			));
-			return info_arr;
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			this.props.data ? console.log(this.props.data.data) : "";
-			return _react2.default.createElement(
-				'div',
-				null,
-				this.props.statuses.loadedATCPeditor === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
-				this.props.statuses.loadedATCPeditor === 'success' && _react2.default.createElement(
-					'div',
-					{ className: 'row' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'col-lg-6' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'panel panel-default' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'panel-heading' },
-								'Th\xF4ng tin c\u01A1 b\u1EA3n: '
-							),
-							_react2.default.createElement(
-								'table',
-								{ className: 'table' },
-								_react2.default.createElement(
-									'tbody',
-									null,
-									this.props.route.formname == "TransferCourse" ? this.props.data ? this.renderProductInfo() : "" : "",
-									this.props.route.formname == "TransferVoucher" ? this.props.data ? this.renderVoucherInfo() : "" : ""
-								)
-							)
-						)
-					)
-				),
-				_react2.default.createElement('div', { className: 'row' })
-			);
-		}
-	}]);
-
-	return StudentTransfer;
-}(_react.Component);
-
-function mapStateToProps(state) {
-	return {
-		data: state.ATCPeditor
-	};
-}
-
-function mapDispatchToProps(dispatch) {
-	return (0, _redux.bindActionCreators)({ getContentByParam: _displaymodulename.getContentByParam }, dispatch);
-}
-
-exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(StudentTransfer);
-
-/***/ },
-/* 424 */,
-/* 425 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(14);
 
 /* harmony default export */ exports["a"] = function(state=null, action) {
 	switch(action.type) {
@@ -32614,232 +32783,54 @@ exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(
 };
 
 /***/ },
-/* 426 */
+/* 412 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-'use strict';
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(14);
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reduxAwait = __webpack_require__(15);
-
-var _displaymodulename = __webpack_require__(29);
-
-var _redux = __webpack_require__(10);
-
-var _PulseLoader = __webpack_require__(25);
-
-var _PulseLoader2 = _interopRequireDefault(_PulseLoader);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var SumTable = function (_Component) {
-	_inherits(SumTable, _Component);
-
-	function SumTable(props) {
-		_classCallCheck(this, SumTable);
-
-		var _this = _possibleConstructorReturn(this, (SumTable.__proto__ || Object.getPrototypeOf(SumTable)).call(this, props));
-
-		_this.state = { potentialid: _this.props.params.potentialid };
-		console.log(_this.state.potentialid);
-		_this.props.getContentByParam("Sumtable", _this.state.potentialid);
-		_this.renderSumData = _this.renderSumData.bind(_this);
-		return _this;
+/* harmony default export */ exports["a"] = function(state=null, action) {
+	switch(action.type) {
+		case __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__["GET_TICKET"]:
+		return action.payload.loadedTicketInfo;
 	}
+	return state;
+};
 
-	_createClass(SumTable, [{
-		key: 'componentWillReceiveProps',
-		value: function componentWillReceiveProps(nextProps) {
-			var _this2 = this;
+/***/ },
+/* 413 */
+/***/ function(module, exports, __webpack_require__) {
 
-			if (this.state.potentialid != nextProps.params.potentialid) this.setState({
-				potentialid: nextProps.params.potentialid
-			}, function () {
-				nextProps.getContentByParam("Sumtable", _this2.state.potentialid);
-			});
-		}
-	}, {
-		key: 'renderSumData',
-		value: function renderSumData() {
-			console.log(this.props.data);
-			var ticketinfo_arr = [];
-			var data = this.props.data;
-			var grandtotal = 0;
-			var total = 0;
-			var refund = 0;
-			if (data.total) {
-				grandtotal += data.total;
-				ticketinfo_arr.push(_react2.default.createElement(
-					'tr',
-					null,
-					_react2.default.createElement(
-						'td',
-						null,
-						_react2.default.createElement(
-							'b',
-							null,
-							'T\u1ED5ng ti\u1EC1n h\xF3a \u0111\u01A1n: '
-						)
-					),
-					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: data.total.toLocaleString() + " VND" } })
-				));
-			}
-			if (data.penalty) {
-				grandtotal += data.penalty;
-				ticketinfo_arr.push(_react2.default.createElement(
-					'tr',
-					null,
-					_react2.default.createElement(
-						'td',
-						null,
-						_react2.default.createElement(
-							'b',
-							null,
-							'T\u1ED5ng ph\xED ph\u1EA1t: '
-						)
-					),
-					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: data.penalty.toLocaleString() + " VND" } })
-				));
-			}
-			if (data.detail) {
-				data.detail.map(function (field) {
-					if (field.acashflow_type != "Refund") {
-						total += field.sum;
-					} else {
-						refund += field.sum;
-					}
-				});
-				grandtotal -= total;
-				grandtotal -= refund;
-				ticketinfo_arr.push(_react2.default.createElement(
-					'tr',
-					null,
-					_react2.default.createElement(
-						'td',
-						null,
-						_react2.default.createElement(
-							'b',
-							null,
-							'T\u1ED5ng \u0111\xE3 thanh to\xE1n: '
-						)
-					),
-					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: total.toLocaleString() + " VND" } })
-				));
-				ticketinfo_arr.push(_react2.default.createElement(
-					'tr',
-					null,
-					_react2.default.createElement(
-						'td',
-						null,
-						_react2.default.createElement(
-							'b',
-							null,
-							'T\u1ED5ng tr\u1EA3 l\u1EA1i: '
-						)
-					),
-					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: refund.toLocaleString() + " VND" } })
-				));
-			}
-			if (grandtotal < 0) {
-				grandtotal *= -1;
-				ticketinfo_arr.push(_react2.default.createElement(
-					'tr',
-					null,
-					_react2.default.createElement(
-						'td',
-						null,
-						_react2.default.createElement(
-							'b',
-							null,
-							'T\u1ED5ng ti\u1EC1n d\u01B0: '
-						)
-					),
-					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: grandtotal.toLocaleString() + " VND" } })
-				));
-			} else {
-				ticketinfo_arr.push(_react2.default.createElement(
-					'tr',
-					null,
-					_react2.default.createElement(
-						'td',
-						null,
-						_react2.default.createElement(
-							'b',
-							null,
-							'T\u1ED5ng ti\u1EC1n c\xF2n thi\u1EBFu: '
-						)
-					),
-					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: grandtotal.toLocaleString() + " VND" } })
-				));
-			}
-			return ticketinfo_arr;
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				this.props.statuses.loadedSumTable === 'pending' && _react2.default.createElement(_PulseLoader2.default, { color: '#26A65B', size: '16px', margin: '4px' }),
-				this.props.statuses.loadedSumTable === 'success' && _react2.default.createElement(
-					'div',
-					{ className: 'row' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'col-lg-6' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'panel panel-default' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'panel-heading' },
-								'T\xF3m t\u1EAFt th\xF4ng tin thanh to\xE1n: '
-							),
-							_react2.default.createElement(
-								'table',
-								{ className: 'table' },
-								_react2.default.createElement(
-									'tbody',
-									null,
-									this.props.data ? this.renderSumData() : ""
-								)
-							)
-						)
-					)
-				)
-			);
-		}
-	}]);
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(14);
 
-	return SumTable;
-}(_react.Component);
+/* harmony default export */ exports["a"] = function(state=null, action) {
+	switch(action.type) {
+		case __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__["REFRESH_TICKETPICKER"]:
+		return action.payload.loadedTicketPicker;
+	}
+	return state;
+};
 
-function mapStateToProps(state) {
-	return {
-		data: state.SumTable
-	};
-}
-function mapDispatchToProps(dispatch) {
-	return (0, _redux.bindActionCreators)({ refreshContent: _displaymodulename.refreshContent, getContentByParam: _displaymodulename.getContentByParam }, dispatch);
-}
+/***/ },
+/* 414 */
+/***/ function(module, exports) {
 
-exports.default = (0, _reduxAwait.connect)(mapStateToProps, mapDispatchToProps)(SumTable);
+/* (ignored) */
+
+/***/ },
+/* 415 */
+/***/ function(module, exports) {
+
+/* (ignored) */
+
+/***/ },
+/* 416 */,
+/* 417 */
+/***/ function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(171);
+
 
 /***/ }
-],[415]);
+],[417]);

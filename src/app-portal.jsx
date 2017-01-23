@@ -80,7 +80,7 @@ window.onload = () => {
                 <Route path ="/Opportunities/main" component={Datatable} tablename="Opportunities"/>
                 <Route path="/Opportunities/potential/:potentialid" component={PotentialDetail}>
                   <IndexRedirect to="/Opportunities/potential/:potentialid/PotentialATCP"/>
-                  <Route path ="/Opportunities/potential/:potentialid/PotentialATCP" component={{Main: Datatable}} tablename="PotentialATCP"/>
+                  <Route path ="/Opportunities/potential/:potentialid/PotentialATCP" component={{Main: Datatable, Tab: SumTable}} tablename="PotentialATCP"/>
                   <Route path ="/Opportunities/potential/:potentialid/PotentialTrans" component={{Main: Datatable, Tab: SumTable}} tablename="PotentialTrans"/>
                 </Route>
               </Route>
