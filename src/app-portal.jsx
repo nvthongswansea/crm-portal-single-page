@@ -46,36 +46,36 @@ window.onload = () => {
   			<Router history={hashHistory}>
         		<Route path="/" component={App}>
         			<IndexRedirect to="/HelpDesk" />
-        			<Route path="HelpDesk" component={MainContent} title="Help Desk">
+        			<Route path="HelpDesk" component={MainContent} title="Trợ giúp">
         				<IndexRedirect to="/HelpDesk/main" />
         				<Route path="/HelpDesk/main" component={Datatable} tablename="HelpDesk"/>
         				<Route path="/HelpDesk/add" component={AddTicket}/>
                 <Route path="/HelpDesk/ticket/:ticketId" component={TicketDetail}/>
         			</Route>
-        			<Route path="Faq" component={MainContent} title="FAQ"> 
+        			<Route path="Faq" component={MainContent} title="Câu hỏi thường gặp"> 
         				<IndexRedirect to="/Faq/main" />
         				<Route path="/Faq/main" component={FAQ}/>
         			</Route>
-              <Route path="Contacts" component={MainContent} title="Contacts"> 
+              <Route path="Contacts" component={MainContent} title="Sổ liên lạc"> 
                 <IndexRedirect to="/Contacts/main"/>
                 <Route path ="/Contacts/main" component={Datatable} tablename="Contacts"/>
                 <Route path="/Contacts/contact/:contactId" component={ContactDetail}/>
               </Route>
-              <Route path="Products" component={MainContent} title="Products"> 
+              <Route path="Products" component={MainContent} title="Lịch học"> 
                 <IndexRedirect to="/Products/main"/>
                 <Route path ="/Products/main" component={Datatable} tablename="Products"/>
                 <Route path="/Products/register/:productId" component={TicketPicker}/>
               </Route>
-              <Route path="ATickets" component={MainContent} title="ATickets"> 
+              <Route path="ATickets" component={MainContent} title="Vé"> 
                 <IndexRedirect to="/ATickets/main"/>
                 <Route path ="/ATickets/main" component={Datatable} tablename="ATickets"/>
               </Route>
-              <Route path="ATickConProd" component={MainContent} title="ATickConProd"> 
+              <Route path="ATickConProd" component={MainContent} title="Quản lý chung"> 
                 <IndexRedirect to="/ATickConProd/main"/>
                 <Route path ="/ATickConProd/main" component={Datatable} tablename="ATickConProd"/>
                 <Route path="/ATickConProd/edit/:ATickConProdId" component={StudentTransfer} formname="TransferCourse"/>
               </Route>
-              <Route path="Opportunities" component={MainContent} title="Opportunities"> 
+              <Route path="Opportunities" component={MainContent} title="Quản lý hóa đơn"> 
                 <IndexRedirect to="/Opportunities/main"/>
                 <Route path ="/Opportunities/main" component={Datatable} tablename="Opportunities"/>
                 <Route path="/Opportunities/potential/:potentialid" component={PotentialDetail}>
@@ -84,7 +84,7 @@ window.onload = () => {
                   <Route path ="/Opportunities/potential/:potentialid/PotentialTrans" component={{Main: Datatable, Tab: SumTable}} tablename="PotentialTrans"/>
                 </Route>
               </Route>
-              <Route path="AVouchers" component={MainContent} title="AVouchers"> 
+              <Route path="AVouchers" component={MainContent} title="Quản lý vouchers"> 
                 <IndexRedirect to="/AVouchers/main"/>
                 <Route path ="/AVouchers/main" component={Datatable} tablename="AVouchers"/>
                 <Route path="/AVouchers/edit/:AVouchersId" component={StudentTransfer} formname="TransferVoucher"/>

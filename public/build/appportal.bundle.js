@@ -9961,7 +9961,7 @@ window.onload = function () {
         _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/HelpDesk' }),
         _react2.default.createElement(
           _reactRouter.Route,
-          { path: 'HelpDesk', component: _Maincontent2.default, title: 'Help Desk' },
+          { path: 'HelpDesk', component: _Maincontent2.default, title: 'Tr\u1EE3 gi\xFAp' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/HelpDesk/main' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/HelpDesk/main', component: _datatable2.default, tablename: 'HelpDesk' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/HelpDesk/add', component: _addticket2.default }),
@@ -9969,40 +9969,40 @@ window.onload = function () {
         ),
         _react2.default.createElement(
           _reactRouter.Route,
-          { path: 'Faq', component: _Maincontent2.default, title: 'FAQ' },
+          { path: 'Faq', component: _Maincontent2.default, title: 'C\xE2u h\u1ECFi th\u01B0\u1EDDng g\u1EB7p' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/Faq/main' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/Faq/main', component: _FAQ2.default })
         ),
         _react2.default.createElement(
           _reactRouter.Route,
-          { path: 'Contacts', component: _Maincontent2.default, title: 'Contacts' },
+          { path: 'Contacts', component: _Maincontent2.default, title: 'S\u1ED5 li\xEAn l\u1EA1c' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/Contacts/main' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/Contacts/main', component: _datatable2.default, tablename: 'Contacts' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/Contacts/contact/:contactId', component: _contactdetail2.default })
         ),
         _react2.default.createElement(
           _reactRouter.Route,
-          { path: 'Products', component: _Maincontent2.default, title: 'Products' },
+          { path: 'Products', component: _Maincontent2.default, title: 'L\u1ECBch h\u1ECDc' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/Products/main' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/Products/main', component: _datatable2.default, tablename: 'Products' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/Products/register/:productId', component: _aticketpicker2.default })
         ),
         _react2.default.createElement(
           _reactRouter.Route,
-          { path: 'ATickets', component: _Maincontent2.default, title: 'ATickets' },
+          { path: 'ATickets', component: _Maincontent2.default, title: 'V\xE9' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/ATickets/main' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/ATickets/main', component: _datatable2.default, tablename: 'ATickets' })
         ),
         _react2.default.createElement(
           _reactRouter.Route,
-          { path: 'ATickConProd', component: _Maincontent2.default, title: 'ATickConProd' },
+          { path: 'ATickConProd', component: _Maincontent2.default, title: 'Qu\u1EA3n l\xFD chung' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/ATickConProd/main' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/ATickConProd/main', component: _datatable2.default, tablename: 'ATickConProd' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/ATickConProd/edit/:ATickConProdId', component: _StudentTransfer2.default, formname: 'TransferCourse' })
         ),
         _react2.default.createElement(
           _reactRouter.Route,
-          { path: 'Opportunities', component: _Maincontent2.default, title: 'Opportunities' },
+          { path: 'Opportunities', component: _Maincontent2.default, title: 'Qu\u1EA3n l\xFD h\xF3a \u0111\u01A1n' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/Opportunities/main' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/Opportunities/main', component: _datatable2.default, tablename: 'Opportunities' }),
           _react2.default.createElement(
@@ -10015,7 +10015,7 @@ window.onload = function () {
         ),
         _react2.default.createElement(
           _reactRouter.Route,
-          { path: 'AVouchers', component: _Maincontent2.default, title: 'AVouchers' },
+          { path: 'AVouchers', component: _Maincontent2.default, title: 'Qu\u1EA3n l\xFD vouchers' },
           _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/AVouchers/main' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/AVouchers/main', component: _datatable2.default, tablename: 'AVouchers' }),
           _react2.default.createElement(_reactRouter.Route, { path: '/AVouchers/edit/:AVouchersId', component: _StudentTransfer2.default, formname: 'TransferVoucher' })

@@ -16,23 +16,23 @@ router.get('/', _helper.loginRequired, function(req, res, next) {
 
 	request(VT_URL + '/vtigerservice.php?service=restful&do=getmodules', function(error, response, body) {
 		if (!error && response.statusCode == 200) {
-			body = {
-				"2": "HelpDesk",
-				"3": "Faq",
-				"6": "Products",
-				"9": "Contacts",
-				"11": "ATickets",
-				"12": "AVouchers",
-				"14": "ATickConProd",
-				"15": "Opportunities"
-			};
+			var menu = [
+				{name: "Quản lý trợ giúp", url: "HelpDesk"},
+				{name: "Câu hỏi thường gặp", url: "Faq"},
+				{name: "Quản lý lịch học", url: "Products"},
+				{name: "Sổ liên lạc", url: "Contacts"},
+				{name: "Quản lý vé", url: "ATickets"},
+				{name: "Quản lý voucher", url: "AVouchers"},
+				{name: "Quản lý chung", url: "ATickConProd"},
+				{name: "Quản lý hóa đơn", url: "Opportunities"}
+			];
 			var modulelist = [];
-			for (module in objectValues(body)) {
+			menu.map((module) => {
 				modulelist.push({
-					title: objectValues(body)[module],
-					url: objectValues(body)[module]
+					title: module.name,
+					url: module.url
 				});
-			}
+			});
 			var SidemenuReducer = function() {
 				return modulelist;
 			};
