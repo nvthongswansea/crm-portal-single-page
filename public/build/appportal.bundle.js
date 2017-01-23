@@ -10393,32 +10393,36 @@ var PotentialDetail = function (_Component) {
 		value: function render() {
 			return _react2.default.createElement(
 				'div',
-				{ className: 'container' },
+				null,
+				this.props.Tab ? this.props.Tab : "",
 				_react2.default.createElement(
-					'ul',
-					{ className: 'nav nav-tabs' },
+					'div',
+					{ className: 'container' },
 					_react2.default.createElement(
-						'li',
-						null,
-						' ',
+						'ul',
+						{ className: 'nav nav-tabs' },
 						_react2.default.createElement(
-							_reactRouter.Link,
-							{ activeClassName: 'active', to: "/Opportunities/potential/" + this.props.params.potentialid + "/PotentialATCP" },
-							'Chi ti\u1EBFt c\xE1c kh\xF3a h\u1ECDc trong h\xF3a \u0111\u01A1n'
+							'li',
+							null,
+							' ',
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ activeClassName: 'active', to: "/Opportunities/potential/" + this.props.params.potentialid + "/PotentialATCP" },
+								'Chi ti\u1EBFt c\xE1c kh\xF3a h\u1ECDc trong h\xF3a \u0111\u01A1n'
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ activeClassName: 'active', to: "/Opportunities/potential/" + this.props.params.potentialid + "/PotentialTrans" },
+								'Chi ti\u1EBFt ti\u1EBFn tr\xECnh thanh to\xE1n'
+							)
 						)
 					),
-					_react2.default.createElement(
-						'li',
-						null,
-						_react2.default.createElement(
-							_reactRouter.Link,
-							{ activeClassName: 'active', to: "/Opportunities/potential/" + this.props.params.potentialid + "/PotentialTrans" },
-							'Chi ti\u1EBFt ti\u1EBFn tr\xECnh thanh to\xE1n'
-						)
-					)
-				),
-				this.props.Tab ? this.props.Tab : "",
-				this.props.Main
+					this.props.Main
+				)
 			);
 		}
 	}]);

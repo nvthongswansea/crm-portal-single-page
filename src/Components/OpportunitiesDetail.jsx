@@ -6,14 +6,17 @@ import { Link } from 'react-router';
 export default class PotentialDetail extends Component {4
 	render() {
 		return (
+			<div>
+			{this.props.Tab? this.props.Tab: ""}
 			<div className="container">
 			  <ul className="nav nav-tabs">
 			    <li> <Link activeClassName="active" to={"/Opportunities/potential/"+this.props.params.potentialid + "/PotentialATCP"} >Chi tiết các khóa học trong hóa đơn</Link></li>
 			    <li><Link activeClassName="active" to={"/Opportunities/potential/"+this.props.params.potentialid + "/PotentialTrans"} >Chi tiết tiến trình thanh toán</Link></li>
 			  </ul>
-			  {this.props.Tab? this.props.Tab: ""}
+			  
 			  {this.props.Main}
 
+			</div>
 			</div>
 			);
 	}
