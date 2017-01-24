@@ -46,14 +46,14 @@ class SumTable extends Component {
 			});
 			grandtotal -= total;
 			grandtotal -= refund;
-			ticketinfo_arr.push(<tr><td><b>Tổng đã thanh toán: </b></td><td dangerouslySetInnerHTML={{__html: total.toLocaleString() + " VND"}} /></tr>);
-			ticketinfo_arr.push(<tr><td><b>Tổng trả lại: </b></td><td dangerouslySetInnerHTML={{__html: refund.toLocaleString() + " VND"}} /></tr>);
+			ticketinfo_arr.push(<tr><td><b>Tổng đã thanh toán: </b></td><td dangerouslySetInnerHTML={{__html: total.toLocaleString('de-DE') + " VND"}} /></tr>);
+			ticketinfo_arr.push(<tr><td><b>Tổng trả lại: </b></td><td dangerouslySetInnerHTML={{__html: refund.toLocaleString('de-DE') + " VND"}} /></tr>);
 		}
 		if (grandtotal < 0) {
 			grandtotal *= -1;
-			ticketinfo_arr.push(<tr><td><b>Tổng tiền dư: </b></td><td dangerouslySetInnerHTML={{__html: grandtotal.toLocaleString() + " VND"}} /></tr>);
+			ticketinfo_arr.push(<tr><td><b>Tổng tiền dư: </b></td><td dangerouslySetInnerHTML={{__html: grandtotal.toLocaleString('de-DE') + " VND"}} /></tr>);
 		} else {
-			ticketinfo_arr.push(<tr><td><b>Tổng tiền còn thiếu: </b></td><td dangerouslySetInnerHTML={{__html: grandtotal.toLocaleString() + " VND"}} /></tr>);
+			ticketinfo_arr.push(<tr><td><b>Tổng tiền còn thiếu: </b></td><td dangerouslySetInnerHTML={{__html: grandtotal.toLocaleString('de-DE') + " VND"}} /></tr>);
 		}
 		return ticketinfo_arr;
 	}

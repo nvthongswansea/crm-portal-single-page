@@ -12426,7 +12426,7 @@ var SumTable = function (_Component) {
 							'T\u1ED5ng \u0111\xE3 thanh to\xE1n: '
 						)
 					),
-					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: total.toLocaleString() + " VND" } })
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: total.toLocaleString('de-DE') + " VND" } })
 				));
 				ticketinfo_arr.push(_react2.default.createElement(
 					'tr',
@@ -12440,7 +12440,7 @@ var SumTable = function (_Component) {
 							'T\u1ED5ng tr\u1EA3 l\u1EA1i: '
 						)
 					),
-					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: refund.toLocaleString() + " VND" } })
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: refund.toLocaleString('de-DE') + " VND" } })
 				));
 			}
 			if (grandtotal < 0) {
@@ -12457,7 +12457,7 @@ var SumTable = function (_Component) {
 							'T\u1ED5ng ti\u1EC1n d\u01B0: '
 						)
 					),
-					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: grandtotal.toLocaleString() + " VND" } })
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: grandtotal.toLocaleString('de-DE') + " VND" } })
 				));
 			} else {
 				ticketinfo_arr.push(_react2.default.createElement(
@@ -12472,7 +12472,7 @@ var SumTable = function (_Component) {
 							'T\u1ED5ng ti\u1EC1n c\xF2n thi\u1EBFu: '
 						)
 					),
-					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: grandtotal.toLocaleString() + " VND" } })
+					_react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: grandtotal.toLocaleString('de-DE') + " VND" } })
 				));
 			}
 			return ticketinfo_arr;
