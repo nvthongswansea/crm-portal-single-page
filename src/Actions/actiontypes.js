@@ -13,3 +13,5 @@ export const COUPON_EXIST = "COUPON_EXIST";
 export const COUPON_USED = "COUPON_USED";
 export const COUPON_INVALID = "COUPON_INVALID";
 export const REFRESH_MODAL = "REFRESH_MODAL";
+export const POST_LOADER = "POST_LOADER";
+

@@ -10,6 +10,7 @@ import TicketPickerReducer from './reducer_ticketpicker.js';
 import ATickConProdReducer from './reducer_atickconprod.js';
 import SumTableReducer from './reducer_sumtable.js';
 import ModalReducer from './reducer_modal.js';
+import PostLoaderReducer from './reducer_postloader.js';
 import { reducer as awaitReducer } from 'redux-await';
 import { reducer as notifications } from 'react-redux-notifications';
 
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
 	await: awaitReducer,
 	SumTable: SumTableReducer,
 	Modal: ModalReducer,
+	PostLoader: PostLoaderReducer,
 	notifications
 });
 

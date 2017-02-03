@@ -121,6 +121,10 @@ const COUPON_INVALID = "COUPON_INVALID";
 const REFRESH_MODAL = "REFRESH_MODAL";
 /* harmony export (immutable) */ exports["REFRESH_MODAL"] = REFRESH_MODAL;
 
+const POST_LOADER = "POST_LOADER";
+/* harmony export (immutable) */ exports["POST_LOADER"] = POST_LOADER;
+
+
 
 
 /***/ },
@@ -622,26 +626,6 @@ function getContentByParam(module, param) {
 						})
 				},
 			};
-		case 'checkStudentEmail':
-			return dispatch => {
-				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkemailexistence", {
-						email: param
-					})
-					.then((response) => {
-						if (!response.data) {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
-							});
-						} else if (response.data.contactid) {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["EMAIL_EXIST"]
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
 		case 'checkCoupon':
 			return dispatch => {
 				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/checkcouponexistence", {
@@ -673,47 +657,61 @@ function getContentByParam(module, param) {
 					})
 			}
 		case "changeStudent":
-			return dispatch => {
-				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/changeStudent", param)
-					.then((response) => {
-						if (response.data) {
-							__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
-								pathname: '/ATickConProd/main',
-								query: {
-									noti: 'Changed student successfully!'
+			return {
+					type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["POST_LOADER"],
+					AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+					payload: {
+						postResult: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/changeStudent", param)
+							.then((response) => {
+								if (response.data) {
+									__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
+										pathname: '/ATickConProd/main',
+										query: {
+											noti: 'Changed student successfully!'
+										}
+									});
+									return response.data;
+									
+								} else {
+									dispatch({
+										type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
+									});
 								}
-							});
-						} else {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
+							})
+							.catch((err) => {
+								return err;
+							})
+					},
+				};
+			
 		case "changeVoucherOwner":
-			return dispatch => {
-				__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/changeVoucherOwner", param)
-					.then((response) => {
-						if (response.data) {
-							__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
-								pathname: '/AVouchers/main',
-								query: {
-									noti: 'Changed student successfully!'
-								}
-							});
-						} else {
-							dispatch({
-								type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
+			return {
+				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["POST_LOADER"],
+				AWAIT_MARKER: __WEBPACK_IMPORTED_MODULE_1_redux_await__["AWAIT_MARKER"],
+				payload: {
+					postResult: __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/portal/changeVoucherOwner", param)
+						.then((response) => {
+							if (response.data) {
+								__WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].push({
+									pathname: '/AVouchers/main',
+									query: {
+										noti: 'Changed student successfully!'
+									}
+								});
+								return response.data;
+								
+							} else {
+								dispatch({
+									type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["NO_EMAIL"]
+								});
+							}
+						})
+						.catch((err) => {
+							return err;
+						})
+				},
+			};
+
 		case "PotentialATCP":
 			return {
 				type: __WEBPACK_IMPORTED_MODULE_3__actiontypes_js__["REFRESH_TABLE"],
@@ -14171,7 +14169,17 @@ var UserInfoModal = function (_Component) {
 					_react2.default.createElement(
 						'button',
 						{ className: 'btn btn-primary', onClick: this.submit },
-						'Chuy\u1EC3n'
+						this.props.statuses.postResult == 'success' || !this.props.statuses.postResult ? _react2.default.createElement(
+							'div',
+							null,
+							'Chuy\u1EC3n nh\u01B0\u1EE3ng'
+						) : "",
+						this.props.statuses.postResult === 'pending' && _react2.default.createElement(
+							'div',
+							null,
+							_react2.default.createElement('i', { className: 'fa fa-spinner fa-spin' }),
+							' Xin ch\u1EDD'
+						)
 					)
 				)
 			);
@@ -38236,12 +38244,14 @@ module.exports = function() { throw new Error("define cannot be used indirect");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__reducer_atickconprod_js__ = __webpack_require__(477);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__reducer_sumtable_js__ = __webpack_require__(484);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__reducer_modal_js__ = __webpack_require__(482);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_redux_await__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_redux_await___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_redux_await__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_react_redux_notifications__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_react_redux_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_react_redux_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__reducer_postloader_js__ = __webpack_require__(498);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_redux_await__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_redux_await___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_redux_await__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_react_redux_notifications__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_react_redux_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_react_redux_notifications__);
 Object.defineProperty(exports, "__esModule", { value: true });
  
+
 
 
 
@@ -38266,10 +38276,11 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 	contactdata: __WEBPACK_IMPORTED_MODULE_7__reducer_contact_js__["a" /* default */],
 	ticketpickerdata: __WEBPACK_IMPORTED_MODULE_8__reducer_ticketpicker_js__["a" /* default */],
 	ATCPeditor: __WEBPACK_IMPORTED_MODULE_9__reducer_atickconprod_js__["a" /* default */],
-	await: __WEBPACK_IMPORTED_MODULE_12_redux_await__["reducer"],
+	await: __WEBPACK_IMPORTED_MODULE_13_redux_await__["reducer"],
 	SumTable: __WEBPACK_IMPORTED_MODULE_10__reducer_sumtable_js__["a" /* default */],
 	Modal: __WEBPACK_IMPORTED_MODULE_11__reducer_modal_js__["a" /* default */],
-	notifications: __WEBPACK_IMPORTED_MODULE_13_react_redux_notifications__["reducer"]
+	PostLoader: __WEBPACK_IMPORTED_MODULE_12__reducer_postloader_js__["a" /* default */],
+	notifications: __WEBPACK_IMPORTED_MODULE_14_react_redux_notifications__["reducer"]
 });
 
 /* harmony default export */ exports["default"] = rootReducer;
@@ -38452,6 +38463,28 @@ const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c
 
 module.exports = __webpack_require__(189);
 
+
+/***/ },
+/* 491 */,
+/* 492 */,
+/* 493 */,
+/* 494 */,
+/* 495 */,
+/* 496 */,
+/* 497 */,
+/* 498 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__ = __webpack_require__(12);
+
+/* harmony default export */ exports["a"] = function(state=null, action) {
+	switch(action.type) {
+		case __WEBPACK_IMPORTED_MODULE_0__Actions_actiontypes_js__["POST_LOADER"]:
+		return action.payload.postResult;
+	}
+	return state;
+};
 
 /***/ }
 ],[490]);

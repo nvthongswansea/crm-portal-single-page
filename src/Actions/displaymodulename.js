@@ -20,7 +20,8 @@ import {
 	COUPON_USED,
 	COUPON_INVALID,
 	REFRESH_SUMTABLE,
-	REFRESH_MODAL
+	REFRESH_MODAL,
+	POST_LOADER
 } from './actiontypes.js';
 
 export function refreshContent(menutitle) {
@@ -346,26 +347,6 @@ export function getContentByParam(module, param) {
 						})
 				},
 			};
-		case 'checkStudentEmail':
-			return dispatch => {
-				axios.post("/portal/checkemailexistence", {
-						email: param
-					})
-					.then((response) => {
-						if (!response.data) {
-							dispatch({
-								type: NO_EMAIL
-							});
-						} else if (response.data.contactid) {
-							dispatch({
-								type: EMAIL_EXIST
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
 		case 'checkCoupon':
 			return dispatch => {
 				axios.post("/portal/checkcouponexistence", {
@@ -397,47 +378,61 @@ export function getContentByParam(module, param) {
 					})
 			}
 		case "changeStudent":
-			return dispatch => {
-				axios.post("/portal/changeStudent", param)
-					.then((response) => {
-						if (response.data) {
-							hashHistory.push({
-								pathname: '/ATickConProd/main',
-								query: {
-									noti: 'Changed student successfully!'
+			return {
+					type: POST_LOADER,
+					AWAIT_MARKER,
+					payload: {
+						postResult: axios.post("/portal/changeStudent", param)
+							.then((response) => {
+								if (response.data) {
+									hashHistory.push({
+										pathname: '/ATickConProd/main',
+										query: {
+											noti: 'Changed student successfully!'
+										}
+									});
+									return response.data;
+									
+								} else {
+									dispatch({
+										type: NO_EMAIL
+									});
 								}
-							});
-						} else {
-							dispatch({
-								type: NO_EMAIL
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
+							})
+							.catch((err) => {
+								return err;
+							})
+					},
+				};
+			
 		case "changeVoucherOwner":
-			return dispatch => {
-				axios.post("/portal/changeVoucherOwner", param)
-					.then((response) => {
-						if (response.data) {
-							hashHistory.push({
-								pathname: '/AVouchers/main',
-								query: {
-									noti: 'Changed student successfully!'
-								}
-							});
-						} else {
-							dispatch({
-								type: NO_EMAIL
-							});
-						}
-					})
-					.catch((err) => {
-						return err;
-					})
-			}
+			return {
+				type: POST_LOADER,
+				AWAIT_MARKER,
+				payload: {
+					postResult: axios.post("/portal/changeVoucherOwner", param)
+						.then((response) => {
+							if (response.data) {
+								hashHistory.push({
+									pathname: '/AVouchers/main',
+									query: {
+										noti: 'Changed student successfully!'
+									}
+								});
+								return response.data;
+								
+							} else {
+								dispatch({
+									type: NO_EMAIL
+								});
+							}
+						})
+						.catch((err) => {
+							return err;
+						})
+				},
+			};
+
 		case "PotentialATCP":
 			return {
 				type: REFRESH_TABLE,

@@ -64,7 +64,8 @@ class UserInfoModal extends Component {
 			      Hủy
 			    </button>
 			    <button className='btn btn-primary' onClick={this.submit}>
-			      Chuyển
+			    { (this.props.statuses.postResult == 'success' || !this.props.statuses.postResult) ? (<div>Chuyển nhượng</div>) : ""}
+			    { this.props.statuses.postResult === 'pending' && (<div><i className="fa fa-spinner fa-spin"></i> Xin chờ</div>) }
 			    </button>
 			  </ModalFooter>
 			  </div>
