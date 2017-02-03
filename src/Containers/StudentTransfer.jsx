@@ -3,9 +3,9 @@ import { connect } from 'redux-await';
 import {refreshContent,getContentByParam} from '../Actions/displaymodulename.js';
 import {bindActionCreators} from 'redux';
 import Loader from 'halogen/PulseLoader';
-import { InlineNotification } from 'react-redux-notifications';
 import {NO_EMAIL, EMAIL_EXIST} from '../Actions/actiontypes.js';
 import jQuery from 'jquery';
+import UserInfoModal from './userinfo_modal.jsx';
 
 class StudentTransfer extends Component {
 	constructor(props) {
@@ -20,7 +20,6 @@ class StudentTransfer extends Component {
 		this.renderProductInfo=this.renderProductInfo.bind(this);
 		this.renderVoucherInfo=this.renderVoucherInfo.bind(this);
 		this.keyDown = this.keyDown.bind(this);
-		this.submit=this.submit.bind(this);
 	}
 	componentWillReceiveProps(nextProps){
 		if (this.props.route.formname=="TransferCourse") {
@@ -45,23 +44,7 @@ class StudentTransfer extends Component {
             event.preventDefault();
         } 
 	}
-	submit(dom) {
-		let txt;
-		if (this.props.route.formname=="TransferCourse") {
-	    	let res = confirm("Lưu ý: Sau khi đổi tên người đi học, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin vé này nữa. Bạn có chắc chắn muốn đổi?");
-			if (res == true) {
-				let Jsondata = jQuery(dom).serialize();
-				this.props.getContentByParam("changeStudent", Jsondata);
-			}
-		} else if (this.props.route.formname=="TransferVoucher") {
-			let res = confirm("Lưu ý: Sau khi chuyển nhượng, bạn sẽ không thể chỉnh sửa, sử dụng hay truy cập thông tin voucher này nữa. Bạn có chắc chắn muốn chuyển?");
-			if (res == true) {
-				let Jsondata = jQuery(dom).serialize();
-				this.props.getContentByParam("changeVoucherOwner", Jsondata);
-			}
-		}
-		
-	}
+	
 	renderProductInfo() {
 		let data = this.props.data;
 		if (!data) return "";
@@ -77,20 +60,10 @@ class StudentTransfer extends Component {
 					<form id="changeStudentForm">
 						<div className="form-group">
 							<input type="hidden" className="form-control" name="atickcontprodid" value={data.atickcontprodid}/>
-		  					<input type="text" className="form-control" name="email" defaultValue={data.email} onKeyDown={(event) => this.keyDown(event)} onBlur={(event) => {this.props.getContentByParam("checkStudentEmail",event.target.value.trim())}}/>
-		  					<div style={{color: "red"}}>
-		  					<InlineNotification
-					          defaultMessage='Email người học không tồn tại! Xin nhập email đã tồn tại trong hệ thống.'
-					          hideAfter={2500}
-					          triggeredBy={NO_EMAIL} /></div>
+		  					<input id="email" type="text" className="form-control" name="email"/>
 							</div>
-							<div style={{color: "green"}}>
-							<InlineNotification
-					          defaultMessage='Có thể chuyển vé cho người đi học này!'
-					          hideAfter={2500}
-					          triggeredBy={EMAIL_EXIST} /></div>
 					</form>
-					<a className="btn btn-success btn-xs" onClick={() => {this.submit("#changeStudentForm")}}>Đổi người đi học</a>
+					<UserInfoModal formname={this.props.route.formname} email={jQuery('#email').val()}/>
 				</td>
 			</tr>);
 		info_arr.push(<tr><td><b>Tình trạng: </b></td><td>{data.atcp_statusatcp_status}</td></tr>);
@@ -105,26 +78,16 @@ class StudentTransfer extends Component {
 		info_arr.push(
 			<tr>
 				<td>
-					<b>Email người đi học: </b>
+					<b>Email người nhận: </b>
 				</td>
 				<td> 
 					<form id="changeStudentForm">
 						<div className="form-group">
 							<input type="hidden" className="form-control" name="voucherid" value={data.avouchersid}/>
-		  					<input type="text" className="form-control" name="email" defaultValue={data.email} onKeyDown={(event) => this.keyDown(event)} onBlur={(event) => {this.props.getContentByParam("checkStudentEmail",event.target.value.trim())}}/>
-		  					<div style={{color: "red"}}>
-		  					<InlineNotification
-					          defaultMessage='Email người học không tồn tại! Xin nhập email đã tồn tại trong hệ thống.'
-					          hideAfter={2500}
-					          triggeredBy={NO_EMAIL} /></div>
+		  					<input id="email" type="text" className="form-control" name="email"/>
 							</div>
-							<div style={{color: "green"}}>
-							<InlineNotification
-					          defaultMessage='Có thể chuyển vé cho người đi học này!'
-					          hideAfter={2500}
-					          triggeredBy={EMAIL_EXIST} /></div>
 					</form>
-					<a className="btn btn-success btn-xs" onClick={() => {this.submit("#changeStudentForm")}}>Chuyển nhượng voucher</a>
+					<UserInfoModal formname={this.props.route.formname} email={jQuery('#email').val()}/>
 				</td>
 			</tr>);
 		return info_arr;

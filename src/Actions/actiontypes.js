@@ -12,3 +12,4 @@ export const NO_COUPON = "NO_COUPON";
 export const COUPON_EXIST = "COUPON_EXIST";
 export const COUPON_USED = "COUPON_USED";
 export const COUPON_INVALID = "COUPON_INVALID";
+export const REFRESH_MODAL = "REFRESH_MODAL";

@@ -19,7 +19,8 @@ import {
 	COUPON_EXIST,
 	COUPON_USED,
 	COUPON_INVALID,
-	REFRESH_SUMTABLE
+	REFRESH_SUMTABLE,
+	REFRESH_MODAL
 } from './actiontypes.js';
 
 export function refreshContent(menutitle) {
@@ -325,13 +326,32 @@ export function getContentByParam(module, param) {
 						})
 				},
 			};
+		case "confirmTransferInfo":
+			return {
+				type: REFRESH_MODAL,
+				AWAIT_MARKER,
+				payload: {
+					loadedModal: axios.post("/portal/checkemailexistence", {
+							email: param
+						})
+						.then((response) => {
+							if (!response.data) {
+								return null;
+							} else if (response.data.contactid) {
+								return response.data;
+							}
+						})
+						.catch((err) => {
+							return err;
+						})
+				},
+			};
 		case 'checkStudentEmail':
 			return dispatch => {
 				axios.post("/portal/checkemailexistence", {
 						email: param
 					})
 					.then((response) => {
-						console.log(response.data);
 						if (!response.data) {
 							dispatch({
 								type: NO_EMAIL
@@ -481,7 +501,7 @@ export function getContentByParam(module, param) {
 								})
 								.then((responsenext) => {
 									if (responsenext.data.atcp_no) {
-										dispatch ({
+										dispatch({
 											type: REFRESH_TICKETPICKER,
 											AWAIT_MARKER,
 											COUPON_EXIST,

@@ -1,14 +1,15 @@
 import { combineReducers } from 'redux'; 
-import BooksReducer from './producer_books.js';
-import SidemenuReducer from './producer_sidemenu.js';
-import DatatableReducer from './producer_datatable.js';
-import FaqReducer from './producer_faq.js';
-import AddTicketReducer from './producer_addticket.js';
-import TicketReducer from './producer_ticket.js';
-import ContactReducer from './producer_contact.js';
-import TicketPickerReducer from './producer_ticketpicker.js';
-import ATickConProdReducer from './producer_atickconprod.js';
-import SumTableReducer from './producer_sumtable.js';
+import BooksReducer from './reducer_books.js';
+import SidemenuReducer from './reducer_sidemenu.js';
+import DatatableReducer from './reducer_datatable.js';
+import FaqReducer from './reducer_faq.js';
+import AddTicketReducer from './reducer_addticket.js';
+import TicketReducer from './reducer_ticket.js';
+import ContactReducer from './reducer_contact.js';
+import TicketPickerReducer from './reducer_ticketpicker.js';
+import ATickConProdReducer from './reducer_atickconprod.js';
+import SumTableReducer from './reducer_sumtable.js';
+import ModalReducer from './reducer_modal.js';
 import { reducer as awaitReducer } from 'redux-await';
 import { reducer as notifications } from 'react-redux-notifications';
 
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
 	ATCPeditor: ATickConProdReducer,
 	await: awaitReducer,
 	SumTable: SumTableReducer,
+	Modal: ModalReducer,
 	notifications
 });
 

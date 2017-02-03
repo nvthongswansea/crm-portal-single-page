@@ -587,7 +587,6 @@ router.get('/listTransbypotential/:potentialid', _helper.loginRequired, function
 });
 
 router.get('/listvouchers', _helper.loginRequired, function(req, res, next) {
-	console.log(ProductModuleId);
 	var formData = {
 		// Pass a simple key-value pair
 		sessionid: req.session.sessid,
@@ -634,7 +633,6 @@ request.post({
 }, function(errordata, responsedata, bodydata) {
 	if (!errordata && responsedata.statusCode == 200) {
 		ProductModuleId = bodydata;
-		console.log(ProductModuleId);
 	} else {
 
 	}
