@@ -6,13 +6,12 @@ import Loader from 'halogen/PulseLoader';
 import { InlineNotification } from 'react-redux-notifications';
 import {NO_EMAIL, EMAIL_EXIST} from '../Actions/actiontypes.js';
 import jQuery from 'jquery';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class StudentTransfer extends Component {
 	constructor(props) {
 		super(props);
 		if (this.props.route.formname=="TransferCourse") {
-			this.state = {ATickConProdId: this.props.params.ATickConProdId, warning: false};
+			this.state = {ATickConProdId: this.props.params.ATickConProdId};
 			this.props.getContentByParam("ATCPDetail", this.state.ATickConProdId);
 		} else if (this.props.route.formname=="TransferVoucher") {
 			this.state = {AVouchersId: this.props.params.AVouchersId};
@@ -22,7 +21,6 @@ class StudentTransfer extends Component {
 		this.renderVoucherInfo=this.renderVoucherInfo.bind(this);
 		this.keyDown = this.keyDown.bind(this);
 		this.submit=this.submit.bind(this);
-		this.toggleWarning = this.toggleWarning.bind(this);
 	}
 	componentWillReceiveProps(nextProps){
 		if (this.props.route.formname=="TransferCourse") {
@@ -40,11 +38,6 @@ class StudentTransfer extends Component {
 	    			nextProps.getContentByParam("VoucherDetail", this.state.AVouchersId);
 	    		});
 		}
-	}
-	toggleWarning() {
-	    this.setState({
-	      warning: !this.state.warning
-	    });
 	}
 	keyDown(event) {
 		if (event.keyCode === 13) {
@@ -131,17 +124,6 @@ class StudentTransfer extends Component {
 					          hideAfter={2500}
 					          triggeredBy={EMAIL_EXIST} /></div>
 					</form>
-					<Button color="warning" onClick={this.toggleWarning}>Warning modal</Button>
-	                <Modal isOpen={this.state.warning} toggle={this.toggleWarning} className={'modal-warning ' + this.props.className}>
-	                  <ModalHeader toggle={this.toggleWarning}>Modal title</ModalHeader>
-	                  <ModalBody>
-	                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-	                  </ModalBody>
-	                  <ModalFooter>
-	                    <Button color="primary" onClick={this.toggleWarning}>Do Something</Button>{' '}
-	                    <Button color="secondary" onClick={this.toggleWarning}>Cancel</Button>
-	                  </ModalFooter>
-	                </Modal>
 					<a className="btn btn-success btn-xs" onClick={() => {this.submit("#changeStudentForm")}}>Chuyển nhượng voucher</a>
 				</td>
 			</tr>);

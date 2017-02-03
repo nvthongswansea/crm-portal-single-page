@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-require('bootstrap/dist/css/bootstrap.css');
-require('bootstrap/dist/js/bootstrap.min.js');
-require('./sb-admin-2.css');
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import './sb-admin-2.css';
 import store from './store.jsx';
 import NavBar from './Components/Navbars.jsx';
 import MainContent from './Components/Maincontent.jsx';

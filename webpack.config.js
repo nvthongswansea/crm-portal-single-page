@@ -13,9 +13,8 @@ module.exports = {
       'react-redux',
       'react-router',
       'axios',
-      'jquery',
-      'react-addons-transition-group',
-      
+      'jquery'
+
     ]
   },
   output: {
