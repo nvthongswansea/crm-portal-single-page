@@ -118,23 +118,5 @@ router.get('/describe/:module', (req, res, next) => {
 	});
 });
 
-router.post('/addATCP', (req, res, next) => {
-	let body = req.body;
-	console.log(body);
-	var values = {
-		'atcp_contact_id': "12x936",
-		'aticket_id': "36x973",
-		'product_id': "14x470",
-		'atcp_status': "Pending",
-		'assigned_user_id': 1
-	};
-	client.doCreate('ATickContProd', values, function(args, modules) {
-		console.log(args);
-		if (modules) res.status(201).json(modules);
-		else res.status(400).json({
-			success: false,
-			message: "failed!"
-		});
-	});
-});
+
 module.exports = router;

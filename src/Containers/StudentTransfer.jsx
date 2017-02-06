@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'redux-await';
-import {refreshContent,getContentByParam} from '../Actions/displaymodulename.js';
+import { connect } from 'react-redux';
+import actions from '../Actions/TransferActions.js';
 import {bindActionCreators} from 'redux';
 import Loader from 'halogen/PulseLoader';
-import {NO_EMAIL, EMAIL_EXIST} from '../Actions/actiontypes.js';
 import jQuery from 'jquery';
 import UserInfoModal from './userinfo_modal.jsx';
 
@@ -12,10 +11,10 @@ class StudentTransfer extends Component {
 		super(props);
 		if (this.props.route.formname=="TransferCourse") {
 			this.state = {ATickConProdId: this.props.params.ATickConProdId};
-			this.props.getContentByParam("ATCPDetail", this.state.ATickConProdId);
+			this.props.getContentOfATCP(this.state.ATickConProdId);
 		} else if (this.props.route.formname=="TransferVoucher") {
 			this.state = {AVouchersId: this.props.params.AVouchersId};
-			this.props.getContentByParam("VoucherDetail", this.state.AVouchersId);
+			this.props.getContentOfVoucher(this.state.AVouchersId);
 		}
 		this.renderProductInfo=this.renderProductInfo.bind(this);
 		this.renderVoucherInfo=this.renderVoucherInfo.bind(this);
@@ -27,14 +26,14 @@ class StudentTransfer extends Component {
 				this.setState({
 	      			ATickConProdId: nextProps.params.ATickConProdId
 	    		}, () => {
-	    			nextProps.getContentByParam("ATCPDetail", this.state.ATickConProdId);
+	    			nextProps.getContentOfATCP(this.state.ATickConProdId);
 	    		});
 		} else if (this.props.route.formname=="TransferVoucher") {
 			if (this.state.AVouchersId != nextProps.params.AVouchersId)
 				this.setState({
 	      			AVouchersId: nextProps.params.AVouchersId
 	    		}, () => {
-	    			nextProps.getContentByParam("VoucherDetail", this.state.AVouchersId);
+	    			nextProps.getContentOfVoucher(this.state.AVouchersId);
 	    		});
 		}
 	}
@@ -46,7 +45,7 @@ class StudentTransfer extends Component {
 	}
 	
 	renderProductInfo() {
-		let data = this.props.data;
+		let data = this.props.fetchedData.data;
 		if (!data) return "";
 		let info_arr = [];
 		info_arr.push(<tr><td><b>Tên Khóa học: </b></td><td>{data.productname}</td></tr>);
@@ -70,7 +69,7 @@ class StudentTransfer extends Component {
 		return info_arr;
 	}
 	renderVoucherInfo() {
-		let data = this.props.data;
+		let data = this.props.fetchedData.data;
 		if (!data) return "";
 		let info_arr = [];
 		info_arr.push(<tr><td><b>Mã voucher: </b></td><td>{data.avouchers_code}</td></tr>);
@@ -93,18 +92,17 @@ class StudentTransfer extends Component {
 		return info_arr;
 	}
 	render() {
-		this.props.data? console.log(this.props.data.data): "";
 		return (
 		   <div>
-		   { this.props.statuses.loadedATCPeditor === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
-	        { this.props.statuses.loadedATCPeditor === 'success' && 
+		   { this.props.fetchedData.loading === true && <Loader color="#26A65B" size="16px" margin="4px"/> }
+	        { this.props.fetchedData.loading === false && 
 	        <div className="row">
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Thông tin cơ bản: </div>
 	              <table className="table">
-	                <tbody>{this.props.route.formname=="TransferCourse"? (this.props.data? this.renderProductInfo() : ""):""}
-	                {this.props.route.formname=="TransferVoucher"? (this.props.data? this.renderVoucherInfo() : ""):""}
+	                <tbody>{this.props.route.formname=="TransferCourse"? (this.props.fetchedData.data? this.renderProductInfo() : ""):""}
+	                {this.props.route.formname=="TransferVoucher"? (this.props.fetchedData.data? this.renderVoucherInfo() : ""):""}
 	                </tbody>
 	               </table>
 	            </div>
@@ -119,12 +117,12 @@ class StudentTransfer extends Component {
 
 function mapStateToProps(state) {
 	return {
-		data: state.ATCPeditor
+		fetchedData: state.StudentTransfer
 	};
 }
 
 function mapDispatchToProps(dispatch) {
-   return bindActionCreators({getContentByParam: getContentByParam}, dispatch);
+   return bindActionCreators({getContentOfATCP: actions.fetchATCPDetail, getContentOfVoucher: actions.fetchVoucherDetail}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentTransfer);

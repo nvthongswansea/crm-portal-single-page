@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './sb-admin-2.css';
+import 'babel-polyfill';
 import store from './store.jsx';
 import NavBar from './Components/Navbars.jsx';
 import MainContent from './Components/Maincontent.jsx';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'redux-await';
-import {getContentByParam} from '../Actions/displaymodulename.js';
+import { connect } from 'react-redux';
+import actions from '../Actions/SupportTicketActions.js';
 import {bindActionCreators} from 'redux';
 import { hashHistory } from 'react-router';
 import Loader from 'halogen/PulseLoader';
@@ -10,7 +10,7 @@ class TicketDetail extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {ticketId: this.props.params.ticketId};
-		this.props.getContentByParam("ticketdetail", this.state.ticketId);
+		this.props.fetchData(this.state.ticketId);
 		this.renderTicketInfo = this.renderTicketInfo.bind(this);
 		this.renderDescription = this.renderDescription.bind(this);
 		this.renderResolution = this.renderResolution.bind(this);
@@ -22,13 +22,13 @@ class TicketDetail extends Component {
 			this.setState({
       			ticketId: nextProps.params.ticketId
     		}, () => {
-    			nextProps.getContentByParam("ticketdetail", this.state.ticketId);
+    			nextProps.fetchData(this.state.ticketId);
     		});
 		
 	}
 
 	renderTicketInfo() {
-		let data = this.props.data;
+		let data = this.props.fetchedData.data;
 		if (!data.HelpDesk) return "";
 		let ticketinfo_arr = [];
 		data.HelpDesk.map( (field, index) => {
@@ -39,7 +39,7 @@ class TicketDetail extends Component {
 		return ticketinfo_arr;
 	}
 	renderDescription() {
-		let data = this.props.data;
+		let data = this.props.fetchedData.data;
 		if (!data.HelpDesk) return "";
 		let ticketinfo_arr = [];
 		data.HelpDesk.map( (field, index) => {
@@ -50,7 +50,7 @@ class TicketDetail extends Component {
 		return ticketinfo_arr;
 	}
 	renderResolution() {
-		let data = this.props.data;
+		let data = this.props.fetchedData.data;
 		if (!data.HelpDesk) return "";
 		let ticketinfo_arr = [];
 		data.HelpDesk.map( (field, index) => {
@@ -61,7 +61,7 @@ class TicketDetail extends Component {
 		return ticketinfo_arr;
 	}
 	renderStatus() {
-		let data = this.props.data;
+		let data = this.props.fetchedData.data;
 		if (!data.HelpDesk) return "";
 		let ticketinfo = null;
 		data.HelpDesk.map( (field, index) => {
@@ -76,10 +76,10 @@ class TicketDetail extends Component {
 					          </div>
 					        </div>
 					        <a onClick={() => this.closeTicket()} style={{cursor: "pointer"}}>
-					          <div className="panel-footer text-center">
-					            <b>Close Ticket</b>
-					            <div className="clearfix" />
-					          </div>
+					          	<div className="panel-footer text-center">
+						            <b>Đóng vé hỗ trợ</b>
+						            <div className="clearfix" />
+						        </div>
 					        </a>
 					    </div>);
 				} else if (field.fieldvalue == "In Progress") {
@@ -93,7 +93,7 @@ class TicketDetail extends Component {
 					        </div>
 					        <a onClick={() => this.closeTicket()} style={{cursor: "pointer"}}>
 					          <div className="panel-footer text-center">
-					            <b>Close Ticket</b>
+					            <b>Đóng vé hỗ trợ</b>
 					            <div className="clearfix" />
 					          </div>
 					        </a>
@@ -110,7 +110,7 @@ class TicketDetail extends Component {
 					        </div>
 					        <a onClick={() => this.closeTicket()} style={{cursor: "pointer"}}>
 					          <div className="panel-footer text-center">
-					            <b>Close Ticket</b>
+					            <b>Đóng vé hỗ trợ</b>
 					            <div className="clearfix" />
 					          </div>
 					        </a>
@@ -132,26 +132,26 @@ class TicketDetail extends Component {
 		return ticketinfo;
 	}
 	closeTicket() {
-		this.props.getContentByParam("closeticket", this.state.ticketId);
-		// axios.get("/portal/closeticket/" + this.state.ticketId)
-		// 		.then((response) => {
-		// 			this.props.getContentByParam("ticketdetail", response.data.ticketid);
-		// 		})
-		// 		.catch((errt) => {
-		// 			this.forceUpdate();
-		// 		})
+		this.props.closeticket(this.state.ticketId);
 	}
 	render() {
 		return (
 	      <div>
-	      { this.props.statuses.loadedTicketInfo === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
-	      { this.props.statuses.loadedTicketInfo === 'success' &&
-	        <div className="row">
+	      {this.props.fetchedData.closeloading ? 
+					        	<div className="panel-footer text-center">
+					        		<i className="fa fa-spinner fa-spin"></i>
+						            <b>Xin vui lòng chờ trong giây lát...</b>
+						            <div className="clearfix" />
+					          	</div> : 
+					          	""}
+	      { this.props.fetchedData.loading === true && <Loader color="#26A65B" size="16px" margin="4px"/> }
+	      { !this.props.fetchedData.loading && !this.props.fetchedData.closeloading ?
+	        <div className="row">	
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Ticket Information</div>
 	              <table className="table">
-	                <tbody>{this.props.data? this.renderTicketInfo() : ""}
+	                <tbody>{this.props.fetchedData.data? this.renderTicketInfo() : ""}
 	                </tbody></table>
 	            </div>
 	          </div>
@@ -159,7 +159,7 @@ class TicketDetail extends Component {
 	            <div className="panel panel-default">
 	              <div className="panel-heading"> Description Details </div>
 	              <table className="table">
-	                <tbody> {this.props.data? this.renderDescription() : ""}
+	                <tbody> {this.props.fetchedData.data? this.renderDescription() : ""}
 	                </tbody></table>
 	            </div>
 	          </div>
@@ -167,12 +167,12 @@ class TicketDetail extends Component {
 	            <div className="panel panel-default">
 	              <div className="panel-heading"> Ticket Resolution </div>
 	              <table className="table">
-	                <tbody> {this.props.data? this.renderResolution() : ""}
+	                <tbody> {this.props.fetchedData.data? this.renderResolution() : ""}
 	                </tbody></table>
 	            </div>
 	          </div>
 	          <div className="col-lg-6">
-	            	{this.props.data? this.renderStatus() : ""}
+	            	{this.props.fetchedData.data? this.renderStatus() : ""}
 	            <div className="panel panel-default">
 	              <div className="panel-heading"> Attachments </div>
 
@@ -181,7 +181,7 @@ class TicketDetail extends Component {
 	                </tbody></table>
 	            </div>
 	          </div>
-	        </div>}
+	        </div>: ""}
 	        <div className="row">
 	        </div>
 	      </div>
@@ -190,12 +190,12 @@ class TicketDetail extends Component {
 }
 function mapStateToProps(state) {
 	return {
-		data: state.ticketdata
+		fetchedData: state.ticketdata
 	};
 }
 
 function mapDispatchToProps(dispatch) {
-   return bindActionCreators({getContentByParam: getContentByParam}, dispatch);
+   return bindActionCreators({fetchData: actions.fetchSupportTicket, closeticket: actions.closeSupportTicket}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TicketDetail);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'redux-await';
-import {refreshContent,getContentByParam} from '../Actions/displaymodulename.js';
+import { connect } from 'react-redux';
+import actions from '../Actions/SumTableActions.js';
 import {bindActionCreators} from 'redux';
 import Loader from 'halogen/PulseLoader';
 
@@ -9,7 +9,7 @@ class SumTable extends Component {
 		super(props);
 		this.state = {potentialid: this.props.params.potentialid};
 		console.log(this.state.potentialid);
-		this.props.getContentByParam("Sumtable", this.state.potentialid);
+		this.props.refreshContent(this.state.potentialid);
 		this.renderSumData=this.renderSumData.bind(this);
 	} 
 	componentWillReceiveProps(nextProps){
@@ -17,14 +17,13 @@ class SumTable extends Component {
 			this.setState({
       			potentialid: nextProps.params.potentialid
     		}, () => {
-    			nextProps.getContentByParam("Sumtable", this.state.potentialid);
+    			nextProps.refreshContent(this.state.potentialid);
     		});
 		
 	}
 	renderSumData() {
-		console.log(this.props.data);
 		let ticketinfo_arr = [];
-		let data = this.props.data;
+		let data = this.props.sumtableData.data;
 		let grandtotal = 0;
 		let total = 0;
 		let refund = 0;
@@ -60,14 +59,14 @@ class SumTable extends Component {
 	render() {
 		return (
 			<div>
-			{ this.props.statuses.loadedSumTable === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
-			{ this.props.statuses.loadedSumTable === 'success' && 
+			{ this.props.sumtableData.loading === true && <Loader color="#26A65B" size="16px" margin="4px"/> }
+			{ this.props.sumtableData.loading === false && 
 			<div className="row">
 	          <div className="col-lg-6">
 	            <div className="panel panel-default">
 	              <div className="panel-heading">Tóm tắt thông tin thanh toán: </div>
 	              <table className="table">
-	                <tbody>{ this.props.data? this.renderSumData() : "" }
+	                <tbody>{ this.props.sumtableData.data? this.renderSumData() : "" }
 	                </tbody></table>
 	            </div>
 	          </div>
@@ -77,13 +76,11 @@ class SumTable extends Component {
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		data: state.SumTable
-	};
+const mapStateToProps = (state) => {
+	return {sumtableData: state.SumTable};
 }
-function mapDispatchToProps(dispatch) {
-   return bindActionCreators({refreshContent: refreshContent, getContentByParam: getContentByParam}, dispatch);
+const mapDispatchToProps = (dispatch) => {
+   return bindActionCreators({refreshContent: actions.refreshSumTable}, dispatch);
 }
 
 

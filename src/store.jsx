@@ -5,8 +5,10 @@ import promise from "redux-promise-middleware";
 import { createStore, applyMiddleware } from 'redux';
 import { middleware as awaitMiddleware } from 'redux-await';
 import { middleware as NotificationMiddleware } from 'react-redux-notifications';
-
-
+import createSagaMiddleware from 'redux-saga';
+import sagas from './Sagas/sagas.js';
+const sagaMiddleware = createSagaMiddleware();
 const preloadedState = window.__PRELOADED_STATE__;
-const store = applyMiddleware(promise(), thunk, logger(), awaitMiddleware, NotificationMiddleware)(createStore)(reducer,preloadedState);
+const store = applyMiddleware(promise(), logger(), NotificationMiddleware, sagaMiddleware)(createStore)(reducer,preloadedState);
+sagaMiddleware.run(sagas);
 export default store;

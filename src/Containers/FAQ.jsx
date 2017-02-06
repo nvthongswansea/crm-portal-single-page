@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'redux-await';
-import {refreshContent} from '../Actions/displaymodulename.js';
+import { connect } from 'react-redux';
+import actions from '../Actions/FAQActions.js';
 import {bindActionCreators} from 'redux';
 import Loader from 'halogen/PulseLoader';
 
@@ -12,7 +12,7 @@ class FAQ extends Component {
 		this.renderFaq=this.renderFaq.bind(this);
 	}
 	renderCategories() {
-		let faq = this.props.faq;
+		let faq = this.props.faqdata.data;
 		let categories = [];
 		faq.faqcategory.map((category, index) => {
 			categories.push(<li className={index==0? "list-group-item active" : "list-group-item"}><a href={"#p"+index} role="tab" data-toggle="tab">{category}</a></li>);
@@ -21,7 +21,7 @@ class FAQ extends Component {
 		return categories;
 	}
 	renderFaq() {
-		let faq = this.props.faq;
+		let faq = this.props.faqdata.data;
 		let QaA = [];
 		let QuesTab =[];
 		faq.faqcategory.map((category, index) => {
@@ -71,13 +71,13 @@ class FAQ extends Component {
 				</div>
 				<div className="col-lg-3">
 					<ul className="list-group" role="tablist">
-						{ this.props.statuses.loadedFAQ === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
-						{ this.props.statuses.loadedFAQ === 'success' && this.renderCategories() }
+						{ this.props.faqdata.loading === true && <Loader color="#26A65B" size="16px" margin="4px"/> }
+						{ this.props.faqdata.loading === false && this.renderCategories() }
 					</ul>
 				</div>
 				<div className="col-lg-9">
 					<div className="tab-content">
-						{ this.props.statuses.loadedFAQ === 'success' && this.renderFaq() }
+						{ this.props.faqdata.loading === false && this.renderFaq() }
 					</div>
 				</div>
 			</div>
@@ -87,12 +87,12 @@ class FAQ extends Component {
 
 function mapStateToProps(state) {
 	return {
-		faq: state.faq
+		faqdata: state.faq
 	};
 }
 
 function mapDispatchToProps(dispatch) {
-   return bindActionCreators({refreshContent: refreshContent}, dispatch);
+   return bindActionCreators({refreshContent: actions.refreshFAQ}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FAQ);

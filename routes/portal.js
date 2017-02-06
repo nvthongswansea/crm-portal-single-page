@@ -23,7 +23,7 @@ router.get('/', _helper.loginRequired, function(req, res, next) {
 				{name: "Sổ liên lạc", url: "Contacts"},
 				{name: "Quản lý vé", url: "ATickets"},
 				{name: "Quản lý voucher", url: "AVouchers"},
-				{name: "Quản lý chung", url: "ATickConProd"},
+				{name: "Quản lý đăng kí lịch học", url: "ATickConProd"},
 				{name: "Quản lý hóa đơn", url: "Opportunities"}
 			];
 			var modulelist = [];
@@ -135,17 +135,17 @@ router.post('/createnewticket', _helper.loginRequired, function(req, res, next) 
 		url: VT_URL + '/vtigerservice.php?service=restful&do=createticket',
 		formData: formData
 	}, function(errordata, responsedata, bodydata) {
-		if (!errordata && responsedata.statusCode == 200) {
+		// if (!errordata && responsedata.statusCode == 200) {
 			res.status(201).json({
 				success: true,
 				message: 'Successful!'
 			});
-		} else {
-			res.status(400).json({
-				success: false,
-				message: 'Could not update.'
-			});
-		}
+		// } else {
+		// 	res.status(400).json({
+		// 		success: false,
+		// 		message: 'Could not update.'
+		// 	});
+		// }
 	});
 
 });
@@ -446,14 +446,8 @@ router.post('/checkcouponexistence', _helper.loginRequired, function(req, res, n
 		url: VT_URL + '/vtigerservice.php?service=restful&do=checkCoupon',
 		formData: formData
 	}, function(errordata, responsedata, bodydata) {
-		if (!errordata && responsedata.statusCode == 200) {
 			res.send(JSON.parse(bodydata));
-		} else {
-			res.status(400).json({
-				success: false,
-				message: 'Could not update.'
-			});
-		}
+		
 	});
 });
 

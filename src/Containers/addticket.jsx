@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'redux-await';
-import {refreshContent,getContentByParam} from '../Actions/displaymodulename.js';
+import { connect } from 'react-redux';
+import actions from '../Actions/SupportTicketActions.js';
 import {bindActionCreators} from 'redux';
 import Loader from 'halogen/PulseLoader';
 import jQuery from 'jquery';
@@ -9,7 +9,7 @@ import axios from 'axios';
 class AddTicket extends Component {
 	constructor(props){
 		super(props);
-		this.props.refreshContent("newticket");
+		this.props.refreshContent();
 		this.renderRelatedProduct = this.renderRelatedProduct.bind(this);
 		this.renderSeverity = this.renderSeverity.bind(this);
 		this.renderCategory = this.renderCategory.bind(this);
@@ -18,7 +18,7 @@ class AddTicket extends Component {
 		this.submit = this.submit.bind(this);
 	}
 	renderRelatedProduct() {
-		let data = this.props.data;
+		let data = this.props.formData.data;
 		if(!data.productid) return "";
 		let productid_arr = data.productid;
 		let productname_arr = data.productname;
@@ -29,7 +29,7 @@ class AddTicket extends Component {
 		return options;
 	}
 	renderSeverity() {
-		let data = this.props.data;
+		let data = this.props.formData.data;
 		if (!data.ticketseverities) return "";
 		let ticketseverities = data.ticketseverities;
 		let options = [];
@@ -39,7 +39,7 @@ class AddTicket extends Component {
 		return options;
 	}
 	renderCategory() {
-		let data = this.props.data;
+		let data = this.props.formData.data;
 		if (!data.ticketcategories) return "";
 		let ticketcategories = data.ticketcategories;
 		let options = [];
@@ -49,7 +49,7 @@ class AddTicket extends Component {
 		return options;
 	}
 	renderContractService() {
-		let data = this.props.data;
+		let data = this.props.formData.data;
 		if(!data.serviceid) return "";
 		let serviceid_arr = data.serviceid;
 		let servicename_arr = data.servicename;
@@ -60,7 +60,7 @@ class AddTicket extends Component {
 		return options;
 	}
 	renderPriority() {
-		let data = this.props.data;
+		let data = this.props.formData.data;
 		if(!data.ticketpriorities) return "";
 		let ticketpriorities = data.ticketpriorities;
 		let options = [];
@@ -69,40 +69,21 @@ class AddTicket extends Component {
 		});
 		return options;
 	}
-	// validate(detail) {
-	// 	let valid = false;
- // 		if(this.props.data) {
- // 			switch(detail) {
- // 				case "productid":
- // 				if(this.props.productid){
- // 					if(this.props.productid.productid){
- // 						valid = true;
- // 					} else {
- // 						valid = false
- // 					}
- // 				} else {
- // 					valid = false;
- // 				}
- // 			}
- 			
- // 		} else {
- // 			valid = false;
- // 		}
- // 		return valid;
-	// }
+
 	submit(dom) {
 		let Jsondata = jQuery(dom).serialize();
-		this.props.getContentByParam("addticket", Jsondata);
+		this.props.submitform(Jsondata);
 		
 	}
 	render() {
+		console.log(this.props);
 		return (
 			<div className="row">
 			   <div className="col-lg-12">
 			      <div className="panel panel-default">
 			         <div className="panel-heading"> Ticket Detail </div>
-			         { this.props.statuses.loadedAddTicketForm === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
-			         { this.props.statuses.loadedAddTicketForm === 'success' &&  
+			         { this.props.formData.loading === true && <Loader color="#26A65B" size="16px" margin="4px"/> }
+			         { this.props.formData.loading === false &&  
 			         <form id="ticketform" method="POST" role="form">
 			         	<div className="panel-body">
 			         		<input name="module" value="HelpDesk" type="hidden"></input>
@@ -119,21 +100,21 @@ class AddTicket extends Component {
 										<label for="productid">Related Product</label>
 										<select id="productid" className="form-control chosen-select" name="productidf">
 											<option value="" selected="">- - - - -</option>
-											{this.props.data? this.renderRelatedProduct() : ""}
+											{this.props.formData.data? this.renderRelatedProduct() : ""}
 										</select>
 									</div>
 									<div className="form-group">
 										<label for="severity">Severity</label>
 										<select id="severity" className="form-control chosen-select" name="severity">
 											<option value="" selected="">- - - - -</option>
-											{this.props.data? this.renderSeverity() : ""}
+											{this.props.formData.data? this.renderSeverity() : ""}
 										</select>
 									</div>
 									<div className="form-group">
 										<label for="category">Category </label>
 										<select id="category" className="form-control chosen-select" name="category">
 											<option value="" selected="">- - - - -</option>
-											{this.props.data? this.renderCategory() : ""}
+											{this.props.formData.data? this.renderCategory() : ""}
 										</select>
 									</div>
 								</div>
@@ -142,14 +123,14 @@ class AddTicket extends Component {
 										<label for="serviceid">Contract Service</label>
 										<select id="serviceid" className="form-control chosen-select" name="serviceid">
 											<option value="" selected="">- - - - -</option>
-											{this.props.data? this.renderContractService() : ""}
+											{this.props.formData.data? this.renderContractService() : ""}
 										</select>
 									</div>
 									<div className="form-group"> 
 										<label for="priority">Priority</label>
 										<select id="priority" className="form-control chosen-select" name="priority">
 											<option value="" selected="">- - - - -</option>
-											{this.props.data? this.renderPriority() : ""}
+											{this.props.formData.data? this.renderPriority() : ""}
 										</select>
 									</div>
 								</div>
@@ -162,10 +143,9 @@ class AddTicket extends Component {
 							</div>
 			         	</div>
 			         	<div className="panel-footer">
-							<a className="btn btn-success btn-lg" onClick={() => {this.submit("#ticketform")}}>Thêm vé mới</a>
+							<a className="btn btn-success btn-lg" onClick={() => {this.submit("#ticketform")}}>{this.props.formData.submitloading ? <div><i className="fa fa-spinner fa-spin"></i> Xin chờ</div> : "Gửi"}</a>
 						</div>
 			         </form> }
-			         <a onClick={() => this.props.getContentByParam('test', 123)}>test</a>
 			      </div>
 			   </div>
 			</div>			
@@ -175,12 +155,12 @@ class AddTicket extends Component {
 
 function mapStateToProps(state) {
 	return {
-		data: state.addticketdata
+		formData: state.addticketdata
 	};
 }
 
 function mapDispatchToProps(dispatch) {
-   return bindActionCreators({refreshContent: refreshContent, getContentByParam: getContentByParam}, dispatch);
+   return bindActionCreators({submitform: actions.addSupportTicket, refreshContent: actions.refreshAddTicketForm}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTicket);

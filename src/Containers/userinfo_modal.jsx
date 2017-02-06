@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'redux-await';
-import {refreshContent,getContentByParam} from '../Actions/displaymodulename.js';
+import { connect } from 'react-redux';
+import actions from '../Actions/ModalActions.js';
+import transferActions from '../Actions/TransferActions.js';
 import {bindActionCreators} from 'redux';
 import Loader from 'halogen/PulseLoader';
 import {
@@ -23,7 +24,7 @@ class UserInfoModal extends Component {
 		this.renderError=this.renderError.bind(this);
 	}
 	openModal() {
-	  this.props.getContentByParam('confirmTransferInfo', jQuery('#email').val());
+	  this.props.refreshContent(jQuery('#email').val());
 	  this.setState({
 	    isOpen: true
 	  });
@@ -38,11 +39,11 @@ class UserInfoModal extends Component {
 		let txt;
 		if (this.props.formname=="TransferCourse") {
 			let Jsondata = jQuery('#changeStudentForm').serialize();
-			this.props.getContentByParam("changeStudent", Jsondata);
+			this.props.changeStudent(Jsondata);
 			
 		} else if (this.props.formname=="TransferVoucher") {
 			let Jsondata = jQuery('#changeStudentForm').serialize();
-			this.props.getContentByParam("changeVoucherOwner", Jsondata);
+			this.props.changeVoucherOwner(Jsondata);
 		}
 		
 	}
@@ -54,9 +55,9 @@ class UserInfoModal extends Component {
 			    <ModalTitle>Thông tin người nhận</ModalTitle>
 			  </ModalHeader>
 			  <ModalBody>
-			    	<b>Tên người nhận:</b> <p dangerouslySetInnerHTML={{__html: this.props.data.lastname}} />
-			    	<b>Email:</b><p dangerouslySetInnerHTML={{__html: this.props.data.email}} />
-			    	<b>Số điện thoại:</b><p dangerouslySetInnerHTML={{__html: this.props.data.mobile}} />
+			    	<b>Tên người nhận:</b> <p dangerouslySetInnerHTML={{__html: this.props.fetchedData.data.lastname}} />
+			    	<b>Email:</b><p dangerouslySetInnerHTML={{__html: this.props.fetchedData.data.email}} />
+			    	<b>Số điện thoại:</b><p dangerouslySetInnerHTML={{__html: this.props.fetchedData.data.mobile}} />
 			    	<div style={{color: 'red'}}><b>Lưu ý: </b>Sau khi chuyển nhượng, bạn không còn sở hữu vé/voucher này nữa. Vì thế bạn không thể truy cập, chỉnh sửa hay đăng kí vé/voucher này. </div>
 			  </ModalBody>
 			  <ModalFooter>
@@ -64,8 +65,8 @@ class UserInfoModal extends Component {
 			      Hủy
 			    </button>
 			    <button className='btn btn-primary' onClick={this.submit}>
-			    { (this.props.statuses.postResult == 'success' || !this.props.statuses.postResult) ? (<div>Chuyển nhượng</div>) : ""}
-			    { this.props.statuses.postResult === 'pending' && (<div><i className="fa fa-spinner fa-spin"></i> Xin chờ</div>) }
+			    { !this.props.fetchedData.postloading  ? (<div>Chuyển nhượng</div>) : ""}
+			    { this.props.fetchedData.postloading === true && (<div><i className="fa fa-spinner fa-spin"></i> Xin chờ</div>) }
 			    </button>
 			  </ModalFooter>
 			  </div>
@@ -94,8 +95,8 @@ class UserInfoModal extends Component {
 			<div>
 				<a className="btn btn-success" onClick={() => {this.openModal()}}>Chuyển nhượng</a>
 				<Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
-				{ this.props.statuses.loadedModal === 'pending' && <Loader color="#26A65B" size="16px" margin="4px"/> }
-	      		{ this.props.statuses.loadedModal === 'success' && (this.props.data? this.renderInfo() : this.renderError())}
+				{ this.props.fetchedData.loading === true && <Loader color="#26A65B" size="16px" margin="4px"/> }
+	      		{ this.props.fetchedData.loading === false && (this.props.fetchedData.data? this.renderInfo() : this.renderError())}
 				</Modal>
 			</div>
 		);
@@ -104,12 +105,12 @@ class UserInfoModal extends Component {
 
 function mapStateToProps(state) {
 	return {
-		data: state.Modal
+		fetchedData: state.Modal
 	};
 }
 
 function mapDispatchToProps(dispatch) {
-   return bindActionCreators({refreshContent: refreshContent, getContentByParam: getContentByParam}, dispatch);
+   return bindActionCreators({refreshContent: actions.loadModal, changeStudent: transferActions.changeStudent, changeVoucherOwner: transferActions.changeVoucherOwner}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserInfoModal);

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
-import {refreshContent,getContentByParam} from '../Actions/displaymodulename.js';
+import actions from '../Actions/DataTableActions.js';
 import {bindActionCreators} from 'redux';
 import { Link } from 'react-router';
 import jQuery from 'jquery';
 import DataTable from 'datatables.net';
 import ReactHtmlParser from 'react-html-parser';
-import { connect } from 'redux-await';
+import { connect } from 'react-redux';
 import Loader from 'halogen/PulseLoader';
 
 class Datatable extends Component {
@@ -14,9 +14,9 @@ class Datatable extends Component {
 		super(props);
 		this.state = {tablename: this.props.route.tablename, selectedProd: null};
 		if (this.state.tablename == "PotentialATCP") {
-			this.props.getContentByParam("PotentialATCP",this.props.params.potentialid);
+			this.props.refreshContent("PotentialATCP",this.props.params.potentialid);
 		} else if (this.state.tablename == "PotentialTrans") {
-			this.props.getContentByParam("PotentialTrans",this.props.params.potentialid);
+			this.props.refreshContent("PotentialTrans",this.props.params.potentialid);
 		} else {
 			this.props.refreshContent(this.state.tablename);
 		}
@@ -31,9 +31,9 @@ class Datatable extends Component {
       			tablename: nextProps.route.tablename
     		}, () => {
     			if (this.state.tablename == "PotentialATCP") {
-					nextProps.getContentByParam("PotentialATCP",nextProps.params.potentialid);
+					nextProps.refreshContent("PotentialATCP",nextProps.params.potentialid);
 				} else if (this.state.tablename == "PotentialTrans") {
-					nextProps.getContentByParam("PotentialTrans",nextProps.params.potentialid);
+					nextProps.refreshContent("PotentialTrans",nextProps.params.potentialid);
 				}else {
 					nextProps.refreshContent(this.state.tablename);
 				}
@@ -56,7 +56,7 @@ class Datatable extends Component {
 	}
 	renderTable() {
 		
-		let data = this.props.data;
+		let data = this.props.tableData.data;
 		if (!data[0] || !data[1]) 
 			return "No data";
 		let headers = [];
@@ -116,8 +116,8 @@ class Datatable extends Component {
 					</div>
 					<div className="panel-body">
 						<div id="toremove" className="table-responsive">						
-							{ this.props.statuses.loadedTable === 'success' && (this.props.data ? this.renderTable(): this.displayNodata())}
-							{ this.props.statuses.loadedTable === 'pending' &&  this.displayLoader() }
+							{ this.props.tableData.loading === false && (this.props.tableData.data ? this.renderTable(): this.displayNodata())}
+							{ this.props.tableData.loading === true &&  this.displayLoader() }
 						</div> 
 					</div>
 				</div>
@@ -127,13 +127,11 @@ class Datatable extends Component {
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		data: state.datatable
-	};
+const mapStateToProps = (state) => {
+	return {tableData: state.datatable};
 }
-function mapDispatchToProps(dispatch) {
-   return bindActionCreators({refreshContent: refreshContent, getContentByParam: getContentByParam}, dispatch);
+const mapDispatchToProps = (dispatch) => {
+   return bindActionCreators({refreshContent: actions.refreshTable}, dispatch);
 }
 
 
