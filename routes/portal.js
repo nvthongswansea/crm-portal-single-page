@@ -23,7 +23,7 @@ router.get('/', _helper.loginRequired, function(req, res, next) {
 				{name: "Sổ liên lạc", url: "Contacts"},
 				{name: "Quản lý vé", url: "ATickets"},
 				{name: "Quản lý voucher", url: "AVouchers"},
-				{name: "Quản lý đăng kí lịch học", url: "ATickConProd"},
+				{name: "Quản lý đăng ký lịch học", url: "ATickConProd"},
 				{name: "Quản lý hóa đơn", url: "Opportunities"}
 			];
 			var modulelist = [];
