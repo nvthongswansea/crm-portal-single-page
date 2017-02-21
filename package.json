@@ -13,7 +13,8 @@
   },
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build": "babel src -d lib"
   },
   "dependencies": {
     "axios": "^0.15.3",
@@ -59,6 +60,7 @@
     "webpack": "^2.1.0-beta.28"
   },
   "devDependencies": {
+    "babel-cli": "^6.22.2",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-es2015-destructuring": "^6.22.0",

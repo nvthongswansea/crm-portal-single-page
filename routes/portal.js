@@ -7,7 +7,7 @@ var FormData = require('form-data');
 const objectValues = require('object-values');
 var http = require('http');
 const _helper = require('../Auth/_helper');
-const redux = require('redux');
+const  redux = require ('redux');
 const config = require('../config/main');
 const VT_URL = config.URL;
 
